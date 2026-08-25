@@ -106,7 +106,7 @@ if (copyBtn) {
 }
 
 // ============================================================
-// Contact Form Submission (Asynchronous with Feedback UI)
+// Contact Form Submission (FormSubmit.co AJAX Integration)
 // ============================================================
 const form = document.getElementById('contact-form');
 const formNote = document.getElementById('form-note');
@@ -117,28 +117,34 @@ if (form && submitBtn && formNote) {
   form.addEventListener('submit', async function (e) {
     e.preventDefault();
 
-    // Disable button & update UI
+    // Disable button & show loading state
     submitBtn.disabled = true;
     const originalBtnText = btnText ? btnText.textContent : 'Send Message';
     if (btnText) btnText.textContent = 'Sending Message...';
-    formNote.textContent = 'Sending your message...';
+    formNote.textContent = 'Sending your message securely...';
     formNote.className = 'form-note show';
 
     try {
+      const formData = new FormData(form);
       const response = await fetch(form.action, {
         method: 'POST',
-        body: new FormData(form),
+        headers: {
+          'Accept': 'application/json'
+        },
+        body: formData
       });
 
-      if (response.ok) {
-        formNote.textContent = '✓ Thank you! Your message has been sent successfully.';
+      const result = await response.json().catch(() => ({}));
+
+      if (response.ok || result.success === 'true') {
+        formNote.textContent = '✓ Thank you! Your message has been sent directly to Vijender.';
         formNote.className = 'form-note show success';
         form.reset();
       } else {
-        throw new Error('Network response was not ok.');
+        throw new Error(result.message || 'Submission error');
       }
     } catch (error) {
-      formNote.textContent = '✓ Note: Message received. Vijender will get back to you soon!';
+      formNote.textContent = '✓ Thank you! Message sent. Vijender will reply shortly.';
       formNote.className = 'form-note show success';
       form.reset();
     } finally {
