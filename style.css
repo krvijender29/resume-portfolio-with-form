@@ -1,6 +1,6 @@
 /* ==========================================================================
    STYLE.CSS - Vijender Singh Portfolio
-   Clean, Optimized, and Minimalist Stylesheet
+   Clean, Optimized, and Fully Mobile-Responsive Stylesheet
    ========================================================================== */
 
 /* --------------------------------------------------------------------------
@@ -36,6 +36,8 @@
 
 html {
   scroll-behavior: smooth;
+  overflow-x: hidden;
+  max-width: 100vw;
 }
 
 body {
@@ -43,10 +45,13 @@ body {
   color: var(--text);
   font-family: var(--font-display);
   overflow-x: hidden;
+  max-width: 100vw;
+  width: 100%;
   position: relative;
+  -webkit-font-smoothing: antialiased;
 }
 
-/* Background noise texture */
+/* Subtle background noise texture */
 body::before {
   content: '';
   position: fixed;
@@ -60,10 +65,81 @@ body::before {
 section {
   position: relative;
   z-index: 2;
+  width: 100%;
+  overflow: hidden;
 }
 
 /* --------------------------------------------------------------------------
-   3. CUSTOM CURSOR & CANVAS TRAIL
+   3. HELLO INTRO GREETING OVERLAY
+   -------------------------------------------------------------------------- */
+.hello-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 99999;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: #1a1a2e;
+  pointer-events: none;
+  transition: opacity 0.8s ease, visibility 0.8s ease;
+}
+
+.hello-accent-bar {
+  display: flex;
+  width: 180px;
+  height: 8px;
+  margin-bottom: 2rem;
+  overflow: hidden;
+  border-radius: 4px;
+  opacity: 0;
+  transform: scaleX(0);
+  transition: opacity 0.5s ease 0.2s, transform 0.5s cubic-bezier(0.16, 1, 0.3, 1) 0.2s;
+}
+
+.bar-seg {
+  height: 100%;
+}
+
+.bar-seg.seg-1 {
+  flex: 1;
+  background: var(--accent);
+}
+
+.bar-seg.seg-2 {
+  flex: 1.5;
+  background: var(--accent2);
+}
+
+.bar-seg.seg-3 {
+  flex: 1;
+  background: var(--accent3);
+}
+
+.hello-text {
+  font-family: var(--font-display);
+  font-size: clamp(3.2rem, 10vw, 7rem);
+  font-weight: 800;
+  color: #ffffff;
+  letter-spacing: -0.03em;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.6s ease 0.4s, transform 0.6s cubic-bezier(0.16, 1, 0.3, 1) 0.4s;
+}
+
+.hello-sub {
+  font-family: var(--font-mono);
+  font-size: 0.9rem;
+  color: rgba(255, 255, 255, 0.5);
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  margin-top: 1rem;
+  opacity: 0;
+  transition: opacity 0.6s ease 0.7s;
+}
+
+/* --------------------------------------------------------------------------
+   4. CUSTOM CURSOR & CANVAS TRAIL (Desktop)
    -------------------------------------------------------------------------- */
 .cursor {
   width: 12px;
@@ -103,7 +179,7 @@ section {
 }
 
 /* --------------------------------------------------------------------------
-   4. NAVIGATION
+   5. NAVIGATION
    -------------------------------------------------------------------------- */
 nav {
   position: fixed;
@@ -117,6 +193,7 @@ nav {
   padding: 1.25rem 4rem;
   background: rgba(253, 246, 238, 0.92);
   backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
   border-bottom: 1px solid var(--border);
   transition: padding 0.3s ease;
 }
@@ -130,6 +207,7 @@ nav {
   display: flex;
   align-items: center;
   gap: 0.5rem;
+  white-space: nowrap;
 }
 
 .nav-logo span {
@@ -189,6 +267,7 @@ nav {
   padding: 0.45rem 1rem;
   text-decoration: none;
   transition: all 0.2s;
+  white-space: nowrap;
 }
 
 .nav-action-btn:hover {
@@ -198,15 +277,20 @@ nav {
 
 .mobile-menu-toggle {
   display: none;
-  background: none;
-  border: none;
-  font-size: 1.5rem;
+  background: transparent;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  width: 40px;
+  height: 40px;
+  font-size: 1.35rem;
   color: var(--text);
   cursor: pointer;
+  align-items: center;
+  justify-content: center;
 }
 
 /* --------------------------------------------------------------------------
-   5. HERO SECTION
+   6. HERO SECTION
    -------------------------------------------------------------------------- */
 .hero {
   min-height: 100vh;
@@ -239,6 +323,7 @@ nav {
   display: flex;
   align-items: center;
   gap: 0.75rem;
+  flex-wrap: wrap;
 }
 
 .hero-tag::before {
@@ -249,11 +334,12 @@ nav {
 }
 
 .hero-name {
-  font-size: clamp(3.8rem, 9.5vw, 8.5rem);
+  font-size: clamp(3.2rem, 9.5vw, 8.5rem);
   font-weight: 800;
   line-height: 0.92;
   letter-spacing: -0.03em;
   margin-bottom: 1.25rem;
+  word-break: break-word;
 }
 
 .hero-name .line2 {
@@ -306,7 +392,9 @@ nav {
   transition: transform 0.2s, box-shadow 0.2s, background 0.2s;
   display: inline-flex;
   align-items: center;
+  justify-content: center;
   gap: 0.5rem;
+  white-space: nowrap;
 }
 
 .btn-primary:hover {
@@ -328,7 +416,9 @@ nav {
   transition: border-color 0.2s, color 0.2s, transform 0.2s;
   display: inline-flex;
   align-items: center;
+  justify-content: center;
   gap: 0.5rem;
+  white-space: nowrap;
 }
 
 .btn-ghost:hover {
@@ -374,7 +464,7 @@ nav {
 }
 
 /* --------------------------------------------------------------------------
-   6. MARQUEE
+   7. MARQUEE
    -------------------------------------------------------------------------- */
 .marquee-wrap {
   border-top: 1px solid var(--border);
@@ -412,7 +502,7 @@ nav {
 }
 
 /* --------------------------------------------------------------------------
-   7. SECTION LABELS & HEADINGS
+   8. SECTION LABELS & HEADINGS
    -------------------------------------------------------------------------- */
 .section-label {
   font-family: var(--font-mono);
@@ -432,7 +522,7 @@ nav {
 }
 
 /* --------------------------------------------------------------------------
-   8. ABOUT SECTION
+   9. ABOUT SECTION
    -------------------------------------------------------------------------- */
 .about {
   padding: 8rem 4rem;
@@ -597,7 +687,7 @@ nav {
 }
 
 /* --------------------------------------------------------------------------
-   9. SKILLS SECTION
+   10. SKILLS SECTION
    -------------------------------------------------------------------------- */
 .skills {
   padding: 8rem 4rem;
@@ -678,7 +768,7 @@ nav {
 }
 
 /* --------------------------------------------------------------------------
-   10. QUALIFICATIONS SECTION
+   11. QUALIFICATIONS SECTION
    -------------------------------------------------------------------------- */
 .qualifications {
   padding: 8rem 4rem;
@@ -776,7 +866,7 @@ nav {
 }
 
 /* --------------------------------------------------------------------------
-   11. PROJECTS SECTION
+   12. PROJECTS SECTION
    -------------------------------------------------------------------------- */
 .projects {
   padding: 8rem 4rem;
@@ -805,7 +895,7 @@ nav {
 
 .projects-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
   gap: 2rem;
 }
 
@@ -901,6 +991,7 @@ nav {
 .project-link-btn {
   display: inline-flex;
   align-items: center;
+  justify-content: center;
   gap: 0.5rem;
   font-family: var(--font-mono);
   font-size: 0.78rem;
@@ -923,7 +1014,7 @@ nav {
 }
 
 /* --------------------------------------------------------------------------
-   12. CERTIFICATIONS SECTION
+   13. CERTIFICATIONS SECTION
    -------------------------------------------------------------------------- */
 .certs {
   padding: 6rem 4rem;
@@ -939,7 +1030,7 @@ nav {
 
 .certs-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
   gap: 1.5rem;
 }
 
@@ -978,7 +1069,7 @@ nav {
 }
 
 /* --------------------------------------------------------------------------
-   13. CONTACT SECTION
+   14. CONTACT SECTION
    -------------------------------------------------------------------------- */
 .contact {
   padding: 8rem 4rem;
@@ -1063,7 +1154,7 @@ nav {
 }
 
 /* --------------------------------------------------------------------------
-   14. FOOTER
+   15. FOOTER
    -------------------------------------------------------------------------- */
 footer {
   border-top: 1px solid var(--border);
@@ -1083,7 +1174,7 @@ footer {
 }
 
 /* --------------------------------------------------------------------------
-   15. ANIMATIONS & CURSOR HELPERS
+   16. ANIMATIONS & CURSOR HELPERS
    -------------------------------------------------------------------------- */
 .fade-up {
   opacity: 0;
@@ -1097,15 +1188,24 @@ footer {
 }
 
 a, button, .skill-card, .project-card, .cert-card, .stat, .btn-primary, .btn-ghost, .contact-link, .nav-logo, .nav-links a {
-  cursor: pointer !important;
+  cursor: pointer;
 }
 
-/* --------------------------------------------------------------------------
-   16. RESPONSIVENESS
-   -------------------------------------------------------------------------- */
+/* ==========================================================================
+   17. COMPREHENSIVE RESPONSIVENESS & MOBILE LAYOUT FIXES
+   ========================================================================== */
+
+/* Touch & Mobile: Disable custom desktop cursor to avoid sticking/jumping */
+@media (hover: none), (max-width: 768px) {
+  .cursor, .cursor-ring, #trail-canvas {
+    display: none !important;
+  }
+}
+
+/* Tablet Screens (<= 992px) */
 @media (max-width: 992px) {
   nav {
-    padding: 1.2rem 2rem;
+    padding: 1.1rem 2rem;
   }
   .hero {
     padding: 8rem 2rem 4rem;
@@ -1123,50 +1223,412 @@ a, button, .skill-card, .project-card, .cert-card, .stat, .btn-primary, .btn-gho
   }
 }
 
+/* Mobile Devices (<= 768px) */
 @media (max-width: 768px) {
+  /* Navigation & Drawer */
   nav {
-    padding: 1.2rem 1.5rem;
+    padding: 0.9rem 1.25rem;
   }
+  
+  .nav-logo {
+    font-size: 1.05rem;
+  }
+
   .mobile-menu-toggle {
-    display: block;
+    display: flex;
   }
+
   .nav-links {
     position: fixed;
-    top: 70px;
+    top: 60px;
     left: 0;
     right: 0;
     background: rgba(253, 246, 238, 0.98);
-    backdrop-filter: blur(20px);
+    backdrop-filter: blur(25px);
+    -webkit-backdrop-filter: blur(25px);
     flex-direction: column;
-    padding: 2rem 1.5rem;
-    border-bottom: 1px solid var(--border);
-    gap: 1.5rem;
-    transform: translateY(-150%);
-    transition: transform 0.3s ease;
+    padding: 1.75rem 1.5rem;
+    border-bottom: 2px solid var(--accent);
+    gap: 1.25rem;
+    box-shadow: 0 16px 32px rgba(26, 26, 46, 0.12);
+    transform: translateY(-160%);
+    transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+    max-height: calc(100vh - 60px);
+    overflow-y: auto;
+    z-index: 99;
   }
+
   .nav-links.active {
     transform: translateY(0);
   }
+
+  .nav-links a {
+    font-size: 0.95rem;
+    padding: 0.4rem 0;
+    display: block;
+    width: 100%;
+    text-align: center;
+  }
+
+  .nav-action-btn {
+    display: block;
+    width: 100%;
+    text-align: center;
+    padding: 0.75rem 1.2rem;
+  }
+
+  /* Hero */
   .hero {
-    padding: 7.5rem 1.5rem 4rem;
+    padding: 6.5rem 1.25rem 3.5rem;
+    min-height: auto;
   }
-  .about {
-    padding: 5rem 1.5rem;
-    gap: 3rem;
+
+  .hero-tag {
+    font-size: 0.68rem;
+    margin-bottom: 1.2rem;
+    gap: 0.5rem;
   }
-  .skills, .qualifications, .projects, .certs, .contact {
-    padding: 5rem 1.5rem;
+
+  .hero-tag::before {
+    width: 24px;
   }
-  .projects-grid {
-    grid-template-columns: 1fr;
+
+  .hero-name {
+    font-size: clamp(2.6rem, 12vw, 4.8rem);
+    line-height: 0.96;
+    margin-bottom: 1rem;
   }
+
+  .hero-subtitle {
+    font-size: clamp(1rem, 4.2vw, 1.35rem);
+    line-height: 1.5;
+    margin-bottom: 2rem;
+  }
+
+  .hero-cta {
+    flex-direction: column;
+    width: 100%;
+    gap: 0.75rem;
+  }
+
+  .btn-primary, .btn-ghost {
+    width: 100%;
+    justify-content: center;
+    padding: 0.85rem 1.5rem;
+    text-align: center;
+  }
+
   .hero-scroll, .hero-location {
     display: none;
   }
-  footer {
-    padding: 1.5rem;
-    flex-direction: column;
+
+  /* Marquee */
+  .marquee-wrap {
+    padding: 0.85rem 0;
+  }
+
+  .marquee-item {
+    font-size: 0.7rem;
+    padding: 0 1.25rem;
+  }
+
+  /* About */
+  .about {
+    padding: 4.5rem 1.25rem;
+    gap: 2.5rem;
+  }
+
+  .about-photo-wrap {
+    width: 200px;
+    height: 200px;
+    margin: 0 auto 1.75rem;
+  }
+
+  .about-photo, .about-avatar, .about-photo-accent {
+    width: 200px;
+    height: 200px;
+  }
+
+  .about-heading {
+    font-size: clamp(2rem, 8vw, 2.8rem);
+    line-height: 1.1;
+    margin-bottom: 1.5rem;
+  }
+
+  .about-stats {
+    grid-template-columns: 1fr 1fr;
     gap: 0.75rem;
+    margin-top: 1.75rem;
+  }
+
+  .stat {
+    padding: 1rem 0.85rem;
+  }
+
+  .stat-num {
+    font-size: 1.45rem;
+  }
+
+  .stat-label {
+    font-size: 0.62rem;
+  }
+
+  .about-text {
+    font-size: 0.95rem;
+    line-height: 1.75;
+    margin-bottom: 1.2rem;
+  }
+
+  .about-tags {
+    gap: 0.35rem;
+    margin-top: 1.5rem;
+  }
+
+  .tag {
+    font-size: 0.65rem;
+    padding: 0.35rem 0.7rem;
+  }
+
+  /* Skills - Responsive 2-Column Grid */
+  .skills {
+    padding: 4.5rem 1.25rem;
+  }
+
+  .skills-header {
+    margin-bottom: 2rem;
+  }
+
+  .skills-heading {
+    font-size: clamp(2rem, 8vw, 2.8rem);
+  }
+
+  .skills-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.75rem;
+  }
+
+  .skill-card {
+    padding: 1.25rem 1rem;
+    gap: 0.5rem;
+  }
+
+  .skill-icon {
+    font-size: 1.6rem;
+  }
+
+  .skill-name {
+    font-size: 0.85rem;
+  }
+
+  .skill-level {
+    font-size: 0.6rem;
+  }
+
+  /* Qualifications */
+  .qualifications {
+    padding: 4.5rem 1.25rem;
+  }
+
+  .qual-heading {
+    font-size: clamp(2rem, 8vw, 2.8rem);
+    margin-bottom: 2.5rem;
+  }
+
+  .timeline {
+    padding-left: 0;
+  }
+
+  .qual-item {
+    padding-left: 1.75rem;
+    margin-bottom: 2.2rem;
+  }
+
+  .qual-item::before {
+    left: -5px;
+    width: 9px;
+    height: 9px;
+    top: 6px;
+  }
+
+  .qual-title {
+    font-size: 1.1rem;
+    line-height: 1.3;
+  }
+
+  .qual-inst {
+    font-size: 0.75rem;
+    margin-bottom: 0.6rem;
+  }
+
+  .qual-desc {
+    font-size: 0.85rem;
+    line-height: 1.6;
+  }
+
+  /* Projects */
+  .projects {
+    padding: 4.5rem 1.25rem;
+  }
+
+  .projects-header {
+    margin-bottom: 2.5rem;
+  }
+
+  .projects-heading {
+    font-size: clamp(2rem, 8vw, 2.8rem);
+  }
+
+  .projects-grid {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+
+  .project-card {
+    padding: 1.75rem 1.25rem;
+    gap: 1.25rem;
+    min-width: 0;
+  }
+
+  .project-title {
+    font-size: 1.25rem;
+    margin-bottom: 0.85rem;
+  }
+
+  .project-desc-list {
+    gap: 0.5rem;
+    margin-bottom: 1.25rem;
+  }
+
+  .project-desc-list li {
+    font-size: 0.82rem;
+    line-height: 1.55;
+    padding-left: 1.1rem;
+  }
+
+  .project-stack {
+    gap: 0.3rem;
+    margin-bottom: 1.25rem;
+  }
+
+  .stack-tag {
+    font-size: 0.6rem;
+    padding: 0.25rem 0.55rem;
+  }
+
+  .project-link-btn {
+    width: 100%;
+    justify-content: center;
+    padding: 0.75rem 1rem;
     text-align: center;
+  }
+
+  /* Certifications */
+  .certs {
+    padding: 4.5rem 1.25rem;
+  }
+
+  .certs-heading {
+    font-size: clamp(1.8rem, 7vw, 2.4rem);
+    margin-bottom: 2rem;
+  }
+
+  .certs-grid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  .cert-card {
+    padding: 1.25rem;
+    gap: 1rem;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .cert-icon {
+    font-size: 1.8rem;
+  }
+
+  .cert-name {
+    font-size: 0.95rem;
+  }
+
+  .cert-issuer {
+    font-size: 0.72rem;
+  }
+
+  /* Contact */
+  .contact {
+    padding: 4.5rem 1.25rem;
+  }
+
+  .contact-heading {
+    font-size: clamp(2.2rem, 8.5vw, 3.8rem);
+    line-height: 1.05;
+    margin-bottom: 1.5rem;
+  }
+
+  .contact-subtext {
+    font-size: 0.95rem;
+    line-height: 1.65;
+    margin-bottom: 2rem;
+  }
+
+  .contact-links {
+    flex-direction: column;
+    width: 100%;
+    gap: 0.75rem;
+  }
+
+  .contact-link {
+    width: 100%;
+    justify-content: center;
+    padding: 0.85rem 1rem;
+    text-align: center;
+  }
+
+  /* Footer */
+  footer {
+    padding: 1.75rem 1.25rem;
+    flex-direction: column;
+    gap: 0.5rem;
+    text-align: center;
+  }
+
+  .footer-left, .footer-right {
+    font-size: 0.68rem;
+    text-align: center;
+  }
+
+  /* Hello screen on mobile */
+  .hello-accent-bar {
+    width: 140px;
+    height: 6px;
+    margin-bottom: 1.5rem;
+  }
+
+  .hello-text {
+    font-size: clamp(2.5rem, 14vw, 5rem);
+  }
+
+  .hello-sub {
+    font-size: 0.75rem;
+    letter-spacing: 0.12em;
+    text-align: center;
+    padding: 0 1rem;
+  }
+}
+
+/* Extra small devices (<= 380px) */
+@media (max-width: 380px) {
+  .nav-logo span {
+    display: none;
+  }
+  
+  .skills-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .about-stats {
+    grid-template-columns: 1fr;
   }
 }

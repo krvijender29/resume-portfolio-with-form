@@ -1,6 +1,41 @@
 // SCRIPT.JS - Interactivity & Visual Effects for Vijender Singh's Portfolio
 
 document.addEventListener('DOMContentLoaded', () => {
+  // 0. HELLO INTRO GREETING ANIMATION
+  const helloOverlay = document.getElementById('hello-overlay');
+  const helloBar = document.getElementById('hello-accent-bar');
+  const helloText = document.getElementById('hello-text');
+  const helloSub = document.getElementById('hello-sub');
+
+  if (helloOverlay) {
+    setTimeout(() => {
+      if (helloBar) {
+        helloBar.style.opacity = '1';
+        helloBar.style.transform = 'scaleX(1)';
+      }
+    }, 150);
+
+    setTimeout(() => {
+      if (helloText) {
+        helloText.style.opacity = '1';
+        helloText.style.transform = 'translateY(0)';
+      }
+    }, 350);
+
+    setTimeout(() => {
+      if (helloSub) {
+        helloSub.style.opacity = '1';
+      }
+    }, 650);
+
+    setTimeout(() => {
+      helloOverlay.style.opacity = '0';
+      setTimeout(() => {
+        helloOverlay.style.display = 'none';
+      }, 800);
+    }, 2100);
+  }
+
   // 1. CUSTOM CURSOR
   const cursor = document.getElementById('cursor');
   const ring = document.getElementById('cursorRing');
@@ -28,7 +63,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Hover expansion on interactive elements
   const hoverElements = document.querySelectorAll(
-    'a, button, .skill-card, .project-card, .cert-card, .stat, .btn-primary, .btn-ghost, .contact-link'
+    'a, button, .skill-card, .project-card, .hobby-card, .stat, .btn-primary, .btn-ghost, .contact-link'
   );
 
   hoverElements.forEach((el) => {
@@ -120,7 +155,7 @@ document.addEventListener('DOMContentLoaded', () => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
             entry.target.querySelectorAll('.skill-bar-fill').forEach((bar) => {
-              const targetWidth = bar.style.width;
+              const targetWidth = bar.getAttribute('data-width') || bar.style.width;
               bar.style.width = '0';
               setTimeout(() => {
                 bar.style.width = targetWidth;
@@ -165,11 +200,27 @@ document.addEventListener('DOMContentLoaded', () => {
       menuToggle.textContent = navList.classList.contains('active') ? '✕' : '☰';
     });
 
+    // Close menu when clicking on a link
     navList.querySelectorAll('a').forEach((link) => {
       link.addEventListener('click', () => {
         navList.classList.remove('active');
         if (menuToggle) menuToggle.textContent = '☰';
       });
     });
+
+    // Close menu when clicking anywhere outside
+    document.addEventListener('click', (e) => {
+      if (navList.classList.contains('active') && !navList.contains(e.target) && !menuToggle.contains(e.target)) {
+        navList.classList.remove('active');
+        if (menuToggle) menuToggle.textContent = '☰';
+      }
+    });
   }
+
+  // Welcome console message
+  console.log(
+    "%c Vijender Singh %c B.Tech Student in AI & Data Science | Portfolio Ready ",
+    "background: #e63946; color: #fff; font-weight: bold; padding: 4px 8px; border-radius: 3px 0 0 3px;",
+    "background: #1a1a2e; color: #f4a261; padding: 4px 8px; border-radius: 0 3px 3px 0;"
+  );
 });
