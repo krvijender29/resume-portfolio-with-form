@@ -1,531 +1,323 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Vijender Singh — Data Analyst</title>
-<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='12' fill='%23e63946'/><text x='50' y='68' font-family='Arial Black,sans-serif' font-size='42' font-weight='900' text-anchor='middle' fill='white'>SA</text></svg>">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:ital,wght@0,300;0,400;1,300&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vijender Singh — Data Analyst | Portfolio</title>
+  <meta name="description" content="Portfolio of Vijender Singh — B.Tech Student in Artificial Intelligence & Data Science based in Jaipur, India. Specializing in Python, SQL, Pandas, Streamlit, and Data Analytics.">
+  
+  <!-- FAVICON -->
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='16' fill='%23e63946'/><text x='50' y='68' font-family='Arial Black,sans-serif' font-size='44' font-weight='900' text-anchor='middle' fill='white'>VS</text></svg>">
+  
+  <!-- GOOGLE FONTS -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:ital,wght@0,300;0,400;0,500;1,300&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+  
+  <!-- STYLESHEET -->
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-<div class="cursor" id="cursor"></div>
-<div class="cursor-ring" id="cursorRing"></div>
+  <!-- CUSTOM CURSOR -->
+  <div class="cursor" id="cursor"></div>
+  <div class="cursor-ring" id="cursorRing"></div>
 
-<!-- NAV -->
-<nav>
-  <a class="nav-logo" href="#">VS</a>
-  <div style="display:flex; align-items:center; gap:2rem;">
-  <ul class="nav-links">
-    <li><a href="#about">About</a></li>
-    <li><a href="#skills">Skills</a></li>
-    <li><a href="#qualifications">Qualifications</a></li>
-    <li><a href="#projects">Projects</a></li>
-    <li><a href="#data-journey">My Data Journey</a></li>
-    <li><a href="#contact">Contact</a></li>
-  </ul>
-  </div>
-</nav>
+  <!-- CURSOR TRAIL CANVAS -->
+  <canvas id="trail-canvas"></canvas>
 
-<!-- HERO -->
-<section class="hero">
-  <div class="hero-grid-bg"></div>
-  <div class="hero-tag">Data Analyst · Open to Intership · Jaipur RJ</div>
-  <h1 class="hero-name">
-    Vijender<br>
-    <span class="line2">Singh</span>
-  </h1>
-  <p class="hero-subtitle">
-    Building with code, learning with curiosity —<br>
-    <em>Innovation</em> is the destination.
-  </p>
-  <div class="hero-cta">
-    <a href="#contact" class="btn-primary">Let's Talk</a>
-    <a href="./Vijender_Singh_Resume.pdf" download="Vijender_Singh_resume.pdf" class="btn-download">⬇ Download Resume</a>
-  </div>
-  <div class="hero-scroll">Scroll to explore</div>
-  <div class="hero-location">Jaipur RJ, India</span></div>
-</section>
+  <!-- NAVIGATION -->
+  <nav>
+    <a class="nav-logo" href="#">
+      VS <span>/ VIJENDER SINGH</span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="#about">About</a></li>
+      <li><a href="#skills">Skills</a></li>
+      <li><a href="#qualifications">Qualifications</a></li>
+      <li><a href="#projects">Projects</a></li>
+      <li><a href="#certs">Certifications</a></li>
+      <li><a href="#contact" class="nav-action-btn">Contact</a></li>
+    </ul>
+    <button class="mobile-menu-toggle" aria-label="Toggle Navigation Menu">☰</button>
+  </nav>
 
-<!-- MARQUEE -->
-<div class="marquee-wrap">
-  <div class="marquee">
-    <div class="marquee-item"><span>★</span> Power BI</div>
-    <div class="marquee-item"><span>★</span> Python · Pandas · NumPy · Streamlit</div>
-    <div class="marquee-item"><span>★</span> SQL · ETL · Data Modeling</div>
-    <div class="marquee-item"><span>★</span> Tableau · Excel · Git</div>
-    <div class="marquee-item"><span>★</span> Power BI</div>
-    <div class="marquee-item"><span>★</span> Python · Pandas · NumPy · Streamlit</div>
-    <div class="marquee-item"><span>★</span> SQL · ETL · Data Modeling</div>
-    <div class="marquee-item"><span>★</span> Tableau · Excel · Git</div>
-  </div>
-</div>
-
-<!-- ABOUT -->
-<section class="about" id="about">
-  <div class="about-left fade-up">
-    <div class="about-photo-wrap">
-      <img src="./WhatsApp Image 2026-05-24 at 7.38.13 AM.jpeg" alt="Profile Photo" class="about-photo">
-      <div class="about-photo-accent"></div>
-    </div>
-    <div class="section-label">About me</div>
-    <h2 class="about-heading">
-      Self-taught.<br>
-      <em>Curious.</em><br>
-      Future-bound.
-    </h2>
-    <div class="about-stats">
-  <div class="stat">
-    <div class="stat-num">B.Tech</div>
-    <div class="stat-label">AI & Data Science</div>
-  </div>
-
-  <div class="stat">
-    <div class="stat-num">4</div>
-    <div class="stat-label">Projects Built</div>
-  </div>
-
-  <div class="stat">
-    <div class="stat-num">GitHub</div>
-    <div class="stat-label">Open Source</div>
-  </div>
-
-  <div class="stat">
-    <div class="stat-num">2025</div>
-    <div class="stat-label">Learning & Building</div>
-  </div>
-</div>
-  </div>
-  <div class="about-right fade-up">
-  <p class="about-text">
-    AI & Data Science student with a <strong>curious mind</strong> and a passion for turning ideas into practical solutions — through code, data, and continuous learning. Started from the basics and built my skills through <strong>self-learning, projects, and experimentation</strong>.
-  </p>
-
-  <p class="about-text">
-    Currently pursuing my <strong>B.Tech in AI & Data Science</strong>, exploring Python, SQL, web development, data analysis, and machine learning. I enjoy building projects that help me understand technology beyond just theory.
-  </p>
-
-  <p class="about-text">
-    Outside of coding — <strong>always learning, experimenting, and building</strong>. I believe every project is an opportunity to learn something new. The goal isn't just to write code. It's to <strong>build something meaningful.</strong>
-  </p>
-
-  <div class="about-tags">
-    <span class="tag">Python</span>
-    <span class="tag">SQL</span>
-    <span class="tag">C++</span>
-    <span class="tag">HTML</span>
-    <span class="tag">CSS</span>
-    <span class="tag">JavaScript</span>
-    <span class="tag">Data Science</span>
-    <span class="tag">AI/ML</span>
-  </div>
-</div>
-
-</section>
-
-<!-- SKILLS -->
-<section class="skills" id="skills">
-  <div class="skills-header fade-up">
-    <div>
-      <div class="section-label">Technical Arsenal</div>
-      <h2 class="skills-heading">Skills &<br>Tools</h2>
-    </div>
-  </div>
-
-  <div class="skills-grid fade-up">
-
-    <div class="skill-card">
-      <div class="skill-icon">📊</div>
-      <div class="skill-name">Power BI</div>
-      <div class="skill-level">Dashboards · Power Query · RLS</div>
-      <div class="skill-bar">
-        <div class="skill-bar-fill" style="width:92%"></div>
-      </div>
-    </div>
-
-    <div class="skill-card">
-      <div class="skill-icon">🗄️</div>
-      <div class="skill-name">SQL</div>
-      <div class="skill-level">Queries · Joins · CTEs · Window Functions</div>
-      <div class="skill-bar">
-        <div class="skill-bar-fill" style="width:88%"></div>
-      </div>
-    </div>
-
-    <div class="skill-card">
-      <div class="skill-icon">📋</div>
-      <div class="skill-name">Excel</div>
-      <div class="skill-level">Pivot Tables · XLOOKUP · Power Query · Modeling</div>
-      <div class="skill-bar">
-        <div class="skill-bar-fill" style="width:90%"></div>
-      </div>
-    </div>
-
-    <div class="skill-card">
-      <div class="skill-icon">🐍</div>
-      <div class="skill-name">Python</div>
-      <div class="skill-level">Pandas · NumPy · Data Cleaning · Analysis</div>
-      <div class="skill-bar">
-        <div class="skill-bar-fill" style="width:80%"></div>
-      </div>
-    </div>
-
-    <div class="skill-card">
-      <div class="skill-icon">⚡</div>
-      <div class="skill-name">Power Query</div>
-      <div class="skill-level">M Language · Data Cleaning · Transformation</div>
-      <div class="skill-bar">
-        <div class="skill-bar-fill" style="width:88%"></div>
-      </div>
-    </div>
-
-    <div class="skill-card">
-      <div class="skill-icon">📈</div>
-      <div class="skill-name">Data Visualization</div>
-      <div class="skill-level">KPIs · Dashboards · Business Insights · Reporting</div>
-      <div class="skill-bar">
-        <div class="skill-bar-fill" style="width:90%"></div>
-      </div>
-    </div>
-
-    <div class="skill-card">
-      <div class="skill-icon">🧹</div>
-      <div class="skill-name">Data Cleaning</div>
-      <div class="skill-level">Data Preparation · Transformation · Validation</div>
-      <div class="skill-bar">
-        <div class="skill-bar-fill" style="width:85%"></div>
-      </div>
-    </div>
-
-    <div class="skill-card">
-      <div class="skill-icon">🔀</div>
-      <div class="skill-name">Git & GitHub</div>
-      <div class="skill-level">Version Control · Collaboration · Projects</div>
-      <div class="skill-bar">
-        <div class="skill-bar-fill" style="width:78%"></div>
-      </div>
-    </div>
-
-  </div>
-</section>
-
-<!-- QUALIFICATIONS -->
-<section class="qualifications" id="qualifications">
-  <div class="section-label fade-up">Education</div>
-  <h2 class="exp-heading fade-up">Qualifications</h2>
-
-  <div class="timeline">
-
-    <!-- B.Tech -->
-    <div class="exp-item fade-up">
-      <div class="exp-meta">
-        <span class="exp-date">2024 – 2028</span>
-        <span class="exp-badge">Pursuing</span>
-      </div>
-
-      <div class="exp-role">B.Tech in Artificial Intelligence & Data Science</div>
-      <div class="exp-company">
-        Rajasthan Institute of Engineering and Technology · Jaipur, Rajasthan
-      </div>
-
-      <ul class="exp-bullets">
-        <li>Specialization in Artificial Intelligence & Data Science</li>
-        <li>Current CGPA: 8.04/10</li>
-        <li>Building practical skills in Python, SQL, Data Analysis, Machine Learning, and Business Intelligence</li>
-      </ul>
-    </div>
-
-
-    <!-- 12th -->
-    <div class="exp-item fade-up">
-      <div class="exp-meta">
-        <span class="exp-date">12th 2024</span>
-      </div>
-
-      <div class="exp-role">Senior Secondary — Class XII</div>
-      <div class="exp-company">
-        SWAMI VIVEKANANDA GOVT. MODEL SCHOOL · SURATGARH, RAJASTHAN
-      </div>
-
-      <ul class="exp-bullets">
-        <li>Senior Secondary Education</li>
-        <li>Percentage: 60.8%</li>
-        <li>Stream: PCM</li>
-      </ul>
-    </div>
-
-
-    <!-- 10th -->
-    <div class="exp-item fade-up">
-      <div class="exp-meta">
-        <span class="exp-date">10th 2022</span>
-      </div>
-
-      <div class="exp-role">Secondary — Class X</div>
-      <div class="exp-company">
-        SWAMI VIVEKANANDA GOVT. MODEL SCHOOL · SURATGARH, RAJASTHAN
-      </div>
-
-      <ul class="exp-bullets">
-        <li>Secondary Education</li>
-        <li>Percentage: 74.6%</li>
-      </ul>
-    </div>
-
-  </div>
-</section>
-
-<!-- PROJECTS -->
-<section class="projects" id="projects">
-  <div class="projects-header fade-up">
-    <div class="section-label">What I've Built</div>
-    <h2 class="projects-heading">Key Projects</h2>
-  </div>
-  <div class="projects-grid">
-    <div class="project-card fade-up">
-      <div class="project-num">01 / PROJECT</div>
-      <a href="https://amazon-sales-analysisdashboard-3ukwibdumnb2mcviccxrxp.streamlit.app/" target="_blank" class="project-arrow">↗</a>
-      <h3 class="project-title">Amazon Sales Analysis Dashboard</h3>
-      <p class="project-desc">Built an interactive Streamlit dashboard for Amazon sales analysis, using Pandas for data cleaning, transformation, and preprocessing of 1,000+ records. Performed EDA, statistical and trend analysis across sales, profit, customer segments, and products. Developed 10+ dynamic Plotly visualizations covering regional performance, category trends, top products, and KPI tracking.</p>
-      <div class="project-stack">
-        <span class="stack-tag">Python</span>
-        <span class="stack-tag">Streamlit</span>
-        <span class="stack-tag">Numpy</span>
-        <span class="stack-tag">Pandas</span>
-        <span class="stack-tag">Plotly</span>
-      </div>
-    </div>
-    <div class="project-card fade-up">
-      <div class="project-num">02 / PROJECT</div>
-      <a href="https://tuttm93plpeaiajgsmo6bq.streamlit.app/" target="_blank" class="project-arrow">↗</a>
-      <h3 class="project-title">Railway Train Analysis Dashboard</h3>
-      <p class="project-desc">Built an interactive Streamlit dashboard for railway train, station, and schedule analysis. Cleaned and processed raw JSON datasets using reusable data-loading modules and data-wrangling techniques. Added real-time filters and 8+ dynamic Plotly visualizations to analyze train routes, stations, and schedules, enabling clear and data-driven reporting.</p>
-      <div class="project-stack">
-        <span class="stack-tag">Python</span>
-        <span class="stack-tag">Pandas</span>
-        <span class="stack-tag">Streamlit</span>
-        <span class="stack-tag">Plotly</span>
-        <span class="stack-tag">NumPy</span>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- CERTS -->
-<section class="certs" id="certs">
-  <div class="section-label fade-up">Credentials</div>
-  <h2 class="certs-heading fade-up">Certifications</h2>
-  <div class="certs-grid fade-up">
-    <div class="cert-card">
-      <div class="cert-icon">💼</div>
-      <div>
-        <div class="cert-name">Deloitte Australia — Data Analytics Job Simulation</div>
-        <div class="cert-issuer">Forage · Data Analytics · Tableau · Excel · Business Insights</div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- Hobby -->
-<section class="hobby">
-  <div class="section-label fade-up">Beyond Work</div>
-  <h2 class="hobby-heading fade-up">Hobbies &<br>Interests</h2>
-
-  <div class="hobby-grid fade-up">
-
-    <div class="lang-card">
-      <div class="lang-name">💻 Coding</div>
-      <div class="lang-level">Building & Experimenting</div>
-      <div class="lang-note">Exploring new technologies and personal projects</div>
-    </div>
-
-    <div class="lang-card">
-      <div class="lang-name">📊 Data Analytics</div>
-      <div class="lang-level">Learning & Exploring</div>
-      <div class="lang-note">Working with data and discovering meaningful insights</div>
-    </div>
-
-    <div class="lang-card">
-      <div class="lang-name">🚀 Technology</div>
-      <div class="lang-level">Curious Learner</div>
-      <div class="lang-note">Exploring new tools, technologies and ideas</div>
-    </div>
-
-  </div>
-</section>
-
-
-<!-- MY DATA JOURNEY -->
-<section class="my-data" id="data-journey">
-  <div class="my-data-inner">
-
-    <div class="why-left fade-up">
-      <div class="section-label">The Journey So Far</div>
-
-      <h2 class="why-heading">
-        My <em>Data Journey</em>
-      </h2>
-
-      <p class="why-text">
-        My journey into data started with <strong>curiosity — understanding how
-        raw information can be transformed into something meaningful.</strong>
-      </p>
-
-      <p class="why-text">
-        As an <strong>Artificial Intelligence & Data Science undergraduate</strong>,
-        I started building my foundation in Python, SQL, data analysis, and
-        visualization. Over time, learning became more practical through
-        hands-on projects and real datasets.
-      </p>
-
-      <p class="why-text">
-        I enjoy the process of taking <strong>messy, unstructured data</strong>,
-        cleaning and exploring it, finding patterns, and turning those patterns
-        into clear visual stories and actionable insights.
-      </p>
-
-      <p class="why-text">
-        From building <strong>Streamlit dashboards</strong> to working with
-        Pandas, NumPy, Plotly, SQL, and Power BI, every project has helped me
-        understand not just how to analyze data, but <em>why the analysis
-        matters.</em>
-      </p>
-
-      <p class="why-text">
-        <strong>I'm still learning, still building, and still curious.</strong>
-        That's what keeps me moving forward.
-      </p>
-    </div>
-
-
-    <div class="why-right fade-up">
-      <div class="why-cards">
-
-        <div class="why-card">
-          <div class="why-card-icon">🐍</div>
-          <div class="why-card-title">Learning</div>
-          <div class="why-card-desc">
-            Building a strong foundation in Python, SQL, data analysis,
-            statistics, and data visualization.
-          </div>
-        </div>
-
-        <div class="why-card">
-          <div class="why-card-icon">🧹</div>
-          <div class="why-card-title">Data to Insight</div>
-          <div class="why-card-desc">
-            Cleaning, transforming, and exploring raw datasets to uncover
-            meaningful patterns and trends.
-          </div>
-        </div>
-
-        <div class="why-card">
-          <div class="why-card-icon">📊</div>
-          <div class="why-card-title">Visual Storytelling</div>
-          <div class="why-card-desc">
-            Turning analysis into interactive dashboards and visualizations
-            that make complex data easier to understand.
-          </div>
-        </div>
-
-        <div class="why-card">
-          <div class="why-card-icon">🚀</div>
-          <div class="why-card-title">Keep Building</div>
-          <div class="why-card-desc">
-            Continuously building real-world projects, learning new tools,
-            and improving as a data professional.
-          </div>
-        </div>
-
-      </div>
-    </div>
-
-  </div>
-</section>
-
-<!-- CONTACT -->
-<section class="contact" id="contact">
-  <div class="contact-bg"></div>
-  <div class="contact-inner">
-    <div class="contact-tag fade-up">Open to opportunities</div>
-    <h2 class="contact-heading fade-up">
-      Let's build<br>
-      something<br>
-      <span class="highlight">together.</span>
-    </h2>
-    <p class="contact-subtext fade-up">
-      Open to Data Analyst internships. Ready to work with real data, solve real problems, and create measurable impact. Not just seeking experience — <strong>ready to earn it.</strong>
+  <!-- HERO SECTION -->
+  <section class="hero">
+    <div class="hero-grid-bg"></div>
+    <div class="hero-tag">Data Analyst · Open to Internships · Jaipur, India 🇮🇳</div>
+    <h1 class="hero-name">
+      Vijender<br>
+      <span class="line2">Singh</span>
+    </h1>
+    <p class="hero-subtitle">
+      Building with code, learning with curiosity —<br>
+      <em>Innovation</em> is the destination.
     </p>
-    <div class="contact-links fade-up">
-      <a href="https://www.linkedin.com/in/vijender-singh-0729b2338/" target="_blank" class="contact-link">
-        <span>in</span> LinkedIn
-      </a>
-      <a href="https://github.com/krvijender29" target="_blank" class="contact-link">
-        <span>◈</span> GitHub
-      </a>
-      <a href="mailto:svijender130@gmail.com" class="contact-link">
-        <span>@</span> Email Me
-      </a>
+    <div class="hero-cta">
+      <a href="#contact" class="btn-primary">Let's Talk</a>
+      <a href="#projects" class="btn-ghost">View Projects <span>↗</span></a>
+      <a href="https://github.com/krvijender29" target="_blank" rel="noopener noreferrer" class="btn-ghost">GitHub <span>◈</span></a>
+    </div>
+    <div class="hero-scroll">Scroll to explore</div>
+    <div class="hero-location">Jaipur, Rajasthan, India</div>
+  </section>
+
+  <!-- MARQUEE TICKER -->
+  <div class="marquee-wrap">
+    <div class="marquee">
+      <div class="marquee-item"><span>★</span> Python · SQL · Data Modeling</div>
+      <div class="marquee-item"><span>★</span> Streamlit · Plotly · Interactive Dashboards</div>
+      <div class="marquee-item"><span>★</span> Pandas · NumPy · Exploratory Data Analysis</div>
+      <div class="marquee-item"><span>★</span> Power BI · KPI Design · Business Reporting</div>
+      <div class="marquee-item"><span>★</span> Git & GitHub · Version Control</div>
+      <div class="marquee-item"><span>★</span> Python · SQL · Data Modeling</div>
+      <div class="marquee-item"><span>★</span> Streamlit · Plotly · Interactive Dashboards</div>
+      <div class="marquee-item"><span>★</span> Pandas · NumPy · Exploratory Data Analysis</div>
     </div>
   </div>
-</section>
 
-<!-- FOOTER -->
-<footer>
-  <div class="footer-left">© 2026 VIJENDER SINGH — Data Analyst</div>
-  <div class="footer-right">Jaipur, Rajasthan, India</div>
-</footer>
+  <!-- ABOUT -->
+  <section class="about" id="about">
+    <div class="about-left fade-up">
+      <div class="about-photo-wrap">
+        <img src="./profile.jpeg" alt="Vijender Singh" class="about-photo" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+        <div class="about-avatar" style="display: none;">
+          <div class="about-avatar-initials">VS</div>
+          <div class="about-avatar-sub">AI & DATA SCIENCE</div>
+        </div>
+        <div class="about-photo-accent"></div>
+      </div>
+      <div class="section-label">About me</div>
+      <h2 class="about-heading">
+        Self-taught.<br>
+        <em>Curious.</em><br>
+        Future-bound.
+      </h2>
+      <div class="about-stats">
+        <div class="stat">
+          <div class="stat-num">B.Tech</div>
+          <div class="stat-label">AI & Data Science</div>
+        </div>
+        <div class="stat">
+          <div class="stat-num">8.04</div>
+          <div class="stat-label">Current CGPA</div>
+        </div>
+        <div class="stat">
+          <div class="stat-num">2+</div>
+          <div class="stat-label">Live Data Apps</div>
+        </div>
+        <div class="stat">
+          <div class="stat-num">2024–28</div>
+          <div class="stat-label">Academic Batch</div>
+        </div>
+      </div>
+    </div>
+    <div class="about-right fade-up">
+      <p class="about-text">
+        AI & Data Science student with a <strong>curious mind</strong> and a passion for turning ideas into practical solutions — through code, data, and continuous learning.
+      </p>
+      <p class="about-text">
+        Currently pursuing my <strong>B.Tech in AI & Data Science</strong>, exploring Python, SQL, web development, data analysis, and machine learning. I enjoy building projects that help me understand technology beyond just theory.
+      </p>
+      <p class="about-text">
+        Whether it's parsing messy JSON payloads into clean DataFrames, engineering real-time data filters, or deploying interactive dashboards on the cloud, I enjoy turning raw data into clear, intuitive insights.
+      </p>
+      <div class="about-tags">
+        <span class="tag">Python</span>
+        <span class="tag">SQL</span>
+        <span class="tag">Pandas</span>
+        <span class="tag">NumPy</span>
+        <span class="tag">Streamlit</span>
+        <span class="tag">Plotly</span>
+        <span class="tag">Power BI</span>
+        <span class="tag">Git & GitHub</span>
+      </div>
+    </div>
+  </section>
 
-<script>
+  <!-- SKILLS -->
+  <section class="skills" id="skills">
+    <div class="skills-header fade-up">
+      <div>
+        <div class="section-label">Technical Arsenal</div>
+        <h2 class="skills-heading">Skills &<br>Tools</h2>
+      </div>
+    </div>
+    <div class="skills-grid fade-up">
+      <div class="skill-card">
+        <div class="skill-icon">🐍</div>
+        <div class="skill-name">Python</div>
+        <div class="skill-level">Pandas · NumPy · Analysis</div>
+        <div class="skill-bar"><div class="skill-bar-fill" style="width:85%"></div></div>
+      </div>
+      <div class="skill-card">
+        <div class="skill-icon">🗄️</div>
+        <div class="skill-name">SQL</div>
+        <div class="skill-level">Queries · Joins · Aggregations</div>
+        <div class="skill-bar"><div class="skill-bar-fill" style="width:80%"></div></div>
+      </div>
+      <div class="skill-card">
+        <div class="skill-icon">📊</div>
+        <div class="skill-name">Power BI</div>
+        <div class="skill-level">Dashboards · Data Modeling · KPIs</div>
+        <div class="skill-bar"><div class="skill-bar-fill" style="width:80%"></div></div>
+      </div>
+      <div class="skill-card">
+        <div class="skill-icon">⚡</div>
+        <div class="skill-name">Streamlit</div>
+        <div class="skill-level">Interactive Apps · Cloud Deploy</div>
+        <div class="skill-bar"><div class="skill-bar-fill" style="width:88%"></div></div>
+      </div>
+      <div class="skill-card">
+        <div class="skill-icon">📈</div>
+        <div class="skill-name">Plotly & Viz</div>
+        <div class="skill-level">Dynamic Charts · EDA</div>
+        <div class="skill-bar"><div class="skill-bar-fill" style="width:85%"></div></div>
+      </div>
+      <div class="skill-card">
+        <div class="skill-icon">📋</div>
+        <div class="skill-name">MS Excel</div>
+        <div class="skill-level">Pivot Tables · Formulas · Modeling</div>
+        <div class="skill-bar"><div class="skill-bar-fill" style="width:82%"></div></div>
+      </div>
+      <div class="skill-card">
+        <div class="skill-icon">🐙</div>
+        <div class="skill-name">Git & GitHub</div>
+        <div class="skill-level">Version Control · Collaboration</div>
+        <div class="skill-bar"><div class="skill-bar-fill" style="width:80%"></div></div>
+      </div>
+    </div>
+  </section>
 
-</script>
+  <!-- QUALIFICATIONS -->
+  <section class="qualifications" id="qualifications">
+    <div class="section-label fade-up">Academic Journey</div>
+    <h2 class="qual-heading fade-up">Qualifications</h2>
+    <div class="timeline">
+      <div class="qual-item fade-up">
+        <div class="qual-meta">
+          <span class="qual-date">2024 – 2028</span>
+          <span class="qual-badge">Pursuing</span>
+        </div>
+        <div class="qual-title">B.Tech in Artificial Intelligence & Data Science</div>
+        <div class="qual-inst">Rajasthan Institute of Engineering and Technology · Jaipur, Rajasthan</div>
+        <p class="qual-desc">Building practical skills in Python, SQL, Data Analysis, Machine Learning, and Business Intelligence. Current CGPA: 8.04/10.</p>
+      </div>
 
-<!-- HELLO GREETING -->
-<div id="hola-overlay" style="
-  position:fixed; inset:0; z-index:9999;
-  display:flex; flex-direction:column; align-items:center; justify-content:center;
-  background: #1a1a2e;
-  pointer-events:none;
-  transition: opacity 0.8s ease;
-">
-  <div id="hola-flag" style="
-    display:flex; width:180px; height:10px; margin-bottom:2rem; overflow:hidden;
-    opacity:0; transform:scaleX(0);
-    transition: opacity 0.5s ease 0.3s, transform 0.5s ease 0.3s;
-  ">
-    <div style="flex:1; background:#c60b1e;"></div>
-    <div style="flex:2; background:#f1bf00;"></div>
-    <div style="flex:1; background:#c60b1e;"></div>
-  </div>
-  <div id="hola-text" style="
-    font-family: Syne, sans-serif;
-    font-size: clamp(3rem, 10vw, 7rem);
-    font-weight: 800;
-    color: #fff;
-    letter-spacing: -0.03em;
-    opacity: 0;
-    transform: translateY(20px);
-    transition: opacity 0.6s ease 0.5s, transform 0.6s ease 0.5s;
-  ">Hello!</div>
-  <div id="hola-sub" style="
-    font-family: DM Mono, monospace;
-    font-size: 0.9rem;
-    color: rgba(255,255,255,0.4);
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    margin-top: 1rem;
-    opacity: 0;
-    transition: opacity 0.6s ease 0.9s;
-  ">Welcome to Vijender's world</div>
-</div>
+      <div class="qual-item fade-up">
+        <div class="qual-meta">
+          <span class="qual-date">2024</span>
+          <span class="qual-badge">Completed</span>
+        </div>
+        <div class="qual-title">Senior Secondary — Class XII (PCM)</div>
+        <div class="qual-inst">Swami Vivekanand Govt. Model School · Suratgarh, Rajasthan</div>
+        <p class="qual-desc">Percentage: 60.8% | Stream: Physics, Chemistry, Mathematics.</p>
+      </div>
 
-<!-- CURSOR TRAIL CANVAS -->
-<canvas id="trail-canvas" style="
-  position:fixed; inset:0; pointer-events:none; z-index:9997;
-"></canvas>
+      <div class="qual-item fade-up">
+        <div class="qual-meta">
+          <span class="qual-date">2022</span>
+          <span class="qual-badge">Completed</span>
+        </div>
+        <div class="qual-title">Secondary — Class X</div>
+        <div class="qual-inst">Swami Vivekanand Govt. Model School · Suratgarh, Rajasthan</div>
+        <p class="qual-desc">Percentage: 74.6%.</p>
+      </div>
+    </div>
+  </section>
 
-<script src="script.js"></script>
+  <!-- PROJECTS -->
+  <section class="projects" id="projects">
+    <div class="projects-header fade-up">
+      <div class="section-label">What I've Built</div>
+      <h2 class="projects-heading">Key Projects</h2>
+    </div>
+    <div class="projects-grid">
+      <div class="project-card fade-up">
+        <div>
+          <div class="project-num">01 / DASHBOARD APP</div>
+          <h3 class="project-title">Amazon Sales Analysis Dashboard</h3>
+          <ul class="project-desc-list">
+            <li>Interactive Streamlit dashboard analyzing sales, profits, customer segments, and products.</li>
+            <li>Cleaned and preprocessed 1,000+ records with Pandas for exploratory data analysis.</li>
+            <li>10+ dynamic Plotly visualizations tracking regional trends, category performance, and KPIs.</li>
+          </ul>
+          <div class="project-stack">
+            <span class="stack-tag">Python</span>
+            <span class="stack-tag">Streamlit</span>
+            <span class="stack-tag">Pandas</span>
+            <span class="stack-tag">Plotly</span>
+          </div>
+        </div>
+        <div>
+          <a href="https://amazon-sales-analysisdashboard-3ukwibdumnb2mcviccxrxp.streamlit.app/" target="_blank" rel="noopener noreferrer" class="project-link-btn">Live Dashboard <span>↗</span></a>
+        </div>
+      </div>
+
+      <div class="project-card fade-up">
+        <div>
+          <div class="project-num">02 / DASHBOARD APP</div>
+          <h3 class="project-title">Railway Train Analysis Dashboard</h3>
+          <ul class="project-desc-list">
+            <li>Interactive dashboard analyzing railway trains, stations, and schedule data.</li>
+            <li>Cleaned and wrangled raw JSON datasets into structured modules.</li>
+            <li>Real-time filters and 8+ dynamic Plotly charts for route and timetable insights.</li>
+          </ul>
+          <div class="project-stack">
+            <span class="stack-tag">Python</span>
+            <span class="stack-tag">Pandas</span>
+            <span class="stack-tag">Streamlit</span>
+            <span class="stack-tag">Plotly</span>
+          </div>
+        </div>
+        <div>
+          <a href="https://tuttm93plpeaiajgsmo6bq.streamlit.app/" target="_blank" rel="noopener noreferrer" class="project-link-btn">Live Dashboard <span>↗</span></a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CERTIFICATIONS -->
+  <section class="certs" id="certs">
+    <div class="section-label fade-up">Credentials</div>
+    <h2 class="certs-heading fade-up">Certifications</h2>
+    <div class="certs-grid fade-up">
+      <div class="cert-card">
+        <div class="cert-icon">💼</div>
+        <div>
+          <div class="cert-name">Deloitte Australia — Data Analytics Job Simulation</div>
+          <div class="cert-issuer">Forage · Tableau · Excel · Forensic Technology & Data Analytics (2026)</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section class="contact" id="contact">
+    <div class="contact-bg"></div>
+    <div class="contact-inner">
+      <div class="contact-tag fade-up">Open to opportunities</div>
+      <h2 class="contact-heading fade-up">
+        Let's build<br>something<br><span class="highlight">together.</span>
+      </h2>
+      <p class="contact-subtext fade-up">
+        Open to Data Analyst internships. Ready to work with real data, solve real problems, and create measurable impact.
+      </p>
+      <div class="contact-links fade-up">
+        <a href="mailto:svijender130@gmail.com" class="contact-link"><span>@</span> Email Me</a>
+        <a href="https://www.linkedin.com/in/vijender-singh-0729b2338" target="_blank" rel="noopener noreferrer" class="contact-link"><span>in</span> LinkedIn</a>
+        <a href="https://github.com/krvijender29" target="_blank" rel="noopener noreferrer" class="contact-link"><span>◈</span> GitHub</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-left">© 2026 Vijender Singh — Data Analyst</div>
+    <div class="footer-right">Jaipur, Rajasthan, India</div>
+  </footer>
+
+  <script src="script.js"></script>
 </body>
 </html>
