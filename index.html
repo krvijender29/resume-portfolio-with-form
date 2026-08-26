@@ -1,675 +1,531 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Vijender Singh — AI & Data Science Portfolio</title>
-  <meta name="description" content="Vijender Singh — B.Tech student in AI & Data Science at RIET Jaipur. Interactive dashboards, machine learning pipelines, and modern software projects.">
-  <meta name="theme-color" content="#070b14">
-
-  <!-- Google Fonts: Plus Jakarta Sans, Inter, JetBrains Mono -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Plus+Jakarta+Sans:wght@500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
-
-  <link rel="stylesheet" href="style.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Vijender Singh — Data Analyst</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='12' fill='%23e63946'/><text x='50' y='68' font-family='Arial Black,sans-serif' font-size='42' font-weight='900' text-anchor='middle' fill='white'>SA</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:ital,wght@0,300;0,400;1,300&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-  <!-- Top Scroll Progress Bar -->
-  <div id="scroll-progress" class="scroll-progress-bar" aria-hidden="true"></div>
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
 
-  <!-- Ambient Glowing Background Orbs -->
-  <div class="ambient-glow glow-1" aria-hidden="true"></div>
-  <div class="ambient-glow glow-2" aria-hidden="true"></div>
-  <div class="ambient-glow glow-3" aria-hidden="true"></div>
+<!-- NAV -->
+<nav>
+  <a class="nav-logo" href="#">VS</a>
+  <div style="display:flex; align-items:center; gap:2rem;">
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#qualifications">Qualifications</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#data-journey">My Data Journey</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  </div>
+</nav>
 
-  <!-- Decorative Grid Backdrop -->
-  <div class="bg-grid" aria-hidden="true"></div>
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-grid-bg"></div>
+  <div class="hero-tag">Data Analyst · Open to Intership · Jaipur RJ</div>
+  <h1 class="hero-name">
+    Vijender<br>
+    <span class="line2">Singh</span>
+  </h1>
+  <p class="hero-subtitle">
+    Building with code, learning with curiosity —<br>
+    <em>Innovation</em> is the destination.
+  </p>
+  <div class="hero-cta">
+    <a href="#contact" class="btn-primary">Let's Talk</a>
+    <a href="./Vijender_Singh_Resume.pdf" download="Vijender_Singh_resume.pdf" class="btn-download">⬇ Download Resume</a>
+  </div>
+  <div class="hero-scroll">Scroll to explore</div>
+  <div class="hero-location">Jaipur RJ, India</span></div>
+</section>
 
-  <div id="top-announcer" class="sr-only" role="status" aria-live="polite"></div>
-
-  <!-- ==================== HEADER & NAVIGATION ==================== -->
-  <header class="site-header" id="site-header">
-    <div class="wrap header-inner">
-      <a href="#top" class="brand" aria-label="Vijender Singh Home">
-        <span class="brand-bracket">&lt;</span><span class="brand-letters">VS</span><span class="brand-dot">.</span><span class="brand-bracket">/&gt;</span>
-      </a>
-
-      <nav class="nav" id="nav">
-        <a href="#about" data-nav>About</a>
-        <a href="#timeline" data-nav>Timeline</a>
-        <a href="#skills" data-nav>Skills</a>
-        <a href="#projects" data-nav>Projects</a>
-        <a href="#hobbies" data-nav>Hobbies</a>
-        <a href="#contact" data-nav>Contact</a>
-        <a href="#contact" class="nav-cta-btn">
-          <span>Let's Talk</span>
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
-        </a>
-      </nav>
-
-      <button class="nav-toggle" id="nav-toggle" aria-label="Toggle navigation menu" aria-expanded="false" aria-controls="nav">
-        <span></span><span></span><span></span>
-      </button>
-    </div>
-  </header>
-
-  <main id="top">
-
-    <!-- ==================== HERO SECTION ==================== -->
-    <section class="hero" id="hero">
-      <div class="wrap hero-grid">
-        <div class="hero-copy">
-          
-          <div class="hero-status-pill reveal">
-            <span class="pulse-indicator">
-              <span class="pulse-core"></span>
-              <span class="pulse-ring"></span>
-            </span>
-            <span class="status-text">Available for Internships &amp; Projects</span>
-          </div>
-
-          <p class="eyebrow reveal">
-            <span class="eyebrow-tag">//</span> ARTIFICIAL INTELLIGENCE &amp; DATA SCIENCE
-          </p>
-
-          <h1 class="hero-title reveal">
-            Hi, I'm <span class="gradient-text">Vijender Singh</span>
-          </h1>
-
-          <p class="hero-sub reveal">
-            B.Tech student in <strong>Artificial Intelligence &amp; Data Science</strong> at RIET Jaipur.
-            I turn complex raw datasets into intuitive, high-performance dashboards that drive decisions — engineering clean software along the way.
-          </p>
-
-          <div class="hero-actions reveal">
-            <a href="#projects" class="btn btn-primary">
-              <span>Explore Projects</span>
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
-            </a>
-            <a href="#contact" class="btn btn-ghost">
-              <span>Get in Touch</span>
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
-            </a>
-          </div>
-
-          <div class="hero-quick-links reveal">
-            <a href="https://github.com/krvijender29" target="_blank" rel="noopener noreferrer" class="social-chip" title="GitHub Profile">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
-              <span>GitHub</span>
-            </a>
-            <a href="https://www.linkedin.com/in/vijender-singh-0729b2338" target="_blank" rel="noopener noreferrer" class="social-chip" title="LinkedIn Profile">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
-              <span>LinkedIn</span>
-            </a>
-            <span class="location-badge">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
-              <span>Jaipur, India</span>
-            </span>
-          </div>
-        </div>
-
-        <!-- Terminal Status Widget -->
-        <div class="hero-panel reveal" aria-hidden="false">
-          <div class="panel-head">
-            <div class="window-controls">
-              <span class="mac-dot mac-red"></span>
-              <span class="mac-dot mac-amber"></span>
-              <span class="mac-dot mac-green"></span>
-            </div>
-            <div class="panel-tab">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg>
-              <span>analytics_stream.py</span>
-            </div>
-            <div class="panel-badge">LIVE</div>
-          </div>
-
-          <div class="chart-container">
-            <div class="chart-header">
-              <span class="chart-title">Model Precision &amp; Query Rates</span>
-              <span class="chart-delta">+99.4% peak</span>
-            </div>
-            <svg class="hero-chart" viewBox="0 0 340 130" preserveAspectRatio="none" aria-hidden="true">
-              <defs>
-                <linearGradient id="tealGlow" x1="0%" y1="0%" x2="0%" y2="100%">
-                  <stop offset="0%" stop-color="#2dd4bf" stop-opacity="0.35"/>
-                  <stop offset="100%" stop-color="#2dd4bf" stop-opacity="0.0"/>
-                </linearGradient>
-                <linearGradient id="amberGlow" x1="0%" y1="0%" x2="0%" y2="100%">
-                  <stop offset="0%" stop-color="#f59e0b" stop-opacity="0.25"/>
-                  <stop offset="100%" stop-color="#f59e0b" stop-opacity="0.0"/>
-                </linearGradient>
-              </defs>
-              <line x1="0" y1="30" x2="340" y2="30" class="chart-grid"/>
-              <line x1="0" y1="65" x2="340" y2="65" class="chart-grid"/>
-              <line x1="0" y1="100" x2="340" y2="100" class="chart-grid"/>
-
-              <!-- Area fills -->
-              <path class="chart-area chart-area-amber" d="M0,105 C 40,95 60,80 90,82 C 120,84 140,60 170,58 C 200,56 220,65 250,50 C 280,36 300,40 340,28 L340,130 L0,130 Z" />
-              <path class="chart-area chart-area-teal" d="M0,90 C 30,88 55,70 85,68 C 115,66 130,75 160,70 C 195,64 210,45 240,42 C 270,39 295,48 340,35 L340,130 L0,130 Z" />
-
-              <!-- Smooth animated curve lines -->
-              <path class="chart-line chart-line-amber" d="M0,105 C 40,95 60,80 90,82 C 120,84 140,60 170,58 C 200,56 220,65 250,50 C 280,36 300,40 340,28" />
-              <path class="chart-line chart-line-teal" d="M0,90 C 30,88 55,70 85,68 C 115,66 130,75 160,70 C 195,64 210,45 240,42 C 270,39 295,48 340,35" />
-            </svg>
-          </div>
-
-          <ul class="stat-list">
-            <li class="stat-item">
-              <div class="stat-icon-wrap icon-teal">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 10v6M2 10l10-5 10 5-10 5z"></path><path d="M6 12v5c3 3 9 3 12 0v-5"></path></svg>
-              </div>
-              <div class="stat-text-wrap">
-                <span class="stat-num">2024–28</span>
-                <span class="stat-label">B.Tech, AI &amp; Data Science</span>
-              </div>
-            </li>
-            <li class="stat-item">
-              <div class="stat-icon-wrap icon-cyan">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><line x1="3" y1="9" x2="21" y2="9"></line><line x1="9" y1="21" x2="9" y2="9"></line></svg>
-              </div>
-              <div class="stat-text-wrap">
-                <span class="stat-num">2 Live</span>
-                <span class="stat-label">Production Dashboards</span>
-              </div>
-            </li>
-            <li class="stat-item">
-              <div class="stat-icon-wrap icon-amber">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 2 7 12 12 22 7 12 2"></polygon><polyline points="2 17 12 22 22 17"></polyline><polyline points="2 12 12 17 22 12"></polyline></svg>
-              </div>
-              <div class="stat-text-wrap">
-                <span class="stat-num">8+ Tools</span>
-                <span class="stat-label">Python &amp; ML Stack</span>
-              </div>
-            </li>
-            <li class="stat-item">
-              <div class="stat-icon-wrap icon-violet">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
-              </div>
-              <div class="stat-text-wrap">
-                <span class="stat-num">Jaipur</span>
-                <span class="stat-label">Rajasthan, India</span>
-              </div>
-            </li>
-          </ul>
-        </div>
-      </div>
-    </section>
-
-    <!-- ==================== ABOUT SECTION ==================== -->
-    <section class="section" id="about">
-      <div class="wrap">
-        <div class="about-grid">
-          <div class="about-media-col reveal">
-            <div class="image-card-wrapper">
-              <div class="image-card-border-glow"></div>
-              <div class="about-media">
-                <img src="./WhatsApp Image 2026-05-24 at 7.38.13 AM.jpeg"
-                     alt="Portrait of Vijender Singh"
-                     loading="lazy"
-                     width="380"
-                     height="380">
-                <div class="media-tag">
-                  <span class="dot dot-teal"></span> Open to Internships
-                </div>
-              </div>
-            </div>
-
-            <div class="about-pills-row">
-              <span class="about-mini-pill">⚡ Fast Learner</span>
-              <span class="about-mini-pill">📊 Data Analyst</span>
-              <span class="about-mini-pill">🛠️ Problem Solver</span>
-            </div>
-          </div>
-
-          <div class="about-copy reveal">
-            <p class="eyebrow">
-              <span class="eyebrow-tag">//</span> ABOUT ME
-            </p>
-            <h2 class="section-title">Curious about data, serious about finishing what I start.</h2>
-            <p class="lead-text">
-              I'm an Artificial Intelligence &amp; Data Science undergraduate at RIET Jaipur with an innate passion for software engineering, analytics architectures, and data storytelling.
-            </p>
-            <p>
-              I pick things up rapidly and prefer learning by building tangible, real-world tools rather than staying on the sidelines. Whether it's wrangling complex JSON datasets with Python &amp; Pandas or crafting performant web analytics applications in Streamlit and Plotly, I care deeply about precision, clarity, and clean design.
-            </p>
-            <p>
-              My goal is straightforward: sharpen my core software engineering and AI competencies, collaborate on impactful real-world systems, and forge a meaningful career in technology.
-            </p>
-
-            <div class="about-stats-strip">
-              <div class="about-stat-box">
-                <span class="stat-box-val">100%</span>
-                <span class="stat-box-lbl">Commitment to Craft</span>
-              </div>
-              <div class="about-stat-box">
-                <span class="stat-box-val">24/7</span>
-                <span class="stat-box-lbl">Drive to Learn</span>
-              </div>
-              <div class="about-stat-box">
-                <span class="stat-box-val">AI &amp; DS</span>
-                <span class="stat-box-lbl">Specialization</span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ==================== QUALIFICATIONS / TIMELINE ==================== -->
-    <section class="section section-alt" id="timeline">
-      <div class="wrap">
-        <div class="section-header-centered reveal">
-          <p class="eyebrow"><span class="eyebrow-tag">//</span> ACADEMIC JOURNEY</p>
-          <h2 class="section-title">Where I've studied so far</h2>
-          <p class="section-desc">My educational background and milestone achievements in science &amp; engineering.</p>
-        </div>
-
-        <ol class="timeline">
-          <li class="timeline-item reveal">
-            <div class="timeline-marker">01</div>
-            <div class="timeline-content-card">
-              <div class="timeline-header">
-                <div>
-                  <span class="timeline-year">2022</span>
-                  <h3 class="timeline-title">Class 10th (Secondary School)</h3>
-                </div>
-                <span class="timeline-score-badge">74.6%</span>
-              </div>
-              <p class="timeline-institution">Swami Vivekanand Govt. Model School, Suratgarh, Rajasthan</p>
-              <p class="timeline-details">Built strong foundations in mathematics and science, achieving 74.6% in the state board examinations.</p>
-            </div>
-          </li>
-
-          <li class="timeline-item reveal">
-            <div class="timeline-marker">02</div>
-            <div class="timeline-content-card">
-              <div class="timeline-header">
-                <div>
-                  <span class="timeline-year">2024</span>
-                  <h3 class="timeline-title">Class 12th · Non-Medical (PCM)</h3>
-                </div>
-                <span class="timeline-score-badge">60.8%</span>
-              </div>
-              <p class="timeline-institution">Swami Vivekanand Govt. Model School, Suratgarh, Rajasthan</p>
-              <p class="timeline-details">Completed Senior Secondary education with Physics, Chemistry, and Mathematics (PCM) specialization.</p>
-            </div>
-          </li>
-
-          <li class="timeline-item timeline-item-active reveal">
-            <div class="timeline-marker timeline-marker-active">03</div>
-            <div class="timeline-content-card timeline-card-active">
-              <div class="timeline-header">
-                <div>
-                  <span class="timeline-year">2024 – 2028</span>
-                  <h3 class="timeline-title">B.Tech, Artificial Intelligence &amp; Data Science</h3>
-                </div>
-                <span class="badge badge-pulse">In Progress</span>
-              </div>
-              <p class="timeline-institution">Rajasthan Institute of Engineering and Technology (RIET), Jaipur</p>
-              <p class="timeline-details">Pursuing comprehensive curriculum in Machine Learning, Statistical Analysis, Data Structures, Python Engineering, SQL Databases, and modern AI algorithms.</p>
-            </div>
-          </li>
-        </ol>
-      </div>
-    </section>
-
-    <!-- ==================== SKILLS SECTION ==================== -->
-    <section class="section" id="skills">
-      <div class="wrap">
-        <div class="section-header-centered reveal">
-          <p class="eyebrow"><span class="eyebrow-tag">//</span> TECHNICAL ARSENAL</p>
-          <h2 class="section-title">The stack I build with</h2>
-          <p class="section-desc">Core languages, analytical libraries, and developer workflows I use daily.</p>
-        </div>
-
-        <div class="skills-grid">
-          <!-- Skill Card 1: Languages -->
-          <div class="skill-card reveal">
-            <div class="skill-card-glow"></div>
-            <div class="skill-card-top">
-              <div class="skill-icon-box skill-icon-teal">
-                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg>
-              </div>
-              <h3 class="skill-group-title">Languages &amp; Queries</h3>
-            </div>
-            <p class="skill-card-desc">Fundamental languages for scripting, data pipelines, backend logic, and database queries.</p>
-            <div class="chip-row">
-              <span class="chip chip-highlight"><code>Python</code></span>
-              <span class="chip chip-highlight"><code>SQL</code></span>
-              <span class="chip"><code>C / C++</code></span>
-            </div>
-          </div>
-
-          <!-- Skill Card 2: Data & ML -->
-          <div class="skill-card reveal">
-            <div class="skill-card-glow"></div>
-            <div class="skill-card-top">
-              <div class="skill-icon-box skill-icon-amber">
-                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 20V10"></path><path d="M12 20V4"></path><path d="M6 20v-6"></path></svg>
-              </div>
-              <h3 class="skill-group-title">Data &amp; Analytics</h3>
-            </div>
-            <p class="skill-card-desc">Powerful libraries and tools for data wrangling, exploratory data analysis, and dashboard UI.</p>
-            <div class="chip-row">
-              <span class="chip chip-highlight"><code>NumPy</code></span>
-              <span class="chip chip-highlight"><code>Pandas</code></span>
-              <span class="chip chip-highlight"><code>Plotly</code></span>
-              <span class="chip chip-highlight"><code>Streamlit</code></span>
-              <span class="chip"><code>Power BI</code></span>
-            </div>
-          </div>
-
-          <!-- Skill Card 3: Workflow & DevOps -->
-          <div class="skill-card reveal">
-            <div class="skill-card-glow"></div>
-            <div class="skill-card-top">
-              <div class="skill-icon-box skill-icon-violet">
-                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="18" r="3"></circle><circle cx="6" cy="6" r="3"></circle><path d="M13 6h3a2 2 0 0 1 2 2v7"></path><line x1="6" y1="9" x2="6" y2="21"></line></svg>
-              </div>
-              <h3 class="skill-group-title">Workflow &amp; Tools</h3>
-            </div>
-            <p class="skill-card-desc">Modern development tools for version control, reproducible notebooks, and cloud deployment.</p>
-            <div class="chip-row">
-              <span class="chip chip-highlight"><code>Git</code></span>
-              <span class="chip chip-highlight"><code>GitHub</code></span>
-              <span class="chip"><code>VS Code</code></span>
-              <span class="chip"><code>Jupyter</code></span>
-              <span class="chip"><code>Google Colab</code></span>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ==================== PROJECTS SECTION ==================== -->
-    <section class="section section-alt" id="projects">
-      <div class="wrap">
-        <div class="section-header-centered reveal">
-          <p class="eyebrow"><span class="eyebrow-tag">//</span> FEATURED WORK</p>
-          <h2 class="section-title">Things I've shipped &amp; deployed</h2>
-          <p class="section-desc">Live, interactive web applications built with Python, Streamlit, and modern analytics libraries.</p>
-        </div>
-
-        <div class="project-grid">
-
-          <!-- Project Card 1 -->
-          <article class="project-card reveal">
-            <div class="project-card-glow"></div>
-            <div class="project-top-bar">
-              <span class="project-badge">
-                <span class="dot dot-teal"></span> Live Application
-              </span>
-              <span class="project-date">Streamlit Cloud</span>
-            </div>
-
-            <div class="project-head">
-              <h3 class="project-title">Railway Train Analysis Dashboard</h3>
-              <div class="project-tags">
-                <span class="tag">Python</span>
-                <span class="tag">Streamlit</span>
-                <span class="tag">NumPy</span>
-                <span class="tag">Pandas</span>
-                <span class="tag">Plotly</span>
-              </div>
-            </div>
-
-            <ul class="project-points">
-              <li>
-                <svg class="check-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
-                <span>Built an end-to-end interactive Streamlit analytics dashboard analyzing railway train, station schedules, and route networks.</span>
-              </li>
-              <li>
-                <svg class="check-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
-                <span>Engineered robust data-cleaning pipelines for raw multi-nested JSON datasets with modular caching for high responsiveness.</span>
-              </li>
-              <li>
-                <svg class="check-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
-                <span>Implemented real-time filters and 8+ dynamic Plotly visualizations for route delays, train frequencies, and geographical distribution.</span>
-              </li>
-            </ul>
-
-            <div class="project-footer">
-              <a href="https://tuttm93plpeaiajgsmo6bq.streamlit.app/" target="_blank" rel="noopener noreferrer" class="project-link-btn">
-                <span>Launch Live Dashboard</span>
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
-              </a>
-            </div>
-          </article>
-
-          <!-- Project Card 2 -->
-          <article class="project-card reveal">
-            <div class="project-card-glow"></div>
-            <div class="project-top-bar">
-              <span class="project-badge">
-                <span class="dot dot-amber"></span> Live Application
-              </span>
-              <span class="project-date">Streamlit Cloud</span>
-            </div>
-
-            <div class="project-head">
-              <h3 class="project-title">Amazon Sales Analysis Dashboard</h3>
-              <div class="project-tags">
-                <span class="tag">Python</span>
-                <span class="tag">Pandas</span>
-                <span class="tag">Streamlit</span>
-                <span class="tag">Plotly</span>
-                <span class="tag">EDA</span>
-              </div>
-            </div>
-
-            <ul class="project-points">
-              <li>
-                <svg class="check-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
-                <span>Designed and launched an interactive e-commerce sales dashboard uncovering category revenue, pricing strategies, discount impact, and review trends.</span>
-              </li>
-              <li>
-                <svg class="check-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
-                <span>Performed comprehensive exploratory data analysis (EDA) and statistical outlier detection utilizing Pandas and NumPy.</span>
-              </li>
-              <li>
-                <svg class="check-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
-                <span>Equipped the UI with dynamic KPI metric cards, rating distribution charts, and interactive category slicers for stakeholder insights.</span>
-              </li>
-            </ul>
-
-            <div class="project-footer">
-              <a href="https://amazon-sales-analysisdashboard-3ukwibdumnb2mcviccxrxp.streamlit.app/" target="_blank" rel="noopener noreferrer" class="project-link-btn">
-                <span>Launch Live Dashboard</span>
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
-              </a>
-            </div>
-          </article>
-
-        </div>
-      </div>
-    </section>
-
-    <!-- ==================== HOBBIES SECTION ==================== -->
-    <section class="section" id="hobbies">
-      <div class="wrap">
-        <div class="section-header-centered reveal">
-          <p class="eyebrow"><span class="eyebrow-tag">//</span> BEYOND CODE</p>
-          <h2 class="section-title">What keeps me energized</h2>
-          <p class="section-desc">Personal interests that spark creativity, focus, and continuous growth.</p>
-        </div>
-
-        <div class="hobby-row">
-          <div class="hobby-card reveal">
-            <div class="hobby-icon-wrap">
-              <span class="hobby-icon-symbol">&lt;/&gt;</span>
-            </div>
-            <h3 class="hobby-title">Coding &amp; Prototyping</h3>
-            <p class="hobby-desc">Exploring novel Python libraries, data workflows, and experimenting with AI models.</p>
-          </div>
-
-          <div class="hobby-card reveal">
-            <div class="hobby-icon-wrap">
-              <span class="hobby-icon-emoji">📰</span>
-            </div>
-            <h3 class="hobby-title">Tech Blogs &amp; Papers</h3>
-            <p class="hobby-desc">Keeping track of latest breakthroughs in generative AI, data engineering, and modern web tech.</p>
-          </div>
-
-          <div class="hobby-card reveal">
-            <div class="hobby-icon-wrap">
-              <span class="hobby-icon-emoji">🎵</span>
-            </div>
-            <h3 class="hobby-title">Music &amp; Flow</h3>
-            <p class="hobby-desc">Channeling deep focus and problem-solving through instrumental and ambient soundtracks.</p>
-          </div>
-
-          <div class="hobby-card reveal">
-            <div class="hobby-icon-wrap">
-              <span class="hobby-icon-emoji">📚</span>
-            </div>
-            <h3 class="hobby-title">Lifelong Learning</h3>
-            <p class="hobby-desc">Constantly refining developer skills through documentation, courses, and hands-on builds.</p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ==================== CONTACT SECTION ==================== -->
-    <section class="section section-alt" id="contact">
-      <div class="wrap contact-grid">
-        <div class="contact-copy reveal">
-          <p class="eyebrow"><span class="eyebrow-tag">//</span> REACH OUT</p>
-          <h2 class="section-title">Let's build something exceptional together</h2>
-          <p class="lead-text">
-            I'm currently seeking internship opportunities, freelance data projects, and software collaborations. Let's start a conversation.
-          </p>
-
-          <ul class="contact-list">
-            <!-- Email Item with Copy Button -->
-            <li class="contact-item-card">
-              <div class="contact-icon-bubble icon-teal">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
-              </div>
-              <div class="contact-detail">
-                <span class="contact-label">Email Address</span>
-                <button class="contact-value copy-btn" type="button" data-copy="svijender130@gmail.com" title="Click to copy email">
-                  <span class="copy-text">svijender130@gmail.com</span>
-                  <span class="copy-hint">Click to copy</span>
-                </button>
-              </div>
-            </li>
-
-            <!-- Phone Item -->
-            <li class="contact-item-card">
-              <div class="contact-icon-bubble icon-cyan">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
-              </div>
-              <div class="contact-detail">
-                <span class="contact-label">Phone Call</span>
-                <a class="contact-value" href="tel:+918079059053">+91-8079059053</a>
-              </div>
-            </li>
-
-            <!-- LinkedIn Item -->
-            <li class="contact-item-card">
-              <div class="contact-icon-bubble icon-amber">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
-              </div>
-              <div class="contact-detail">
-                <span class="contact-label">LinkedIn Profile</span>
-                <a class="contact-value link-external" href="https://www.linkedin.com/in/vijender-singh-0729b2338" target="_blank" rel="noopener noreferrer">
-                  <span>vijender-singh-0729b2338</span>
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
-                </a>
-              </div>
-            </li>
-
-            <!-- GitHub Item -->
-            <li class="contact-item-card">
-              <div class="contact-icon-bubble icon-violet">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
-              </div>
-              <div class="contact-detail">
-                <span class="contact-label">GitHub Profile</span>
-                <a class="contact-value link-external" href="https://github.com/krvijender29" target="_blank" rel="noopener noreferrer">
-                  <span>krvijender29</span>
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"></line><polyline points="7 7 17 7 17 17"></polyline></svg>
-                </a>
-              </div>
-            </li>
-          </ul>
-        </div>
-
-<!-- Contact Form with FormSubmit.co -->
-<div class="form-wrapper reveal">
-  <div class="form-glow"></div>
-  <form class="contact-form" id="contact-form" action="https://formsubmit.co/ajax/svijender130@gmail.com" method="POST">
-    <!-- FormSubmit Hidden Configurations -->
-    <input type="hidden" name="_captcha" value="false">
-    <input type="hidden" name="_template" value="table">
-    <input type="hidden" name="_subject" value="New Portfolio Contact Message!">
-
-    <div class="form-header">
-      <h3 class="form-title">Send a Direct Message</h3>
-      <p class="form-subtitle">Fill out the fields below and I'll respond promptly.</p>
-    </div>
-
-    <div class="field">
-      <label for="name">Your Name</label>
-      <div class="input-wrapper">
-        <input type="text" id="name" name="name" autocomplete="name" placeholder="e.g. Alex Smith" required>
-      </div>
-    </div>
-    
-    <div class="field">
-      <label for="email">Email Address</label>
-      <div class="input-wrapper">
-        <input type="email" id="email" name="email" autocomplete="email" placeholder="alex@example.com" required>
-      </div>
-    </div>
-
-    <div class="field">
-      <label for="subject">Subject</label>
-      <div class="input-wrapper">
-        <input type="text" id="subject" name="subject" placeholder="Internship Opportunity / Project Inquiry" required>
-      </div>
-    </div>
-
-    <div class="field">
-      <label for="message">Your Message</label>
-      <div class="input-wrapper">
-        <textarea id="message" name="message" rows="4" placeholder="Hello Vijender, I'd like to discuss..." required></textarea>
-      </div>
-    </div>
-
-    <button type="submit" id="submit-btn" class="btn btn-primary btn-block">
-      <span id="btn-text">Send Message</span>
-      <svg id="btn-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
-    </button>
-    <div class="form-note-wrapper">
-      <p class="form-note" id="form-note" role="status"></p>
-    </div>
-  </form>
+<!-- MARQUEE -->
+<div class="marquee-wrap">
+  <div class="marquee">
+    <div class="marquee-item"><span>★</span> Power BI</div>
+    <div class="marquee-item"><span>★</span> Python · Pandas · NumPy · Streamlit</div>
+    <div class="marquee-item"><span>★</span> SQL · ETL · Data Modeling</div>
+    <div class="marquee-item"><span>★</span> Tableau · Excel · Git</div>
+    <div class="marquee-item"><span>★</span> Power BI</div>
+    <div class="marquee-item"><span>★</span> Python · Pandas · NumPy · Streamlit</div>
+    <div class="marquee-item"><span>★</span> SQL · ETL · Data Modeling</div>
+    <div class="marquee-item"><span>★</span> Tableau · Excel · Git</div>
+  </div>
 </div>
-      </div>
-    </section>
 
-  </main>
+<!-- ABOUT -->
+<section class="about" id="about">
+  <div class="about-left fade-up">
+    <div class="about-photo-wrap">
+      <img src="./WhatsApp Image 2026-05-24 at 7.38.13 AM.jpeg" alt="Profile Photo" class="about-photo">
+      <div class="about-photo-accent"></div>
+    </div>
+    <div class="section-label">About me</div>
+    <h2 class="about-heading">
+      Self-taught.<br>
+      <em>Curious.</em><br>
+      Future-bound.
+    </h2>
+    <div class="about-stats">
+  <div class="stat">
+    <div class="stat-num">B.Tech</div>
+    <div class="stat-label">AI & Data Science</div>
+  </div>
 
-  <!-- ==================== FOOTER ==================== -->
-  <footer class="site-footer">
-    <div class="wrap footer-inner">
-      <div class="footer-left">
-        <span class="footer-brand">VS<span class="brand-dot">.</span></span>
-        <p>&copy; <span id="year"></span> Vijender Singh. Crafted with code, data &amp; precision.</p>
-      </div>
+  <div class="stat">
+    <div class="stat-num">4</div>
+    <div class="stat-label">Projects Built</div>
+  </div>
 
-      <div class="footer-right">
-        <a href="#top" class="to-top" aria-label="Scroll back to top">
-          <span>Back to top</span>
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"></polyline></svg>
-        </a>
+  <div class="stat">
+    <div class="stat-num">GitHub</div>
+    <div class="stat-label">Open Source</div>
+  </div>
+
+  <div class="stat">
+    <div class="stat-num">2025</div>
+    <div class="stat-label">Learning & Building</div>
+  </div>
+</div>
+  </div>
+  <div class="about-right fade-up">
+  <p class="about-text">
+    AI & Data Science student with a <strong>curious mind</strong> and a passion for turning ideas into practical solutions — through code, data, and continuous learning. Started from the basics and built my skills through <strong>self-learning, projects, and experimentation</strong>.
+  </p>
+
+  <p class="about-text">
+    Currently pursuing my <strong>B.Tech in AI & Data Science</strong>, exploring Python, SQL, web development, data analysis, and machine learning. I enjoy building projects that help me understand technology beyond just theory.
+  </p>
+
+  <p class="about-text">
+    Outside of coding — <strong>always learning, experimenting, and building</strong>. I believe every project is an opportunity to learn something new. The goal isn't just to write code. It's to <strong>build something meaningful.</strong>
+  </p>
+
+  <div class="about-tags">
+    <span class="tag">Python</span>
+    <span class="tag">SQL</span>
+    <span class="tag">C++</span>
+    <span class="tag">HTML</span>
+    <span class="tag">CSS</span>
+    <span class="tag">JavaScript</span>
+    <span class="tag">Data Science</span>
+    <span class="tag">AI/ML</span>
+  </div>
+</div>
+
+</section>
+
+<!-- SKILLS -->
+<section class="skills" id="skills">
+  <div class="skills-header fade-up">
+    <div>
+      <div class="section-label">Technical Arsenal</div>
+      <h2 class="skills-heading">Skills &<br>Tools</h2>
+    </div>
+  </div>
+
+  <div class="skills-grid fade-up">
+
+    <div class="skill-card">
+      <div class="skill-icon">📊</div>
+      <div class="skill-name">Power BI</div>
+      <div class="skill-level">Dashboards · Power Query · RLS</div>
+      <div class="skill-bar">
+        <div class="skill-bar-fill" style="width:92%"></div>
       </div>
     </div>
-  </footer>
 
-  <script src="script.js"></script>
+    <div class="skill-card">
+      <div class="skill-icon">🗄️</div>
+      <div class="skill-name">SQL</div>
+      <div class="skill-level">Queries · Joins · CTEs · Window Functions</div>
+      <div class="skill-bar">
+        <div class="skill-bar-fill" style="width:88%"></div>
+      </div>
+    </div>
+
+    <div class="skill-card">
+      <div class="skill-icon">📋</div>
+      <div class="skill-name">Excel</div>
+      <div class="skill-level">Pivot Tables · XLOOKUP · Power Query · Modeling</div>
+      <div class="skill-bar">
+        <div class="skill-bar-fill" style="width:90%"></div>
+      </div>
+    </div>
+
+    <div class="skill-card">
+      <div class="skill-icon">🐍</div>
+      <div class="skill-name">Python</div>
+      <div class="skill-level">Pandas · NumPy · Data Cleaning · Analysis</div>
+      <div class="skill-bar">
+        <div class="skill-bar-fill" style="width:80%"></div>
+      </div>
+    </div>
+
+    <div class="skill-card">
+      <div class="skill-icon">⚡</div>
+      <div class="skill-name">Power Query</div>
+      <div class="skill-level">M Language · Data Cleaning · Transformation</div>
+      <div class="skill-bar">
+        <div class="skill-bar-fill" style="width:88%"></div>
+      </div>
+    </div>
+
+    <div class="skill-card">
+      <div class="skill-icon">📈</div>
+      <div class="skill-name">Data Visualization</div>
+      <div class="skill-level">KPIs · Dashboards · Business Insights · Reporting</div>
+      <div class="skill-bar">
+        <div class="skill-bar-fill" style="width:90%"></div>
+      </div>
+    </div>
+
+    <div class="skill-card">
+      <div class="skill-icon">🧹</div>
+      <div class="skill-name">Data Cleaning</div>
+      <div class="skill-level">Data Preparation · Transformation · Validation</div>
+      <div class="skill-bar">
+        <div class="skill-bar-fill" style="width:85%"></div>
+      </div>
+    </div>
+
+    <div class="skill-card">
+      <div class="skill-icon">🔀</div>
+      <div class="skill-name">Git & GitHub</div>
+      <div class="skill-level">Version Control · Collaboration · Projects</div>
+      <div class="skill-bar">
+        <div class="skill-bar-fill" style="width:78%"></div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- QUALIFICATIONS -->
+<section class="qualifications" id="qualifications">
+  <div class="section-label fade-up">Education</div>
+  <h2 class="exp-heading fade-up">Qualifications</h2>
+
+  <div class="timeline">
+
+    <!-- B.Tech -->
+    <div class="exp-item fade-up">
+      <div class="exp-meta">
+        <span class="exp-date">2024 – 2028</span>
+        <span class="exp-badge">Pursuing</span>
+      </div>
+
+      <div class="exp-role">B.Tech in Artificial Intelligence & Data Science</div>
+      <div class="exp-company">
+        Rajasthan Institute of Engineering and Technology · Jaipur, Rajasthan
+      </div>
+
+      <ul class="exp-bullets">
+        <li>Specialization in Artificial Intelligence & Data Science</li>
+        <li>Current CGPA: 8.04/10</li>
+        <li>Building practical skills in Python, SQL, Data Analysis, Machine Learning, and Business Intelligence</li>
+      </ul>
+    </div>
+
+
+    <!-- 12th -->
+    <div class="exp-item fade-up">
+      <div class="exp-meta">
+        <span class="exp-date">12th 2024</span>
+      </div>
+
+      <div class="exp-role">Senior Secondary — Class XII</div>
+      <div class="exp-company">
+        SWAMI VIVEKANANDA GOVT. MODEL SCHOOL · SURATGARH, RAJASTHAN
+      </div>
+
+      <ul class="exp-bullets">
+        <li>Senior Secondary Education</li>
+        <li>Percentage: 60.8%</li>
+        <li>Stream: PCM</li>
+      </ul>
+    </div>
+
+
+    <!-- 10th -->
+    <div class="exp-item fade-up">
+      <div class="exp-meta">
+        <span class="exp-date">10th 2022</span>
+      </div>
+
+      <div class="exp-role">Secondary — Class X</div>
+      <div class="exp-company">
+        SWAMI VIVEKANANDA GOVT. MODEL SCHOOL · SURATGARH, RAJASTHAN
+      </div>
+
+      <ul class="exp-bullets">
+        <li>Secondary Education</li>
+        <li>Percentage: 74.6%</li>
+      </ul>
+    </div>
+
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section class="projects" id="projects">
+  <div class="projects-header fade-up">
+    <div class="section-label">What I've Built</div>
+    <h2 class="projects-heading">Key Projects</h2>
+  </div>
+  <div class="projects-grid">
+    <div class="project-card fade-up">
+      <div class="project-num">01 / PROJECT</div>
+      <a href="https://amazon-sales-analysisdashboard-3ukwibdumnb2mcviccxrxp.streamlit.app/" target="_blank" class="project-arrow">↗</a>
+      <h3 class="project-title">Amazon Sales Analysis Dashboard</h3>
+      <p class="project-desc">Built an interactive Streamlit dashboard for Amazon sales analysis, using Pandas for data cleaning, transformation, and preprocessing of 1,000+ records. Performed EDA, statistical and trend analysis across sales, profit, customer segments, and products. Developed 10+ dynamic Plotly visualizations covering regional performance, category trends, top products, and KPI tracking.</p>
+      <div class="project-stack">
+        <span class="stack-tag">Python</span>
+        <span class="stack-tag">Streamlit</span>
+        <span class="stack-tag">Numpy</span>
+        <span class="stack-tag">Pandas</span>
+        <span class="stack-tag">Plotly</span>
+      </div>
+    </div>
+    <div class="project-card fade-up">
+      <div class="project-num">02 / PROJECT</div>
+      <a href="https://tuttm93plpeaiajgsmo6bq.streamlit.app/" target="_blank" class="project-arrow">↗</a>
+      <h3 class="project-title">Railway Train Analysis Dashboard</h3>
+      <p class="project-desc">Built an interactive Streamlit dashboard for railway train, station, and schedule analysis. Cleaned and processed raw JSON datasets using reusable data-loading modules and data-wrangling techniques. Added real-time filters and 8+ dynamic Plotly visualizations to analyze train routes, stations, and schedules, enabling clear and data-driven reporting.</p>
+      <div class="project-stack">
+        <span class="stack-tag">Python</span>
+        <span class="stack-tag">Pandas</span>
+        <span class="stack-tag">Streamlit</span>
+        <span class="stack-tag">Plotly</span>
+        <span class="stack-tag">NumPy</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CERTS -->
+<section class="certs" id="certs">
+  <div class="section-label fade-up">Credentials</div>
+  <h2 class="certs-heading fade-up">Certifications</h2>
+  <div class="certs-grid fade-up">
+    <div class="cert-card">
+      <div class="cert-icon">💼</div>
+      <div>
+        <div class="cert-name">Deloitte Australia — Data Analytics Job Simulation</div>
+        <div class="cert-issuer">Forage · Data Analytics · Tableau · Excel · Business Insights</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Hobby -->
+<section class="hobby">
+  <div class="section-label fade-up">Beyond Work</div>
+  <h2 class="hobby-heading fade-up">Hobbies &<br>Interests</h2>
+
+  <div class="hobby-grid fade-up">
+
+    <div class="lang-card">
+      <div class="lang-name">💻 Coding</div>
+      <div class="lang-level">Building & Experimenting</div>
+      <div class="lang-note">Exploring new technologies and personal projects</div>
+    </div>
+
+    <div class="lang-card">
+      <div class="lang-name">📊 Data Analytics</div>
+      <div class="lang-level">Learning & Exploring</div>
+      <div class="lang-note">Working with data and discovering meaningful insights</div>
+    </div>
+
+    <div class="lang-card">
+      <div class="lang-name">🚀 Technology</div>
+      <div class="lang-level">Curious Learner</div>
+      <div class="lang-note">Exploring new tools, technologies and ideas</div>
+    </div>
+
+  </div>
+</section>
+
+
+<!-- MY DATA JOURNEY -->
+<section class="my-data" id="data-journey">
+  <div class="my-data-inner">
+
+    <div class="why-left fade-up">
+      <div class="section-label">The Journey So Far</div>
+
+      <h2 class="why-heading">
+        My <em>Data Journey</em>
+      </h2>
+
+      <p class="why-text">
+        My journey into data started with <strong>curiosity — understanding how
+        raw information can be transformed into something meaningful.</strong>
+      </p>
+
+      <p class="why-text">
+        As an <strong>Artificial Intelligence & Data Science undergraduate</strong>,
+        I started building my foundation in Python, SQL, data analysis, and
+        visualization. Over time, learning became more practical through
+        hands-on projects and real datasets.
+      </p>
+
+      <p class="why-text">
+        I enjoy the process of taking <strong>messy, unstructured data</strong>,
+        cleaning and exploring it, finding patterns, and turning those patterns
+        into clear visual stories and actionable insights.
+      </p>
+
+      <p class="why-text">
+        From building <strong>Streamlit dashboards</strong> to working with
+        Pandas, NumPy, Plotly, SQL, and Power BI, every project has helped me
+        understand not just how to analyze data, but <em>why the analysis
+        matters.</em>
+      </p>
+
+      <p class="why-text">
+        <strong>I'm still learning, still building, and still curious.</strong>
+        That's what keeps me moving forward.
+      </p>
+    </div>
+
+
+    <div class="why-right fade-up">
+      <div class="why-cards">
+
+        <div class="why-card">
+          <div class="why-card-icon">🐍</div>
+          <div class="why-card-title">Learning</div>
+          <div class="why-card-desc">
+            Building a strong foundation in Python, SQL, data analysis,
+            statistics, and data visualization.
+          </div>
+        </div>
+
+        <div class="why-card">
+          <div class="why-card-icon">🧹</div>
+          <div class="why-card-title">Data to Insight</div>
+          <div class="why-card-desc">
+            Cleaning, transforming, and exploring raw datasets to uncover
+            meaningful patterns and trends.
+          </div>
+        </div>
+
+        <div class="why-card">
+          <div class="why-card-icon">📊</div>
+          <div class="why-card-title">Visual Storytelling</div>
+          <div class="why-card-desc">
+            Turning analysis into interactive dashboards and visualizations
+            that make complex data easier to understand.
+          </div>
+        </div>
+
+        <div class="why-card">
+          <div class="why-card-icon">🚀</div>
+          <div class="why-card-title">Keep Building</div>
+          <div class="why-card-desc">
+            Continuously building real-world projects, learning new tools,
+            and improving as a data professional.
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="contact" id="contact">
+  <div class="contact-bg"></div>
+  <div class="contact-inner">
+    <div class="contact-tag fade-up">Open to opportunities</div>
+    <h2 class="contact-heading fade-up">
+      Let's build<br>
+      something<br>
+      <span class="highlight">together.</span>
+    </h2>
+    <p class="contact-subtext fade-up">
+      Open to Data Analyst internships. Ready to work with real data, solve real problems, and create measurable impact. Not just seeking experience — <strong>ready to earn it.</strong>
+    </p>
+    <div class="contact-links fade-up">
+      <a href="https://www.linkedin.com/in/vijender-singh-0729b2338/" target="_blank" class="contact-link">
+        <span>in</span> LinkedIn
+      </a>
+      <a href="https://github.com/krvijender29" target="_blank" class="contact-link">
+        <span>◈</span> GitHub
+      </a>
+      <a href="mailto:svijender130@gmail.com" class="contact-link">
+        <span>@</span> Email Me
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-left">© 2026 VIJENDER SINGH — Data Analyst</div>
+  <div class="footer-right">Jaipur, Rajasthan, India</div>
+</footer>
+
+<script>
+
+</script>
+
+<!-- HELLO GREETING -->
+<div id="hola-overlay" style="
+  position:fixed; inset:0; z-index:9999;
+  display:flex; flex-direction:column; align-items:center; justify-content:center;
+  background: #1a1a2e;
+  pointer-events:none;
+  transition: opacity 0.8s ease;
+">
+  <div id="hola-flag" style="
+    display:flex; width:180px; height:10px; margin-bottom:2rem; overflow:hidden;
+    opacity:0; transform:scaleX(0);
+    transition: opacity 0.5s ease 0.3s, transform 0.5s ease 0.3s;
+  ">
+    <div style="flex:1; background:#c60b1e;"></div>
+    <div style="flex:2; background:#f1bf00;"></div>
+    <div style="flex:1; background:#c60b1e;"></div>
+  </div>
+  <div id="hola-text" style="
+    font-family: Syne, sans-serif;
+    font-size: clamp(3rem, 10vw, 7rem);
+    font-weight: 800;
+    color: #fff;
+    letter-spacing: -0.03em;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.6s ease 0.5s, transform 0.6s ease 0.5s;
+  ">Hello!</div>
+  <div id="hola-sub" style="
+    font-family: DM Mono, monospace;
+    font-size: 0.9rem;
+    color: rgba(255,255,255,0.4);
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    margin-top: 1rem;
+    opacity: 0;
+    transition: opacity 0.6s ease 0.9s;
+  ">Welcome to Vijender's world</div>
+</div>
+
+<!-- CURSOR TRAIL CANVAS -->
+<canvas id="trail-canvas" style="
+  position:fixed; inset:0; pointer-events:none; z-index:9997;
+"></canvas>
+
+<script src="script.js"></script>
 </body>
 </html>
