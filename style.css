@@ -25,6 +25,23 @@
   --font-serif: 'Instrument Serif', serif;
 }
 
+/* Dark Theme Color Palette */
+[data-theme="dark"] {
+  --bg: #0c0c14;
+  --bg2: #12121e;
+  --bg3: #18182b;
+  --surface: #161626;
+  --border: #2b2b48;
+  --accent: #ff4757;
+  --accent-hover: #ff6b77;
+  --accent2: #f4a261;
+  --accent3: #2ec4b6;
+  --accent4: #ffd166;
+  --text: #f4f4fa;
+  --text2: #a5a5c6;
+  --text3: #75759a;
+}
+
 /* --------------------------------------------------------------------------
    2. RESET & BASE
    -------------------------------------------------------------------------- */
@@ -273,6 +290,68 @@ nav {
 .nav-action-btn:hover {
   background: var(--accent);
   color: #fff;
+}
+
+.nav-controls {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.theme-toggle-btn {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  width: 40px;
+  height: 40px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: var(--text);
+  font-size: 1.15rem;
+  transition: all 0.25s ease;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+}
+
+.theme-toggle-btn:hover {
+  border-color: var(--accent);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(230, 57, 70, 0.15);
+}
+
+.theme-icon-sun {
+  display: none;
+}
+
+.theme-icon-moon {
+  display: block;
+}
+
+[data-theme="dark"] .theme-icon-sun {
+  display: block;
+}
+
+[data-theme="dark"] .theme-icon-moon {
+  display: none;
+}
+
+[data-theme="dark"] nav {
+  background: rgba(12, 12, 20, 0.92);
+}
+
+[data-theme="dark"] .cursor {
+  mix-blend-mode: screen;
+}
+
+[data-theme="dark"] .projects {
+  background: #14101e;
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+}
+
+[data-theme="dark"] footer {
+  background: #08080e;
 }
 
 .mobile-menu-toggle {
@@ -1087,7 +1166,15 @@ nav {
 .contact-inner {
   position: relative;
   z-index: 1;
-  max-width: 760px;
+  max-width: 1160px;
+  margin: 0 auto;
+}
+
+.contact-grid {
+  display: grid;
+  grid-template-columns: 1fr 1.15fr;
+  gap: 4.5rem;
+  align-items: start;
 }
 
 .contact-tag {
@@ -1100,11 +1187,11 @@ nav {
 }
 
 .contact-heading {
-  font-size: clamp(2.8rem, 5.5vw, 4.8rem);
+  font-size: clamp(2.6rem, 4.5vw, 4.2rem);
   font-weight: 800;
   line-height: 0.98;
   letter-spacing: -0.03em;
-  margin-bottom: 2rem;
+  margin-bottom: 1.75rem;
 }
 
 .contact-heading .highlight {
@@ -1115,35 +1202,36 @@ nav {
   font-size: 1.05rem;
   color: var(--text2);
   line-height: 1.75;
-  margin-bottom: 3rem;
-  max-width: 580px;
+  margin-bottom: 2.5rem;
+  max-width: 520px;
 }
 
 .contact-links {
   display: flex;
-  gap: 1rem;
-  flex-wrap: wrap;
+  flex-direction: column;
+  gap: 0.85rem;
 }
 
 .contact-link {
-  display: flex;
+  display: inline-flex;
   align-items: center;
-  gap: 0.65rem;
+  gap: 0.75rem;
   font-family: var(--font-mono);
-  font-size: 0.78rem;
+  font-size: 0.8rem;
   color: var(--text2);
   text-decoration: none;
   border: 1px solid var(--border);
   padding: 0.85rem 1.4rem;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
+  letter-spacing: 0.05em;
   background: var(--surface);
   transition: all 0.2s;
+  width: fit-content;
 }
 
 .contact-link span {
   color: var(--accent);
   font-weight: 700;
+  font-size: 0.95rem;
 }
 
 .contact-link:hover {
@@ -1151,6 +1239,145 @@ nav {
   color: var(--accent);
   transform: translateY(-2px);
   box-shadow: 0 4px 12px rgba(230, 57, 70, 0.1);
+}
+
+/* Contact Form Styling */
+.contact-form-wrap {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  padding: 2.75rem 2.5rem;
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.04);
+  position: relative;
+}
+
+.query-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.form-group label {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text2);
+  font-weight: 600;
+}
+
+.form-group input,
+.form-group textarea {
+  width: 100%;
+  padding: 0.85rem 1rem;
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  color: var(--text);
+  outline: none;
+  transition: border-color 0.2s, box-shadow 0.2s, background 0.2s;
+}
+
+.form-group input::placeholder,
+.form-group textarea::placeholder {
+  color: var(--text3);
+  opacity: 0.7;
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+  border-color: var(--accent);
+  background: #ffffff;
+  box-shadow: 0 0 0 3px rgba(230, 57, 70, 0.12);
+}
+
+.form-group textarea {
+  resize: vertical;
+  min-height: 110px;
+}
+
+.form-submit-btn {
+  width: 100%;
+  padding: 1rem;
+  font-size: 0.88rem;
+  cursor: pointer;
+  margin-top: 0.5rem;
+}
+
+.form-error-msg {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--accent);
+  background: rgba(230, 57, 70, 0.08);
+  border: 1px solid rgba(230, 57, 70, 0.25);
+  padding: 0.75rem 1rem;
+  margin-top: 0.5rem;
+  text-align: center;
+}
+
+/* Custom Success Interface */
+.form-success-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 2.5rem 1.5rem;
+  animation: fadeInSuccess 0.5s ease forwards;
+}
+
+@keyframes fadeInSuccess {
+  from {
+    opacity: 0;
+    transform: translateY(15px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.success-icon {
+  width: 64px;
+  height: 64px;
+  background: rgba(42, 157, 143, 0.12);
+  border: 2px solid var(--accent3);
+  color: var(--accent3);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2rem;
+  font-weight: 800;
+  margin-bottom: 1.5rem;
+}
+
+.success-title {
+  font-size: 1.75rem;
+  font-weight: 800;
+  color: var(--text);
+  margin-bottom: 0.75rem;
+  letter-spacing: -0.02em;
+}
+
+.success-desc {
+  font-size: 0.92rem;
+  color: var(--text2);
+  line-height: 1.7;
+  max-width: 420px;
+  margin-bottom: 2rem;
+}
+
+.success-btn {
+  padding: 0.75rem 1.8rem;
+  font-size: 0.78rem;
+  cursor: pointer;
 }
 
 /* --------------------------------------------------------------------------
@@ -1260,6 +1487,10 @@ a, button, .skill-card, .project-card, .cert-card, .stat, .btn-primary, .btn-gho
 
   .nav-links.active {
     transform: translateY(0);
+  }
+
+  [data-theme="dark"] .nav-links {
+    background: rgba(12, 12, 20, 0.98);
   }
 
   .nav-links a {
@@ -1561,16 +1792,21 @@ a, button, .skill-card, .project-card, .cert-card, .stat, .btn-primary, .btn-gho
     padding: 4.5rem 1.25rem;
   }
 
+  .contact-grid {
+    grid-template-columns: 1fr;
+    gap: 2.5rem;
+  }
+
   .contact-heading {
     font-size: clamp(2.2rem, 8.5vw, 3.8rem);
     line-height: 1.05;
-    margin-bottom: 1.5rem;
+    margin-bottom: 1.25rem;
   }
 
   .contact-subtext {
     font-size: 0.95rem;
     line-height: 1.65;
-    margin-bottom: 2rem;
+    margin-bottom: 1.75rem;
   }
 
   .contact-links {
@@ -1584,6 +1820,10 @@ a, button, .skill-card, .project-card, .cert-card, .stat, .btn-primary, .btn-gho
     justify-content: center;
     padding: 0.85rem 1rem;
     text-align: center;
+  }
+
+  .contact-form-wrap {
+    padding: 1.75rem 1.25rem;
   }
 
   /* Footer */
@@ -1631,4 +1871,30 @@ a, button, .skill-card, .project-card, .cert-card, .stat, .btn-primary, .btn-gho
   .about-stats {
     grid-template-columns: 1fr;
   }
+}
+
+.btn-download {
+  border: 2px solid var(--accent);
+  color: var(--accent);
+  padding: 0.85rem 2rem;
+  cursor: pointer;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 0.85rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  text-decoration: none;
+  clip-path: polygon(0 0, calc(100% - 12px) 0, 100% 12px, 100% 100%, 12px 100%, 0 calc(100% - 12px));
+  transition: background 0.2s, color 0.2s, transform 0.2s;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  white-space: nowrap;
+}
+
+.btn-download:hover {
+  background: var(--accent);
+  color: #fff;
+  transform: translate(-2px, -2px);
 }

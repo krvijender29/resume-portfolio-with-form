@@ -36,7 +36,18 @@ document.addEventListener('DOMContentLoaded', () => {
     }, 2100);
   }
 
-  // 1. CUSTOM CURSOR
+  // 1. THEME TOGGLE (Dark / Light Mode)
+  const themeToggleBtn = document.getElementById('themeToggleBtn');
+  if (themeToggleBtn) {
+    themeToggleBtn.addEventListener('click', () => {
+      const currentTheme = document.documentElement.getAttribute('data-theme') || 'light';
+      const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+      document.documentElement.setAttribute('data-theme', newTheme);
+      localStorage.setItem('theme', newTheme);
+    });
+  }
+
+  // 2. CUSTOM CURSOR
   const cursor = document.getElementById('cursor');
   const ring = document.getElementById('cursorRing');
   let mx = -100, my = -100, rx = -100, ry = -100;
@@ -63,7 +74,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Hover expansion on interactive elements
   const hoverElements = document.querySelectorAll(
-    'a, button, .skill-card, .project-card, .hobby-card, .stat, .btn-primary, .btn-ghost, .contact-link'
+    'a, button, .skill-card, .project-card, .cert-card, .hobby-card, .stat, .btn-primary, .btn-ghost, .btn-download, .theme-toggle-btn, .contact-link'
   );
 
   hoverElements.forEach((el) => {
@@ -214,6 +225,70 @@ document.addEventListener('DOMContentLoaded', () => {
         navList.classList.remove('active');
         if (menuToggle) menuToggle.textContent = '☰';
       }
+    });
+  }
+
+  // 7. AJAX QUERY FORM SUBMISSION (No external page redirects)
+  const queryForm = document.getElementById('queryForm');
+  const formSubmitBtn = document.getElementById('formSubmitBtn');
+  const formSuccessBox = document.getElementById('formSuccessBox');
+  const formErrorMsg = document.getElementById('formErrorMsg');
+  const sendAnotherBtn = document.getElementById('sendAnotherBtn');
+
+  if (queryForm) {
+    queryForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      if (formErrorMsg) formErrorMsg.style.display = 'none';
+
+      // Set loading state
+      const originalBtnText = formSubmitBtn.innerHTML;
+      formSubmitBtn.disabled = true;
+      formSubmitBtn.innerHTML = 'Sending Message... ⏳';
+
+      try {
+        const formData = new FormData(queryForm);
+        const data = Object.fromEntries(formData.entries());
+
+        const response = await fetch('https://formsubmit.co/ajax/svijender130@gmail.com', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json',
+          },
+          body: JSON.stringify(data),
+        });
+
+        const result = await response.json();
+
+        if (response.ok) {
+          // Hide form and display sleek custom success interface
+          queryForm.style.display = 'none';
+          queryForm.reset();
+          if (formSuccessBox) {
+            formSuccessBox.style.display = 'flex';
+          }
+        } else {
+          throw new Error(result.message || 'Submission failed. Please try again.');
+        }
+      } catch (err) {
+        if (formErrorMsg) {
+          formErrorMsg.textContent = 'Oops! Unable to send message. Please email directly at svijender130@gmail.com';
+          formErrorMsg.style.display = 'block';
+        }
+      } finally {
+        formSubmitBtn.disabled = false;
+        formSubmitBtn.innerHTML = originalBtnText;
+      }
+    });
+  }
+
+  // Handle "Send Another Message" button
+  if (sendAnotherBtn) {
+    sendAnotherBtn.addEventListener('click', () => {
+      if (formSuccessBox) formSuccessBox.style.display = 'none';
+      if (queryForm) queryForm.style.display = 'flex';
+      if (formErrorMsg) formErrorMsg.style.display = 'none';
     });
   }
 

@@ -14,6 +14,18 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:ital,wght@0,300;0,400;0,500;1,300&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
   
+  <!-- THEME PRE-INITIALIZATION (Prevents flash of light theme) -->
+  <script>
+    (function() {
+      const savedTheme = localStorage.getItem('theme');
+      if (savedTheme) {
+        document.documentElement.setAttribute('data-theme', savedTheme);
+      } else if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.documentElement.setAttribute('data-theme', 'dark');
+      }
+    })();
+  </script>
+  
   <!-- STYLESHEET -->
   <link rel="stylesheet" href="style.css">
 </head>
@@ -50,7 +62,13 @@
       <li><a href="#certs">Certifications</a></li>
       <li><a href="#contact" class="nav-action-btn">Contact</a></li>
     </ul>
-    <button class="mobile-menu-toggle" aria-label="Toggle Navigation Menu">☰</button>
+    <div class="nav-controls">
+      <button class="theme-toggle-btn" id="themeToggleBtn" aria-label="Toggle Dark/Light Mode" title="Toggle Theme">
+        <span class="theme-icon-sun">☀️</span>
+        <span class="theme-icon-moon">🌙</span>
+      </button>
+      <button class="mobile-menu-toggle" aria-label="Toggle Navigation Menu">☰</button>
+    </div>
   </nav>
 
   <!-- HERO SECTION -->
@@ -67,8 +85,7 @@
     </p>
     <div class="hero-cta">
       <a href="#contact" class="btn-primary">Let's Talk</a>
-      <a href="#projects" class="btn-ghost">View Projects <span>↗</span></a>
-      <a href="https://github.com/krvijender29" target="_blank" rel="noopener noreferrer" class="btn-ghost">GitHub <span>◈</span></a>
+      <a href="./Vijender_Singh_Resume.pdf" download="Vijender_Singh_Resume.pdf" class="btn-download">⬇ Download Resume</a>
     </div>
     <div class="hero-scroll">Scroll to explore</div>
     <div class="hero-location">Jaipur, Rajasthan, India</div>
@@ -304,21 +321,74 @@
     </div>
   </section>
 
-  <!-- CONTACT -->
+  <!-- CONTACT SECTION -->
   <section class="contact" id="contact">
     <div class="contact-bg"></div>
     <div class="contact-inner">
-      <div class="contact-tag fade-up">Open to opportunities</div>
-      <h2 class="contact-heading fade-up">
-        Let's build<br>something<br><span class="highlight">together.</span>
-      </h2>
-      <p class="contact-subtext fade-up">
-        Open to Data Analyst internships. Ready to work with real data, solve real problems, and create measurable impact.
-      </p>
-      <div class="contact-links fade-up">
-        <a href="mailto:svijender130@gmail.com" class="contact-link"><span>@</span> Email Me</a>
-        <a href="https://www.linkedin.com/in/vijender-singh-0729b2338" target="_blank" rel="noopener noreferrer" class="contact-link"><span>in</span> LinkedIn</a>
-        <a href="https://github.com/krvijender29" target="_blank" rel="noopener noreferrer" class="contact-link"><span>◈</span> GitHub</a>
+      <div class="contact-grid">
+        <!-- Left Info Column -->
+        <div class="contact-info fade-up">
+          <div class="contact-tag">Open to opportunities</div>
+          <h2 class="contact-heading">
+            Let's build<br>something<br><span class="highlight">together.</span>
+          </h2>
+          <p class="contact-subtext">
+            Have a project, query, or data analyst internship opportunity? Send me a message through the form or connect directly via email and socials.
+          </p>
+          <div class="contact-links">
+            <a href="mailto:svijender130@gmail.com" class="contact-link"><span>@</span> svijender130@gmail.com</a>
+            <a href="https://www.linkedin.com/in/vijender-singh-0729b2338" target="_blank" rel="noopener noreferrer" class="contact-link"><span>in</span> LinkedIn</a>
+            <a href="https://github.com/krvijender29" target="_blank" rel="noopener noreferrer" class="contact-link"><span>◈</span> GitHub</a>
+          </div>
+        </div>
+
+        <!-- Right Form Column -->
+        <div class="contact-form-wrap fade-up">
+          <form class="query-form" id="queryForm" action="https://formsubmit.co/ajax/svijender130@gmail.com" method="POST">
+            <!-- FormSubmit Configurations -->
+            <input type="hidden" name="_captcha" value="false">
+            <input type="hidden" name="_template" value="table">
+            <input type="hidden" name="_subject" value="New Query from Portfolio Website!">
+            <input type="text" name="_honey" style="display:none">
+
+            <div class="form-group">
+              <label for="name">Your Name</label>
+              <input type="text" id="name" name="name" placeholder="Your name..." required>
+            </div>
+
+            <div class="form-group">
+              <label for="email">Email Address</label>
+              <input type="email" id="email" name="email" placeholder="your.email@example.com" required>
+            </div>
+
+            <div class="form-group">
+              <label for="subject">Subject / Purpose</label>
+              <input type="text" id="subject" name="subject" placeholder="Internship / Project Inquiry" required>
+            </div>
+
+            <div class="form-group">
+              <label for="message">Your Message</label>
+              <textarea id="message" name="message" rows="4" placeholder="Hi Vijender, I would like to discuss..." required></textarea>
+            </div>
+
+            <button type="submit" id="formSubmitBtn" class="btn-primary form-submit-btn">
+              Send Message <span>↗</span>
+            </button>
+            <div id="formErrorMsg" class="form-error-msg" style="display: none;"></div>
+          </form>
+
+          <!-- Custom Success Interface (Shown after submit without leaving the website) -->
+          <div id="formSuccessBox" class="form-success-box" style="display: none;">
+            <div class="success-icon">✓</div>
+            <h3 class="success-title">Message Sent!</h3>
+            <p class="success-desc">
+              Thank you for reaching out! Your query has been successfully delivered to my inbox. I will review it and get back to you shortly.
+            </p>
+            <button type="button" id="sendAnotherBtn" class="btn-ghost success-btn">
+              Send Another Message
+            </button>
+          </div>
+        </div>
       </div>
     </div>
   </section>
