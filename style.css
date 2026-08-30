@@ -390,6 +390,7 @@ nav {
   background-size: 60px 60px;
   opacity: 0.35;
   mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black 30%, transparent 100%);
+  pointer-events: none;
 }
 
 .hero-tag {
@@ -673,6 +674,7 @@ nav {
   border: 2px solid var(--accent);
   clip-path: polygon(0 0, calc(100% - 20px) 0, 100% 20px, 100% 100%, 20px 100%, 0 calc(100% - 20px));
   z-index: -1;
+  pointer-events: none;
 }
 
 .about-heading {
@@ -990,6 +992,11 @@ nav {
   justify-content: space-between;
 }
 
+.project-card > * {
+  position: relative;
+  z-index: 1;
+}
+
 .project-card::before {
   content: '';
   position: absolute;
@@ -997,6 +1004,7 @@ nav {
   background: linear-gradient(135deg, rgba(255, 255, 255, 0.08), transparent);
   opacity: 0;
   transition: opacity 0.3s;
+  pointer-events: none;
 }
 
 .project-card:hover {
@@ -1082,6 +1090,9 @@ nav {
   background: rgba(0, 0, 0, 0.25);
   border: 1px solid rgba(255, 255, 255, 0.4);
   width: fit-content;
+  position: relative;
+  z-index: 2;
+  cursor: pointer;
   transition: all 0.2s ease;
 }
 
@@ -1161,6 +1172,7 @@ nav {
   position: absolute;
   inset: 0;
   background: radial-gradient(ellipse 60% 60% at 50% 100%, rgba(230, 57, 70, 0.08), transparent);
+  pointer-events: none;
 }
 
 .contact-inner {
