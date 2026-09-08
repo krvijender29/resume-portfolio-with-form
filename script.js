@@ -493,8 +493,11 @@ document.addEventListener('DOMContentLoaded', () => {
   const canvas3D = document.getElementById('bg-3d-canvas');
   if (canvas3D && typeof THREE !== 'undefined') {
     const scene = new THREE.Scene();
+    const isMobile = () => window.innerWidth <= 768;
+    const getCameraZ = () => isMobile() ? 14 : 8;
+
     const camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 1000);
-    camera.position.set(0, 0, 8);
+    camera.position.set(0, 0, getCameraZ());
 
     const renderer = new THREE.WebGLRenderer({
       canvas: canvas3D,
@@ -662,6 +665,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Window Resize Handler
     window.addEventListener('resize', () => {
       camera.aspect = window.innerWidth / window.innerHeight;
+      camera.position.z = getCameraZ();
       camera.updateProjectionMatrix();
       renderer.setSize(window.innerWidth, window.innerHeight);
     });
