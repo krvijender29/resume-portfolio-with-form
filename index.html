@@ -28,8 +28,18 @@
   
   <!-- STYLESHEET -->
   <link rel="stylesheet" href="style.css">
+
+  <!-- THREE.JS & GLTF LOADER FOR 3D AVATAR BACKGROUND -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/GLTFLoader.js"></script>
 </head>
 <body>
+
+  <!-- 3D BACKGROUND MODEL CANVAS -->
+  <canvas id="bg-3d-canvas" class="bg-3d-canvas"></canvas>
+
+  <!-- SCROLL PROGRESS INDICATOR -->
+  <div id="scroll-progress-bar" class="scroll-progress-bar"></div>
 
   <!-- CUSTOM CURSOR -->
   <div class="cursor" id="cursor"></div>
@@ -74,6 +84,8 @@
   <!-- HERO SECTION -->
   <section class="hero">
     <div class="hero-grid-bg"></div>
+    <div class="hero-glow-orb orb-1"></div>
+    <div class="hero-glow-orb orb-2"></div>
     <div class="hero-tag">Data Analyst · Open to Internships · Jaipur, India 🇮🇳</div>
     <h1 class="hero-name">
       Vijender<br>
@@ -81,7 +93,7 @@
     </h1>
     <p class="hero-subtitle">
       Building with code, learning with curiosity —<br>
-      <em>Innovation</em> is the destination.
+      <span class="hero-typing-wrap">I am a <span id="hero-dynamic-role" class="hero-dynamic-role">Data Analyst</span><span class="typing-cursor">|</span></span>
     </p>
     <div class="hero-cta">
       <a href="#contact" class="btn-primary">Let's Talk</a>
@@ -171,49 +183,76 @@
         <div class="section-label">Technical Arsenal</div>
         <h2 class="skills-heading">Skills &<br>Tools</h2>
       </div>
+      <div class="skills-filter-wrap">
+        <button class="skills-filter-btn active" data-filter="all">All</button>
+        <button class="skills-filter-btn" data-filter="analytics">Analytics & SQL</button>
+        <button class="skills-filter-btn" data-filter="viz">Visualization</button>
+        <button class="skills-filter-btn" data-filter="tools">Dev Tools</button>
+      </div>
     </div>
     <div class="skills-grid fade-up">
-      <div class="skill-card">
+      <div class="skill-card" data-category="analytics">
         <div class="skill-icon">🐍</div>
         <div class="skill-name">Python</div>
         <div class="skill-level">Pandas · NumPy · Analysis</div>
-        <div class="skill-bar"><div class="skill-bar-fill" style="width:85%"></div></div>
+        <div class="skill-bar-wrap">
+          <div class="skill-bar"><div class="skill-bar-fill" style="width:85%"></div></div>
+          <span class="skill-percent-num" data-target="85">0%</span>
+        </div>
       </div>
-      <div class="skill-card">
+      <div class="skill-card" data-category="analytics">
         <div class="skill-icon">🗄️</div>
         <div class="skill-name">SQL</div>
         <div class="skill-level">Queries · Joins · Aggregations</div>
-        <div class="skill-bar"><div class="skill-bar-fill" style="width:80%"></div></div>
+        <div class="skill-bar-wrap">
+          <div class="skill-bar"><div class="skill-bar-fill" style="width:80%"></div></div>
+          <span class="skill-percent-num" data-target="80">0%</span>
+        </div>
       </div>
-      <div class="skill-card">
+      <div class="skill-card" data-category="viz">
         <div class="skill-icon">📊</div>
         <div class="skill-name">Power BI</div>
         <div class="skill-level">Dashboards · Data Modeling · KPIs</div>
-        <div class="skill-bar"><div class="skill-bar-fill" style="width:80%"></div></div>
+        <div class="skill-bar-wrap">
+          <div class="skill-bar"><div class="skill-bar-fill" style="width:80%"></div></div>
+          <span class="skill-percent-num" data-target="80">0%</span>
+        </div>
       </div>
-      <div class="skill-card">
+      <div class="skill-card" data-category="viz">
         <div class="skill-icon">⚡</div>
         <div class="skill-name">Streamlit</div>
         <div class="skill-level">Interactive Apps · Cloud Deploy</div>
-        <div class="skill-bar"><div class="skill-bar-fill" style="width:88%"></div></div>
+        <div class="skill-bar-wrap">
+          <div class="skill-bar"><div class="skill-bar-fill" style="width:88%"></div></div>
+          <span class="skill-percent-num" data-target="88">0%</span>
+        </div>
       </div>
-      <div class="skill-card">
+      <div class="skill-card" data-category="viz">
         <div class="skill-icon">📈</div>
         <div class="skill-name">Plotly & Viz</div>
         <div class="skill-level">Dynamic Charts · EDA</div>
-        <div class="skill-bar"><div class="skill-bar-fill" style="width:85%"></div></div>
+        <div class="skill-bar-wrap">
+          <div class="skill-bar"><div class="skill-bar-fill" style="width:85%"></div></div>
+          <span class="skill-percent-num" data-target="85">0%</span>
+        </div>
       </div>
-      <div class="skill-card">
+      <div class="skill-card" data-category="analytics">
         <div class="skill-icon">📋</div>
         <div class="skill-name">MS Excel</div>
         <div class="skill-level">Pivot Tables · Formulas · Modeling</div>
-        <div class="skill-bar"><div class="skill-bar-fill" style="width:82%"></div></div>
+        <div class="skill-bar-wrap">
+          <div class="skill-bar"><div class="skill-bar-fill" style="width:82%"></div></div>
+          <span class="skill-percent-num" data-target="82">0%</span>
+        </div>
       </div>
-      <div class="skill-card">
+      <div class="skill-card" data-category="tools">
         <div class="skill-icon">🐙</div>
         <div class="skill-name">Git & GitHub</div>
         <div class="skill-level">Version Control · Collaboration</div>
-        <div class="skill-bar"><div class="skill-bar-fill" style="width:80%"></div></div>
+        <div class="skill-bar-wrap">
+          <div class="skill-bar"><div class="skill-bar-fill" style="width:80%"></div></div>
+          <span class="skill-percent-num" data-target="80">0%</span>
+        </div>
       </div>
     </div>
   </section>
@@ -336,7 +375,12 @@
             Have a project, query, or data analyst internship opportunity? Send me a message through the form or connect directly via email and socials.
           </p>
           <div class="contact-links">
-            <a href="mailto:svijender130@gmail.com" class="contact-link"><span>@</span> svijender130@gmail.com</a>
+            <div class="email-copy-row">
+              <a href="mailto:svijender130@gmail.com" class="contact-link" id="emailContactLink"><span>@</span> svijender130@gmail.com</a>
+              <button class="copy-email-btn" id="copyEmailBtn" title="Copy Email Address" aria-label="Copy Email Address">
+                📋 Copy
+              </button>
+            </div>
             <a href="https://www.linkedin.com/in/vijender-singh-0729b2338" target="_blank" rel="noopener noreferrer" class="contact-link"><span>in</span> LinkedIn</a>
             <a href="https://github.com/krvijender29" target="_blank" rel="noopener noreferrer" class="contact-link"><span>◈</span> GitHub</a>
           </div>
@@ -398,6 +442,17 @@
     <div class="footer-left">© 2026 Vijender Singh — Data Analyst</div>
     <div class="footer-right">Jaipur, Rajasthan, India</div>
   </footer>
+
+  <!-- FLOATING BACK TO TOP BUTTON -->
+  <button id="backToTopBtn" class="back-to-top-btn" aria-label="Back to top" title="Back to top">
+    <svg class="progress-ring" width="48" height="48">
+      <circle class="progress-ring-circle" stroke="var(--accent)" stroke-width="3" fill="transparent" r="20" cx="24" cy="24"/>
+    </svg>
+    <span class="arrow-up">↑</span>
+  </button>
+
+  <!-- TOAST NOTIFICATION BANNER -->
+  <div id="toastNotification" class="toast-notification" aria-live="polite"></div>
 
   <script src="script.js"></script>
 </body>

@@ -252,7 +252,7 @@ nav {
   position: relative;
 }
 
-.nav-links a::after {
+.nav-links a:not(.nav-action-btn)::after {
   content: '';
   position: absolute;
   bottom: -4px;
@@ -268,8 +268,8 @@ nav {
   color: var(--accent);
 }
 
-.nav-links a:hover::after,
-.nav-links a.active::after {
+.nav-links a:not(.nav-action-btn):hover::after,
+.nav-links a:not(.nav-action-btn).active::after {
   width: 100%;
 }
 
@@ -279,17 +279,26 @@ nav {
   letter-spacing: 0.08em;
   text-transform: uppercase;
   background: transparent;
-  border: 1px solid var(--accent);
+  border: 1.5px solid var(--accent);
   color: var(--accent);
-  padding: 0.45rem 1rem;
+  padding: 0.45rem 1.1rem;
+  border-radius: 20px;
   text-decoration: none;
-  transition: all 0.2s;
+  transition: all 0.25s ease;
   white-space: nowrap;
 }
 
 .nav-action-btn:hover {
-  background: var(--accent);
-  color: #fff;
+  background: rgba(230, 57, 70, 0.12);
+  color: var(--accent);
+  border-color: var(--accent);
+  box-shadow: 0 4px 15px rgba(230, 57, 70, 0.25);
+  transform: translateY(-2px);
+}
+
+[data-theme="dark"] .nav-action-btn:hover {
+  background: rgba(255, 71, 87, 0.18);
+  box-shadow: 0 4px 15px rgba(255, 71, 87, 0.3);
 }
 
 .nav-controls {
@@ -1287,13 +1296,14 @@ nav {
 .form-group textarea {
   width: 100%;
   padding: 0.85rem 1rem;
-  background: var(--bg2);
+  background: var(--surface);
   border: 1px solid var(--border);
   font-family: var(--font-mono);
   font-size: 0.85rem;
   color: var(--text);
   outline: none;
-  transition: border-color 0.2s, box-shadow 0.2s, background 0.2s;
+  border-radius: 6px;
+  transition: border-color 0.2s, box-shadow 0.2s, background 0.2s, color 0.2s;
 }
 
 .form-group input::placeholder,
@@ -1305,8 +1315,21 @@ nav {
 .form-group input:focus,
 .form-group textarea:focus {
   border-color: var(--accent);
-  background: #ffffff;
-  box-shadow: 0 0 0 3px rgba(230, 57, 70, 0.12);
+  background: var(--surface);
+  color: var(--text);
+  box-shadow: 0 0 0 3px rgba(230, 57, 70, 0.18);
+}
+
+/* Fix webkit browser autofill text and background visibility in Dark & Light modes */
+.form-group input:-webkit-autofill,
+.form-group input:-webkit-autofill:hover,
+.form-group input:-webkit-autofill:focus,
+.form-group textarea:-webkit-autofill,
+.form-group textarea:-webkit-autofill:hover,
+.form-group textarea:-webkit-autofill:focus {
+  -webkit-text-fill-color: var(--text) !important;
+  -webkit-box-shadow: 0 0 0px 1000px var(--surface) inset !important;
+  transition: background-color 5000s ease-in-out 0s;
 }
 
 .form-group textarea {
@@ -1910,3 +1933,336 @@ a, button, .skill-card, .project-card, .cert-card, .stat, .btn-primary, .btn-gho
   color: #fff;
   transform: translate(-2px, -2px);
 }
+
+/* --------------------------------------------------------------------------
+   8. NEW ANIMATIONS & ENHANCED UI/UX STYLES
+   -------------------------------------------------------------------------- */
+
+/* Scroll Progress Bar */
+.scroll-progress-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 3.5px;
+  width: 0%;
+  background: linear-gradient(90deg, var(--accent), var(--accent2), var(--accent3));
+  z-index: 100001;
+  transition: width 0.1s ease-out;
+  box-shadow: 0 0 10px rgba(230, 57, 70, 0.6);
+}
+
+/* Elevated Header on Scroll */
+nav.scrolled {
+  padding: 0.95rem 4rem;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+}
+
+/* Ambient Hero Orbs */
+.hero-glow-orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(100px);
+  opacity: 0.22;
+  pointer-events: none;
+  z-index: 0;
+  animation: pulseOrb 9s infinite alternate ease-in-out;
+}
+.hero-glow-orb.orb-1 {
+  top: 10%;
+  left: 10%;
+  width: 380px;
+  height: 380px;
+  background: var(--accent);
+}
+.hero-glow-orb.orb-2 {
+  bottom: 15%;
+  right: 10%;
+  width: 420px;
+  height: 420px;
+  background: var(--accent3);
+}
+@keyframes pulseOrb {
+  0% { transform: scale(1) translate(0, 0); opacity: 0.18; }
+  100% { transform: scale(1.2) translate(30px, -25px); opacity: 0.32; }
+}
+
+/* Dynamic Hero Typing Effect */
+.hero-typing-wrap {
+  display: inline-flex;
+  align-items: center;
+  font-weight: 700;
+  white-space: nowrap;
+}
+.hero-dynamic-role {
+  color: var(--accent);
+  margin-left: 0.35rem;
+  border-bottom: 2px solid var(--accent);
+  padding-bottom: 2px;
+  transition: opacity 0.2s ease;
+}
+.typing-cursor {
+  color: var(--accent);
+  font-weight: 300;
+  margin-left: 2px;
+  animation: blinkCursor 0.8s infinite;
+}
+@keyframes blinkCursor {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+/* Button Shimmer Effect */
+.btn-primary, .btn-download {
+  position: relative;
+  overflow: hidden;
+}
+.btn-primary::before, .btn-download::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 60%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+  transform: skewX(-25deg);
+  transition: left 0.75s ease;
+}
+.btn-primary:hover::before, .btn-download:hover::before {
+  left: 140%;
+}
+
+/* 3D Tilt & Magnetic Spotlight Glow on Cards */
+.skill-card, .project-card, .cert-card, .qual-item {
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.4s cubic-bezier(0.165, 0.84, 0.44, 1), box-shadow 0.4s ease, border-color 0.3s ease;
+  transform-style: preserve-3d;
+  will-change: transform;
+}
+.skill-card::after, .project-card::after, .cert-card::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(500px circle at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(230, 57, 70, 0.12), transparent 45%);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+  z-index: 3;
+}
+.skill-card:hover::after, .project-card:hover::after, .cert-card:hover::after {
+  opacity: 1;
+}
+
+/* Skills Category Filter Tabs */
+.skills-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+  margin-bottom: 2.5rem;
+}
+.skills-filter-wrap {
+  display: flex;
+  gap: 0.6rem;
+  flex-wrap: wrap;
+}
+.skills-filter-btn {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  color: var(--text2);
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  padding: 0.5rem 1.1rem;
+  border-radius: 30px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+.skills-filter-btn:hover {
+  border-color: var(--accent);
+  color: var(--text);
+  transform: translateY(-2px);
+}
+.skills-filter-btn.active {
+  background: var(--accent);
+  color: #ffffff;
+  border-color: var(--accent);
+  box-shadow: 0 4px 12px rgba(230, 57, 70, 0.3);
+}
+
+.skill-card {
+  transition: transform 0.4s ease, opacity 0.4s ease, box-shadow 0.3s ease;
+}
+.skill-card.filtered-out {
+  opacity: 0;
+  transform: scale(0.85);
+  pointer-events: none;
+  position: absolute;
+  visibility: hidden;
+}
+
+/* Skill Percent Bar Wrap */
+.skill-bar-wrap {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-top: 0.8rem;
+}
+.skill-bar-wrap .skill-bar {
+  flex: 1;
+  margin-top: 0;
+}
+.skill-percent-num {
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  color: var(--accent);
+  font-weight: 600;
+  min-width: 36px;
+  text-align: right;
+}
+
+/* Contact Email Copy Row & Toast Notification */
+.email-copy-row {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  flex-wrap: wrap;
+}
+.copy-email-btn {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  color: var(--text2);
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  padding: 0.4rem 0.85rem;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+}
+.copy-email-btn:hover {
+  background: var(--accent);
+  color: #ffffff;
+  border-color: var(--accent);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(230, 57, 70, 0.3);
+}
+
+.toast-notification {
+  position: fixed;
+  bottom: 2.5rem;
+  left: 50%;
+  transform: translateX(-50%) translateY(100px);
+  background: #1a1a2e;
+  color: #ffffff;
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  padding: 0.75rem 1.6rem;
+  border-radius: 30px;
+  box-shadow: 0 12px 35px rgba(0, 0, 0, 0.35);
+  border: 1px solid var(--accent);
+  z-index: 99990;
+  opacity: 0;
+  pointer-events: none;
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+[data-theme="dark"] .toast-notification {
+  background: #ffffff;
+  color: #1a1a2e;
+}
+.toast-notification.show {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+
+/* Floating Back to Top Button */
+.back-to-top-btn {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  color: var(--text);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 999;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(20px) scale(0.9);
+  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+}
+.back-to-top-btn.visible {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0) scale(1);
+}
+.back-to-top-btn:hover {
+  transform: translateY(-4px) scale(1.05);
+  box-shadow: 0 10px 25px rgba(230, 57, 70, 0.3);
+  border-color: var(--accent);
+}
+.progress-ring {
+  position: absolute;
+  top: 0;
+  left: 0;
+  transform: rotate(-90deg);
+  pointer-events: none;
+}
+.progress-ring-circle {
+  stroke-dasharray: 125.6;
+  stroke-dashoffset: 125.6;
+  transition: stroke-dashoffset 0.1s ease-out;
+}
+.arrow-up {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: var(--accent);
+  z-index: 2;
+}
+
+@media (max-width: 768px) {
+  nav.scrolled {
+    padding: 0.8rem 1.5rem;
+  }
+  .back-to-top-btn {
+    bottom: 1.5rem;
+    right: 1.5rem;
+    width: 42px;
+    height: 42px;
+  }
+  .progress-ring {
+    width: 42px;
+    height: 42px;
+  }
+  .progress-ring-circle {
+    r: 17;
+    cx: 21;
+    cy: 21;
+    stroke-dasharray: 106.8;
+    stroke-dashoffset: 106.8;
+  }
+}
+
+/* 3D Background Model Canvas */
+.bg-3d-canvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+  z-index: 1;
+  opacity: 0.35;
+  transition: opacity 0.5s ease;
+}
+[data-theme="dark"] .bg-3d-canvas {
+  opacity: 0.58;
+}
