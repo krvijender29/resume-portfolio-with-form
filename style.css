@@ -2249,26 +2249,6 @@ nav.scrolled {
     stroke-dasharray: 106.8;
     stroke-dashoffset: 106.8;
   }
-
-  /* 3D background model — scale down on mobile so it doesn't overpower the layout */
-  .bg-3d-canvas {
-    opacity: 0.2;
-    transform: scale(0.62) translateX(-30%);
-    transform-origin: center center;
-  }
-  [data-theme="dark"] .bg-3d-canvas {
-    opacity: 0.35;
-  }
-}
-
-@media (max-width: 480px) {
-  .bg-3d-canvas {
-    opacity: 0.15;
-    transform: scale(0.5) translateX(-50%);
-  }
-  [data-theme="dark"] .bg-3d-canvas {
-    opacity: 0.28;
-  }
 }
 
 /* 3D Background Model Canvas */
@@ -2280,9 +2260,28 @@ nav.scrolled {
   height: 100vh;
   pointer-events: none;
   z-index: 1;
-  opacity: 0.35;
+  opacity: 0.32;
   transition: opacity 0.5s ease;
 }
+
 [data-theme="dark"] .bg-3d-canvas {
-  opacity: 0.58;
+  opacity: 0.5;
+}
+
+@media (max-width: 768px) {
+  .bg-3d-canvas {
+    opacity: 0.22;
+  }
+  [data-theme="dark"] .bg-3d-canvas {
+    opacity: 0.35;
+  }
+}
+
+@media (max-width: 480px) {
+  .bg-3d-canvas {
+    opacity: 0.18;
+  }
+  [data-theme="dark"] .bg-3d-canvas {
+    opacity: 0.28;
+  }
 }

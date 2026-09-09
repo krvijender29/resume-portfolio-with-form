@@ -493,8 +493,19 @@ document.addEventListener('DOMContentLoaded', () => {
   const canvas3D = document.getElementById('bg-3d-canvas');
   if (canvas3D && typeof THREE !== 'undefined') {
     const scene = new THREE.Scene();
-    const isMobile = () => window.innerWidth <= 768;
-    const getCameraZ = () => isMobile() ? 14 : 8;
+    const getModelScale = () => {
+      const w = window.innerWidth;
+      if (w <= 480) return 0.45; // Compact size for mobile phones
+      if (w <= 768) return 0.60; // Medium size for tablets
+      return 1.0;                // Standard size for desktop
+    };
+
+    const getCameraZ = () => {
+      const w = window.innerWidth;
+      if (w <= 480) return 9.5;
+      if (w <= 768) return 9.0;
+      return 8.0;
+    };
 
     const camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 1000);
     camera.position.set(0, 0, getCameraZ());
@@ -521,6 +532,19 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const modelGroup = new THREE.Group();
     scene.add(modelGroup);
+
+    function update3DLayout() {
+      const w = window.innerWidth;
+      const h = window.innerHeight;
+      camera.aspect = w / h;
+      camera.position.z = getCameraZ();
+      camera.updateProjectionMatrix();
+      renderer.setSize(w, h);
+
+      const s = getModelScale();
+      modelGroup.scale.set(s, s, s);
+    }
+    update3DLayout();
 
     let isGLBLoaded = false;
 
@@ -663,12 +687,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // Window Resize Handler
-    window.addEventListener('resize', () => {
-      camera.aspect = window.innerWidth / window.innerHeight;
-      camera.position.z = getCameraZ();
-      camera.updateProjectionMatrix();
-      renderer.setSize(window.innerWidth, window.innerHeight);
-    });
+    window.addEventListener('resize', update3DLayout);
 
     // Animation Loop
     function animate3D() {
@@ -678,8 +697,9 @@ document.addEventListener('DOMContentLoaded', () => {
       modelGroup.rotation.y += (targetRotationY + mouseX - modelGroup.rotation.y) * 0.05;
       modelGroup.rotation.x += (mouseY - modelGroup.rotation.x) * 0.05;
 
-      // Floating sine wave bob animation
-      modelGroup.position.y = Math.sin(Date.now() * 0.0012) * 0.22;
+      // Floating sine wave bob animation (reduced amplitude on mobile)
+      const bobAmp = window.innerWidth <= 768 ? 0.10 : 0.22;
+      modelGroup.position.y = Math.sin(Date.now() * 0.0012) * bobAmp;
 
       // Globe & Ring Rotations
       if (dataGlobe) dataGlobe.rotation.y += 0.003;
