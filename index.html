@@ -28,15 +28,8 @@
   
   <!-- STYLESHEET -->
   <link rel="stylesheet" href="style.css">
-
-  <!-- THREE.JS & GLTF LOADER FOR 3D AVATAR BACKGROUND -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/GLTFLoader.js"></script>
 </head>
 <body>
-
-  <!-- 3D BACKGROUND MODEL CANVAS -->
-  <canvas id="bg-3d-canvas" class="bg-3d-canvas"></canvas>
 
   <!-- SCROLL PROGRESS INDICATOR -->
   <div id="scroll-progress-bar" class="scroll-progress-bar"></div>
@@ -81,24 +74,33 @@
     </div>
   </nav>
 
-  <!-- HERO SECTION -->
   <section class="hero">
     <div class="hero-grid-bg"></div>
     <div class="hero-glow-orb orb-1"></div>
     <div class="hero-glow-orb orb-2"></div>
-    <div class="hero-tag">Data Analyst · Open to Internships · Jaipur, India 🇮🇳</div>
-    <h1 class="hero-name">
-      Vijender<br>
-      <span class="line2">Singh</span>
-    </h1>
-    <p class="hero-subtitle">
-      Building with code, learning with curiosity —<br>
-      <span class="hero-typing-wrap">I am a <span id="hero-dynamic-role" class="hero-dynamic-role">Data Analyst</span><span class="typing-cursor">|</span></span>
-    </p>
-    <div class="hero-cta">
-      <a href="#contact" class="btn-primary">Let's Talk</a>
-      <a href="./Vijender_Singh_Resume.pdf" download="Vijender_Singh_Resume.pdf" class="btn-download">⬇ Download Resume</a>
+
+    <!-- FULL-SCREEN HERO BACKGROUND CANVAS (Scroll-Driven 300-Frame Head Animation) -->
+    <div class="hero-bg-character-fullscreen" id="heroBgCharacterFullscreen">
+      <canvas id="hero-scroll-canvas"></canvas>
     </div>
+
+    <!-- HERO FOREGROUND CONTENT -->
+    <div class="hero-content">
+      <div class="hero-tag">Data Analyst · Open to Internships · Jaipur, India 🇮🇳</div>
+      <h1 class="hero-name">
+        Vijender<br>
+        <span class="line2">Singh</span>
+      </h1>
+      <p class="hero-subtitle">
+        Building with code, learning with curiosity —<br>
+        <span class="hero-typing-wrap">I am a <span id="hero-dynamic-role" class="hero-dynamic-role">Data Analyst</span><span class="typing-cursor">|</span></span>
+      </p>
+      <div class="hero-cta">
+        <a href="#contact" class="btn-primary">Let's Talk</a>
+        <a href="./Vijender_Singh_Resume.pdf" download="Vijender_Singh_Resume.pdf" class="btn-download">⬇ Download Resume</a>
+      </div>
+    </div>
+
     <div class="hero-scroll">Scroll to explore</div>
     <div class="hero-location">Jaipur, Rajasthan, India</div>
   </section>

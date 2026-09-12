@@ -489,233 +489,146 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // 13. THREE.JS 3D AVATAR BACKGROUND WITH SCROLL-DRIVEN ROTATION
-  const canvas3D = document.getElementById('bg-3d-canvas');
-  if (canvas3D && typeof THREE !== 'undefined') {
-    const scene = new THREE.Scene();
-    const getModelScale = () => {
-      const w = window.innerWidth;
-      if (w <= 480) return 0.45; // Compact size for mobile phones
-      if (w <= 768) return 0.60; // Medium size for tablets
-      return 1.0;                // Standard size for desktop
-    };
+  // 13. FULL-SCREEN SCROLL-CONTROLLED 300-FRAME CHARACTER ANIMATION
+  const scrollCanvas = document.getElementById('hero-scroll-canvas');
+  if (scrollCanvas) {
+    const ctx = scrollCanvas.getContext('2d');
+    const TOTAL_FRAMES = 300;
+    const frameImages = new Array(TOTAL_FRAMES);
 
-    const getCameraZ = () => {
-      const w = window.innerWidth;
-      if (w <= 480) return 9.5;
-      if (w <= 768) return 9.0;
-      return 8.0;
-    };
+    let targetProgress = 0;   // 0.0 (top) to 1.0 (end of hero scroll range)
+    let currentProgress = 0;  // Eased progress for ultra-smooth 60fps interpolation
+    let lastDrawnIndex = -1;
 
-    const camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 1000);
-    camera.position.set(0, 0, getCameraZ());
+    // Responsive Canvas Resize (covering hero viewport with retina DPR)
+    function resizeCanvas() {
+      const hero = document.querySelector('.hero');
+      const w = hero ? hero.clientWidth : window.innerWidth;
+      const h = hero ? hero.clientHeight : window.innerHeight;
+      const dpr = Math.min(window.devicePixelRatio || 1, 2);
 
-    const renderer = new THREE.WebGLRenderer({
-      canvas: canvas3D,
-      alpha: true,
-      antialias: true,
-    });
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-    renderer.setSize(window.innerWidth, window.innerHeight);
+      scrollCanvas.width = Math.round(w * dpr);
+      scrollCanvas.height = Math.round(h * dpr);
 
-    // Lights
-    const ambientLight = new THREE.AmbientLight(0xffffff, 0.85);
-    scene.add(ambientLight);
-
-    const dirLight1 = new THREE.DirectionalLight(0xe63946, 1.4);
-    dirLight1.position.set(5, 5, 5);
-    scene.add(dirLight1);
-
-    const dirLight2 = new THREE.DirectionalLight(0x2a9d8f, 1.0);
-    dirLight2.position.set(-5, -3, -2);
-    scene.add(dirLight2);
-
-    const modelGroup = new THREE.Group();
-    scene.add(modelGroup);
-
-    function update3DLayout() {
-      const w = window.innerWidth;
-      const h = window.innerHeight;
-      camera.aspect = w / h;
-      camera.position.z = getCameraZ();
-      camera.updateProjectionMatrix();
-      renderer.setSize(w, h);
-
-      const s = getModelScale();
-      modelGroup.scale.set(s, s, s);
+      // Re-draw active frame immediately after resize
+      const targetIndex = Math.min(TOTAL_FRAMES - 1, Math.max(0, Math.round(currentProgress * (TOTAL_FRAMES - 1))));
+      drawFrameCover(targetIndex);
     }
-    update3DLayout();
 
-    let isGLBLoaded = false;
+    window.addEventListener('resize', resizeCanvas, { passive: true });
 
-    // Attempt loading custom avatar GLB model
-    if (typeof THREE.GLTFLoader !== 'undefined') {
-      const loader = new THREE.GLTFLoader();
-      const modelPaths = ['./profile_3d.glb', './avatar.glb', './model.glb'];
-      
-      function tryLoadModel(index) {
-        if (index >= modelPaths.length) {
-          if (!isGLBLoaded) createDataAnalyst3DModel();
-          return;
-        }
-        loader.load(
-          modelPaths[index],
-          (gltf) => {
-            isGLBLoaded = true;
-            const model = gltf.scene;
-            model.scale.set(2, 2, 2);
-            model.position.set(0, -1, 0);
-            modelGroup.add(model);
-          },
-          undefined,
-          () => {
-            tryLoadModel(index + 1);
+    // Object-fit: cover rendering engine on canvas
+    function drawFrameCover(frameIndex) {
+      // Find requested image or nearest already-loaded frame to eliminate blank flash
+      let img = frameImages[frameIndex];
+      if (!img || !img.complete || img.naturalWidth === 0) {
+        for (let offset = 1; offset < TOTAL_FRAMES; offset++) {
+          const down = frameIndex - offset;
+          const up = frameIndex + offset;
+          if (down >= 0 && frameImages[down] && frameImages[down].complete) {
+            img = frameImages[down];
+            break;
           }
-        );
+          if (up < TOTAL_FRAMES && frameImages[up] && frameImages[up].complete) {
+            img = frameImages[up];
+            break;
+          }
+        }
       }
-      tryLoadModel(0);
-    } else {
-      createDataAnalyst3DModel();
+
+      if (!img || !img.complete || img.naturalWidth === 0) return;
+
+      const cw = scrollCanvas.width;
+      const ch = scrollCanvas.height;
+      const iw = img.naturalWidth;
+      const ih = img.naturalHeight;
+
+      // Calculate scale to cover canvas (100vw x 100vh)
+      const scale = Math.max(cw / iw, ch / ih);
+      const nw = iw * scale;
+      const nh = ih * scale;
+
+      // Character positioning:
+      // Position character prominently on the RIGHT side (clear of the left text)
+      const isMobile = window.innerWidth <= 768;
+      const charTargetX = isMobile ? (cw * 0.5) : (cw * 0.74);
+      const nx = charTargetX - (nw * 0.5);
+      // Anchor vertically so hair and head sit comfortably below the top banner (navbar)
+      const dpr = Math.min(window.devicePixelRatio || 1, 2);
+      const verticalShift = (isMobile ? 32 : 65) * dpr;
+      const ny = ((ch - nh) * 0.15) + verticalShift;
+
+      const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+      if (!isDark) {
+        ctx.fillStyle = '#f2e7d3';
+        ctx.fillRect(0, 0, cw, ch);
+      } else {
+        ctx.clearRect(0, 0, cw, ch);
+      }
+      ctx.drawImage(img, nx, ny, nw, nh);
+      lastDrawnIndex = frameIndex;
     }
 
-    let dataGlobe, globeGrid, orbitRing, barGroup;
-    let dataBars = [];
+    // 1. Instant First Paint: Load neutral front frame (frame_001.png) immediately
+    const neutralImg = new Image();
+    neutralImg.src = './frames/frame_001.png';
+    neutralImg.onload = () => {
+      frameImages[0] = neutralImg;
+      resizeCanvas();
+      drawFrameCover(0);
+    };
+    frameImages[0] = neutralImg;
 
-    // 3D Interactive Data Charts & Globe Model (Data Analyst / Business Intelligence)
-    function createDataAnalyst3DModel() {
-      // 1. Central Data Globe (Solid Core + Latitude/Longitude Grid)
-      const globeGeo = new THREE.SphereGeometry(1.4, 32, 32);
-      const globeMat = new THREE.MeshStandardMaterial({
-        color: 0x2a9d8f,
-        roughness: 0.3,
-        metalness: 0.8,
-        emissive: 0x0a3d36,
-        flatShading: true,
-      });
-      dataGlobe = new THREE.Mesh(globeGeo, globeMat);
-      modelGroup.add(dataGlobe);
+    // 2. Preload remaining 299 frames sequentially in background
+    for (let i = 2; i <= TOTAL_FRAMES; i++) {
+      const img = new Image();
+      img.src = `./frames/frame_${String(i).padStart(3, '0')}.png`;
+      frameImages[i - 1] = img;
+    }
 
-      // Globe Latitude/Longitude Wireframe Ring Grid
-      const gridGeo = new THREE.SphereGeometry(1.48, 20, 20);
-      const gridMat = new THREE.MeshBasicMaterial({
-        color: 0xe63946,
-        wireframe: true,
-        transparent: true,
-        opacity: 0.45,
-      });
-      globeGrid = new THREE.Mesh(gridGeo, gridMat);
-      modelGroup.add(globeGrid);
+    // 3. Scroll progress calculation
+    // 0% at scrollY = 0 (top of page, neutral front-facing pose)
+    // 100% when scrolled past the hero section (head smoothly tilted down)
+    function updateScrollProgress() {
+      const hero = document.querySelector('.hero');
+      const heroHeight = hero ? hero.offsetHeight : window.innerHeight;
+      const scrollY = window.scrollY || window.pageYOffset || 0;
+      targetProgress = Math.min(1, Math.max(0, scrollY / heroHeight));
+    }
 
-      // 2. 3D Dynamic Bar Chart Columns (KPI Metrics)
-      barGroup = new THREE.Group();
-      modelGroup.add(barGroup);
+    window.addEventListener('scroll', updateScrollProgress, { passive: true });
+    updateScrollProgress();
+    resizeCanvas();
 
-      const barHeights = [1.2, 1.8, 2.4, 1.5, 2.1, 2.7];
-      const barColors = [0xe63946, 0xf4a261, 0x2a9d8f, 0xf7c948, 0xe63946, 0x2a9d8f];
-      const barCount = barHeights.length;
-      const radius = 2.4;
+    // 4. Smooth 60 FPS requestAnimationFrame Loop with lerp interpolation
+    function renderLoop() {
+      requestAnimationFrame(renderLoop);
 
-      for (let i = 0; i < barCount; i++) {
-        const h = barHeights[i];
-        const barGeo = new THREE.BoxGeometry(0.32, h, 0.32);
-        const barMat = new THREE.MeshStandardMaterial({
-          color: barColors[i],
-          metalness: 0.7,
-          roughness: 0.2,
-          emissive: THREE.Color.NAMES[barColors[i]] || 0x111111,
-        });
-        const barMesh = new THREE.Mesh(barGeo, barMat);
-        const angle = (i / barCount) * Math.PI * 2;
-        barMesh.position.x = Math.cos(angle) * radius;
-        barMesh.position.z = Math.sin(angle) * radius;
-        barMesh.position.y = h / 2 - 1.2;
-        barMesh.userData = { initialY: barMesh.position.y, initialH: h, speed: 0.002 + i * 0.0008 };
-        barGroup.add(barMesh);
-        dataBars.push(barMesh);
+      // Lerp easing ensures silky-smooth frame transitions even on fast scrolls/flicks
+      const delta = targetProgress - currentProgress;
+      if (Math.abs(delta) > 0.0002) {
+        currentProgress += delta * 0.12;
+      } else {
+        currentProgress = targetProgress;
       }
 
-      // 3. Orbiting Data Ring (Horizontal Analytics Axis)
-      const ringGeo = new THREE.TorusGeometry(3.3, 0.035, 16, 100);
-      const ringMat = new THREE.MeshStandardMaterial({
-        color: 0xf4a261,
-        metalness: 0.9,
-        roughness: 0.1,
-        emissive: 0x4a2c11,
-      });
-      orbitRing = new THREE.Mesh(ringGeo, ringMat);
-      orbitRing.rotation.x = Math.PI / 2.5;
-      modelGroup.add(orbitRing);
+      // Map progress (0.0 to 1.0) to frame index (0 to 299)
+      const targetIndex = Math.min(TOTAL_FRAMES - 1, Math.max(0, Math.round(currentProgress * (TOTAL_FRAMES - 1))));
 
-      // 4. Floating Data Nodes & Particles
-      const nodeColors = [0xe63946, 0x2a9d8f, 0xf7c948, 0xf4a261];
-      for (let i = 0; i < 16; i++) {
-        const nodeGeo = new THREE.SphereGeometry(0.07 + Math.random() * 0.05, 10, 10);
-        const nodeMat = new THREE.MeshBasicMaterial({
-          color: nodeColors[i % nodeColors.length],
-        });
-        const nodeMesh = new THREE.Mesh(nodeGeo, nodeMat);
-        const u = Math.random();
-        const v = Math.random();
-        const theta = u * 2.0 * Math.PI;
-        const phi = Math.acos(2.0 * v - 1.0);
-        const r = 2.6 + Math.random() * 0.9;
-        nodeMesh.position.x = r * Math.sin(phi) * Math.cos(theta);
-        nodeMesh.position.y = r * Math.sin(phi) * Math.sin(theta);
-        nodeMesh.position.z = r * Math.cos(phi);
-        modelGroup.add(nodeMesh);
+      if (targetIndex !== lastDrawnIndex) {
+        drawFrameCover(targetIndex);
       }
     }
 
-    // Scroll & Cursor Rotation Math
-    let targetRotationY = 0;
-    let mouseX = 0;
-    let mouseY = 0;
-
-    function update3DScroll() {
-      const scrollTop = window.scrollY;
-      const docHeight = document.documentElement.scrollHeight - window.innerHeight;
-      const scrollRatio = docHeight > 0 ? scrollTop / docHeight : 0;
-      targetRotationY = scrollRatio * Math.PI * 4; // 2 complete 360deg spins on scroll
-    }
-
-    window.addEventListener('scroll', update3DScroll, { passive: true });
-    update3DScroll();
-
-    document.addEventListener('mousemove', (e) => {
-      mouseX = (e.clientX / window.innerWidth - 0.5) * 0.35;
-      mouseY = (e.clientY / window.innerHeight - 0.5) * 0.35;
-    });
-
-    // Window Resize Handler
-    window.addEventListener('resize', update3DLayout);
-
-    // Animation Loop
-    function animate3D() {
-      requestAnimationFrame(animate3D);
-
-      // Smooth lerp for scroll rotation and cursor parallax
-      modelGroup.rotation.y += (targetRotationY + mouseX - modelGroup.rotation.y) * 0.05;
-      modelGroup.rotation.x += (mouseY - modelGroup.rotation.x) * 0.05;
-
-      // Floating sine wave bob animation (reduced amplitude on mobile)
-      const bobAmp = window.innerWidth <= 768 ? 0.10 : 0.22;
-      modelGroup.position.y = Math.sin(Date.now() * 0.0012) * bobAmp;
-
-      // Globe & Ring Rotations
-      if (dataGlobe) dataGlobe.rotation.y += 0.003;
-      if (globeGrid) globeGrid.rotation.y -= 0.002;
-      if (orbitRing) orbitRing.rotation.z += 0.004;
-
-      // Pulsing 3D Bar Chart Height Animation (KPI Dynamics)
-      const time = Date.now() * 0.0025;
-      dataBars.forEach((bar, idx) => {
-        const pulse = Math.sin(time + idx * 0.8) * 0.2;
-        bar.scale.y = 1 + pulse * 0.3;
+    // Redraw hero canvas immediately when dark/light theme is toggled
+    const themeBtn = document.getElementById('themeToggleBtn');
+    if (themeBtn) {
+      themeBtn.addEventListener('click', () => {
+        lastDrawnIndex = -1;
       });
-
-      renderer.render(scene, camera);
     }
-    animate3D();
+
+    renderLoop();
   }
 
   // Welcome console message
