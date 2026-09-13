@@ -489,15 +489,15 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // 13. FULL-SCREEN SCROLL-CONTROLLED 300-FRAME CHARACTER ANIMATION (Individual Full-Quality JPG Frames)
+  // 13. FULL-SCREEN SCROLL-CONTROLLED CHARACTER ANIMATION (66 Transparent PNG Frames)
   const scrollCanvas = document.getElementById('hero-scroll-canvas');
   if (scrollCanvas) {
     const ctx = scrollCanvas.getContext('2d');
-    const TOTAL_FRAMES = 300;
+    const TOTAL_FRAMES = 66;
     const frameImages = new Array(TOTAL_FRAMES);
 
-    let targetProgress = 0;   // 0.0 (top) to 1.0 (end of hero scroll range)
-    let currentProgress = 0;  // Eased progress for ultra-smooth 60fps interpolation
+    let targetProgress = 0;   // 0.0 (top, face looking up) to 1.0 (scrolled, face looking down)
+    let currentProgress = 0;  // Eased progress for smooth, snappy 60fps tracking
     let lastDrawnIndex = -1;
 
     // Responsive Canvas Resize (covering hero viewport with retina DPR)
@@ -525,11 +525,11 @@ document.addEventListener('DOMContentLoaded', () => {
         for (let offset = 1; offset < TOTAL_FRAMES; offset++) {
           const down = frameIndex - offset;
           const up = frameIndex + offset;
-          if (down >= 0 && frameImages[down] && frameImages[down].complete) {
+          if (down >= 0 && frameImages[down] && frameImages[down].complete && frameImages[down].naturalWidth > 0) {
             img = frameImages[down];
             break;
           }
-          if (up < TOTAL_FRAMES && frameImages[up] && frameImages[up].complete) {
+          if (up < TOTAL_FRAMES && frameImages[up] && frameImages[up].complete && frameImages[up].naturalWidth > 0) {
             img = frameImages[up];
             break;
           }
@@ -574,16 +574,22 @@ document.addEventListener('DOMContentLoaded', () => {
     };
     frameImages[0] = neutralImg;
 
-    // 2. Preload remaining 299 frames sequentially in background
+    // 2. Preload remaining frames concurrently in background
     for (let i = 2; i <= TOTAL_FRAMES; i++) {
       const img = new Image();
       img.src = `./frame_png/frame_${String(i).padStart(3, '0')}.png`;
+      img.onload = () => {
+        const targetIdx = Math.min(TOTAL_FRAMES - 1, Math.max(0, Math.round(currentProgress * (TOTAL_FRAMES - 1))));
+        if (targetIdx === i - 1 && lastDrawnIndex !== targetIdx) {
+          drawFrameCover(targetIdx);
+        }
+      };
       frameImages[i - 1] = img;
     }
 
     // 3. Scroll progress calculation
-    // 0% at scrollY = 0 (top of page, neutral front-facing pose)
-    // 100% when scrolled past the hero section (head smoothly tilted down)
+    // Scroll down: face moves down (frame 0 -> 65)
+    // Scroll up: face moves up (frame 65 -> 0)
     function updateScrollProgress() {
       const hero = document.querySelector('.hero');
       const heroHeight = hero ? hero.offsetHeight : window.innerHeight;
@@ -595,19 +601,19 @@ document.addEventListener('DOMContentLoaded', () => {
     updateScrollProgress();
     resizeCanvas();
 
-    // 4. Smooth 60 FPS requestAnimationFrame Loop with lerp interpolation
+    // 4. Smooth 60 FPS requestAnimationFrame Loop with responsive lerp tracking
     function renderLoop() {
       requestAnimationFrame(renderLoop);
 
-      // Lerp easing ensures silky-smooth frame transitions even on fast scrolls/flicks
+      // Responsive lerp (0.24 factor): snappily tracks scroll down and scroll up without lag
       const delta = targetProgress - currentProgress;
-      if (Math.abs(delta) > 0.0002) {
-        currentProgress += delta * 0.12;
+      if (Math.abs(delta) > 0.001) {
+        currentProgress += delta * 0.24;
       } else {
         currentProgress = targetProgress;
       }
 
-      // Map progress (0.0 to 1.0) to frame index (0 to 299)
+      // Map progress (0.0 to 1.0) to frame index (0 to 65)
       const targetIndex = Math.min(TOTAL_FRAMES - 1, Math.max(0, Math.round(currentProgress * (TOTAL_FRAMES - 1))));
 
       if (targetIndex !== lastDrawnIndex) {
