@@ -565,9 +565,9 @@ document.addEventListener('DOMContentLoaded', () => {
       lastDrawnIndex = frameIndex;
     }
 
-    // 1. Instant First Paint: Load neutral front frame (frame_001.jpg) immediately
+    // 1. Instant First Paint: Load neutral front frame (frame_001.png) immediately
     const neutralImg = new Image();
-    neutralImg.src = './frames/frame_001.jpg';
+    neutralImg.src = './frame_png/frame_001.png';
     neutralImg.onload = () => {
       frameImages[0] = neutralImg;
       resizeCanvas();
@@ -578,7 +578,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // 2. Preload remaining 299 frames sequentially in background
     for (let i = 2; i <= TOTAL_FRAMES; i++) {
       const img = new Image();
-      img.src = `./frames/frame_${String(i).padStart(3, '0')}.jpg`;
+      img.src = `./frame_png/frame_${String(i).padStart(3, '0')}.png`;
       frameImages[i - 1] = img;
     }
 
