@@ -14,16 +14,9 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:ital,wght@0,300;0,400;0,500;1,300&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
   
-  <!-- THEME PRE-INITIALIZATION (Prevents flash of light theme) -->
   <script>
-    (function() {
-      const savedTheme = localStorage.getItem('theme');
-      if (savedTheme) {
-        document.documentElement.setAttribute('data-theme', savedTheme);
-      } else if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
-        document.documentElement.setAttribute('data-theme', 'dark');
-      }
-    })();
+    localStorage.removeItem('theme');
+    document.documentElement.removeAttribute('data-theme');
   </script>
   
   <!-- STYLESHEET -->
@@ -66,21 +59,18 @@
       <li><a href="#contact" class="nav-action-btn">Contact</a></li>
     </ul>
     <div class="nav-controls">
-      <button class="theme-toggle-btn" id="themeToggleBtn" aria-label="Toggle Dark/Light Mode" title="Toggle Theme">
-        <span class="theme-icon-sun">☀️</span>
-        <span class="theme-icon-moon">🌙</span>
-      </button>
       <button class="mobile-menu-toggle" aria-label="Toggle Navigation Menu">☰</button>
     </div>
+    <!-- Subtle high-performance sprite sheet loading indicator -->
+    <div class="sprite-loader-bar" id="spriteLoaderBar" aria-hidden="true"></div>
   </nav>
 
   <section class="hero">
-    <div class="hero-grid-bg"></div>
-    <div class="hero-glow-orb orb-1"></div>
-    <div class="hero-glow-orb orb-2"></div>
-
     <!-- FULL-SCREEN HERO BACKGROUND CANVAS (Scroll-Driven 300-Frame Head Animation) -->
     <div class="hero-bg-character-fullscreen" id="heroBgCharacterFullscreen">
+      <div class="hero-glow-orb orb-1"></div>
+      <div class="hero-glow-orb orb-2"></div>
+      <div class="hero-grid-bg"></div>
       <canvas id="hero-scroll-canvas"></canvas>
     </div>
 
@@ -457,5 +447,15 @@
   <div id="toastNotification" class="toast-notification" aria-live="polite"></div>
 
   <script src="script.js"></script>
+  <!-- SERVICE WORKER REGISTRATION (Cache Acceleration) -->
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('./sw.js').catch((err) => {
+          console.debug('ServiceWorker notice:', err);
+        });
+      });
+    }
+  </script>
 </body>
 </html>

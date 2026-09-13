@@ -25,22 +25,6 @@
   --font-serif: 'Instrument Serif', serif;
 }
 
-/* Dark Theme Color Palette */
-[data-theme="dark"] {
-  --bg: #0c0c14;
-  --bg2: #12121e;
-  --bg3: #18182b;
-  --surface: #161626;
-  --border: #2b2b48;
-  --accent: #ff4757;
-  --accent-hover: #ff6b77;
-  --accent2: #f4a261;
-  --accent3: #2ec4b6;
-  --accent4: #ffd166;
-  --text: #f4f4fa;
-  --text2: #a5a5c6;
-  --text3: #75759a;
-}
 
 /* --------------------------------------------------------------------------
    2. RESET & BASE
@@ -215,6 +199,32 @@ nav {
   transition: padding 0.3s ease;
 }
 
+/* Subtle Sprite Sheet Loading Progress Bar */
+.sprite-loader-bar {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 2.5px;
+  background: linear-gradient(90deg, var(--accent), var(--accent2), var(--accent3), var(--accent));
+  background-size: 200% 100%;
+  animation: spriteBarShimmer 1.6s infinite linear;
+  opacity: 1;
+  transition: opacity 0.5s ease;
+  pointer-events: none;
+  z-index: 101;
+}
+
+.sprite-loader-bar.loaded {
+  opacity: 0;
+  pointer-events: none;
+}
+
+@keyframes spriteBarShimmer {
+  0% { background-position: 100% 0; }
+  100% { background-position: -100% 0; }
+}
+
 .nav-logo {
   font-size: 1.15rem;
   font-weight: 800;
@@ -296,71 +306,10 @@ nav {
   transform: translateY(-2px);
 }
 
-[data-theme="dark"] .nav-action-btn:hover {
-  background: rgba(255, 71, 87, 0.18);
-  box-shadow: 0 4px 15px rgba(255, 71, 87, 0.3);
-}
-
 .nav-controls {
   display: flex;
   align-items: center;
   gap: 0.75rem;
-}
-
-.theme-toggle-btn {
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: 8px;
-  width: 40px;
-  height: 40px;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  color: var(--text);
-  font-size: 1.15rem;
-  transition: all 0.25s ease;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
-}
-
-.theme-toggle-btn:hover {
-  border-color: var(--accent);
-  transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(230, 57, 70, 0.15);
-}
-
-.theme-icon-sun {
-  display: none;
-}
-
-.theme-icon-moon {
-  display: block;
-}
-
-[data-theme="dark"] .theme-icon-sun {
-  display: block;
-}
-
-[data-theme="dark"] .theme-icon-moon {
-  display: none;
-}
-
-[data-theme="dark"] nav {
-  background: rgba(12, 12, 20, 0.92);
-}
-
-[data-theme="dark"] .cursor {
-  mix-blend-mode: screen;
-}
-
-[data-theme="dark"] .projects {
-  background: #14101e;
-  border-top: 1px solid var(--border);
-  border-bottom: 1px solid var(--border);
-}
-
-[data-theme="dark"] footer {
-  background: #08080e;
 }
 
 .mobile-menu-toggle {
@@ -389,10 +338,6 @@ nav {
   position: relative;
   overflow: hidden;
   background: #f2e7d3;
-}
-
-[data-theme="dark"] .hero {
-  background: var(--bg);
 }
 
 .hero-content {
@@ -443,14 +388,14 @@ nav {
 }
 
 .hero-name .line2 {
-  color: transparent;
-  -webkit-text-stroke: 2px var(--border);
+  color: #000000;
+  -webkit-text-stroke: 0;
   display: block;
-  transition: -webkit-text-stroke-color 0.3s;
+  transition: color 0.3s ease;
 }
 
 .hero-name .line2:hover {
-  -webkit-text-stroke-color: var(--text);
+  color: var(--accent);
 }
 
 .hero-subtitle {
@@ -573,6 +518,11 @@ nav {
   z-index: 1;
   pointer-events: none;
   overflow: hidden;
+  /* 2-color grading: ambient soft red and subtle green combination matching theme */
+  background:
+    radial-gradient(ellipse 65% 55% at 15% 25%, rgba(230, 57, 70, 0.12) 0%, transparent 70%),
+    radial-gradient(ellipse 65% 55% at 85% 75%, rgba(42, 157, 143, 0.14) 0%, transparent 70%),
+    #fdf6ee;
 }
 
 #hero-scroll-canvas {
@@ -583,14 +533,11 @@ nav {
   height: 100%;
   display: block;
   pointer-events: none;
+  mix-blend-mode: multiply;
   /* Seamless bottom gradient fade */
   mask-image: linear-gradient(to bottom, black 82%, transparent 100%);
   -webkit-mask-image: linear-gradient(to bottom, black 82%, transparent 100%);
   transition: opacity 0.4s ease;
-}
-
-[data-theme="dark"] #hero-scroll-canvas {
-  opacity: 0.85;
 }
 
 @media (max-width: 768px) {
@@ -599,9 +546,6 @@ nav {
   }
   #hero-scroll-canvas {
     opacity: 0.45; /* Subtle background presence on mobile so text remains 100% crisp */
-  }
-  [data-theme="dark"] #hero-scroll-canvas {
-    opacity: 0.38;
   }
 }
 
@@ -1583,10 +1527,6 @@ a, button, .skill-card, .project-card, .cert-card, .stat, .btn-primary, .btn-gho
     transform: translateY(0);
   }
 
-  [data-theme="dark"] .nav-links {
-    background: rgba(12, 12, 20, 0.98);
-  }
-
   .nav-links a {
     font-size: 0.95rem;
     padding: 0.4rem 0;
@@ -2031,9 +1971,6 @@ nav.scrolled {
   left: 10%;
   width: 380px;
   height: 380px;
-  background: #f2e7d3;
-}
-[data-theme="dark"] .hero-glow-orb.orb-1 {
   background: var(--accent);
 }
 .hero-glow-orb.orb-2 {
@@ -2230,10 +2167,7 @@ nav.scrolled {
   pointer-events: none;
   transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
-[data-theme="dark"] .toast-notification {
-  background: #ffffff;
-  color: #1a1a2e;
-}
+
 .toast-notification.show {
   opacity: 1;
   transform: translateX(-50%) translateY(0);
