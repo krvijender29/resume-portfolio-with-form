@@ -564,9 +564,9 @@ document.addEventListener('DOMContentLoaded', () => {
       lastDrawnIndex = frameIndex;
     }
 
-    // 1. Instant First Paint: Load neutral front frame (frame_001.png) immediately
+    // 1. Instant First Paint: Load neutral front frame (ezgif-frame-001.png) immediately
     const neutralImg = new Image();
-    neutralImg.src = './frame_png/frame_001.png';
+    neutralImg.src = './ezgif-frame-png/ezgif-frame-001.png';
     neutralImg.onload = () => {
       frameImages[0] = neutralImg;
       resizeCanvas();
@@ -577,7 +577,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // 2. Preload remaining frames concurrently in background
     for (let i = 2; i <= TOTAL_FRAMES; i++) {
       const img = new Image();
-      img.src = `./frame_png/frame_${String(i).padStart(3, '0')}.png`;
+      img.src = `./ezgif-frame-png/ezgif-frame-${String(i).padStart(3, '0')}.png`;
       img.onload = () => {
         const targetIdx = Math.min(TOTAL_FRAMES - 1, Math.max(0, Math.round(currentProgress * (TOTAL_FRAMES - 1))));
         if (targetIdx === i - 1 && lastDrawnIndex !== targetIdx) {

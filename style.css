@@ -444,23 +444,14 @@ nav {
 }
 
 .hero-name .line2 {
-  color: #000000;
-  -webkit-text-stroke: 0;
+  color: transparent;
+  -webkit-text-stroke: 2px var(--border);
   display: block;
-  transition: color 0.3s ease;
+  transition: -webkit-text-stroke-color 0.3s;
 }
 
 .hero-name .line2:hover {
-  color: var(--accent);
-}
-
-[data-theme="dark"] .hero-name .line2 {
-  color: var(--text);
-  -webkit-text-stroke: 0;
-}
-
-[data-theme="dark"] .hero-name .line2:hover {
-  color: var(--accent);
+  -webkit-text-stroke-color: var(--text);
 }
 
 .hero-subtitle {
