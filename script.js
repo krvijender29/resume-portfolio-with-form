@@ -588,13 +588,14 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // 3. Scroll progress calculation
-    // Scroll down: face moves down (frame 0 -> 65)
-    // Scroll up: face moves up (frame 65 -> 0)
+    // Face moves down faster (within the top ~380px of scroll) so the full animation
+    // is clearly visible to the user while the hero section is still on screen
     function updateScrollProgress() {
       const hero = document.querySelector('.hero');
       const heroHeight = hero ? hero.offsetHeight : window.innerHeight;
       const scrollY = window.scrollY || window.pageYOffset || 0;
-      targetProgress = Math.min(1, Math.max(0, scrollY / heroHeight));
+      const animScrollDistance = Math.max(260, Math.min(heroHeight * 0.42, 400));
+      targetProgress = Math.min(1, Math.max(0, scrollY / animScrollDistance));
     }
 
     window.addEventListener('scroll', updateScrollProgress, { passive: true });
@@ -605,10 +606,10 @@ document.addEventListener('DOMContentLoaded', () => {
     function renderLoop() {
       requestAnimationFrame(renderLoop);
 
-      // Responsive lerp (0.24 factor): snappily tracks scroll down and scroll up without lag
+      // Fast, responsive lerp tracking (0.28 factor): immediately tracks scroll down and scroll up without lag
       const delta = targetProgress - currentProgress;
       if (Math.abs(delta) > 0.001) {
-        currentProgress += delta * 0.24;
+        currentProgress += delta * 0.28;
       } else {
         currentProgress = targetProgress;
       }
