@@ -36,6 +36,16 @@ document.addEventListener('DOMContentLoaded', () => {
     }, 2100);
   }
 
+  // 1. THEME TOGGLE (Dark / Light Mode)
+  const themeToggleBtn = document.getElementById('themeToggleBtn');
+  if (themeToggleBtn) {
+    themeToggleBtn.addEventListener('click', () => {
+      const currentTheme = document.documentElement.getAttribute('data-theme') || 'dark';
+      const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+      document.documentElement.setAttribute('data-theme', newTheme);
+      localStorage.setItem('theme', newTheme);
+    });
+  }
 
   // 2. CUSTOM CURSOR
   const cursor = document.getElementById('cursor');
@@ -64,7 +74,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Hover expansion on interactive elements
   const hoverElements = document.querySelectorAll(
-    'a, button, .skill-card, .project-card, .cert-card, .hobby-card, .stat, .btn-primary, .btn-ghost, .btn-download, .contact-link'
+    'a, button, .skill-card, .project-card, .cert-card, .hobby-card, .stat, .btn-primary, .btn-ghost, .btn-download, .theme-toggle-btn, .contact-link'
   );
 
   hoverElements.forEach((el) => {
@@ -548,19 +558,8 @@ document.addEventListener('DOMContentLoaded', () => {
       const verticalShift = (isMobile ? 32 : 65) * dpr;
       const ny = ((ch - nh) * 0.15) + verticalShift;
 
-      ctx.fillStyle = '#f2e7d3';
-      ctx.fillRect(0, 0, cw, ch);
+      ctx.clearRect(0, 0, cw, ch);
       ctx.drawImage(img, nx, ny, nw, nh);
-
-      // Feather left edge of frame so it blends seamlessly into the background with zero visible boundary
-      if (nx > 0) {
-        const featherW = Math.min(140 * dpr, (cw - nx) * 0.25);
-        const featherGrad = ctx.createLinearGradient(nx, 0, nx + featherW, 0);
-        featherGrad.addColorStop(0, '#f2e7d3');
-        featherGrad.addColorStop(1, 'rgba(242, 231, 211, 0)');
-        ctx.fillStyle = featherGrad;
-        ctx.fillRect(nx, 0, featherW, ch);
-      }
 
       lastDrawnIndex = frameIndex;
     }
@@ -614,6 +613,14 @@ document.addEventListener('DOMContentLoaded', () => {
       if (targetIndex !== lastDrawnIndex) {
         drawFrameCover(targetIndex);
       }
+    }
+
+    // Redraw hero canvas immediately when dark/light theme is toggled
+    const themeBtn = document.getElementById('themeToggleBtn');
+    if (themeBtn) {
+      themeBtn.addEventListener('click', () => {
+        lastDrawnIndex = -1;
+      });
     }
 
     renderLoop();

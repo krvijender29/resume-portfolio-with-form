@@ -14,9 +14,16 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:ital,wght@0,300;0,400;0,500;1,300&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
   
+  <!-- THEME PRE-INITIALIZATION (Defaults to dark, prevents flash) -->
   <script>
-    localStorage.removeItem('theme');
-    document.documentElement.removeAttribute('data-theme');
+    (function() {
+      const savedTheme = localStorage.getItem('theme');
+      if (savedTheme) {
+        document.documentElement.setAttribute('data-theme', savedTheme);
+      } else {
+        document.documentElement.setAttribute('data-theme', 'dark');
+      }
+    })();
   </script>
   
   <!-- STYLESHEET -->
@@ -59,6 +66,10 @@
       <li><a href="#contact" class="nav-action-btn">Contact</a></li>
     </ul>
     <div class="nav-controls">
+      <button class="theme-toggle-btn" id="themeToggleBtn" aria-label="Toggle Dark/Light Mode" title="Toggle Theme">
+        <span class="theme-icon-sun">☀️</span>
+        <span class="theme-icon-moon">🌙</span>
+      </button>
       <button class="mobile-menu-toggle" aria-label="Toggle Navigation Menu">☰</button>
     </div>
   </nav>
