@@ -61,8 +61,6 @@
     <div class="nav-controls">
       <button class="mobile-menu-toggle" aria-label="Toggle Navigation Menu">☰</button>
     </div>
-    <!-- Subtle high-performance sprite sheet loading indicator -->
-    <div class="sprite-loader-bar" id="spriteLoaderBar" aria-hidden="true"></div>
   </nav>
 
   <section class="hero">
@@ -447,15 +445,5 @@
   <div id="toastNotification" class="toast-notification" aria-live="polite"></div>
 
   <script src="script.js"></script>
-  <!-- SERVICE WORKER REGISTRATION (Cache Acceleration) -->
-  <script>
-    if ('serviceWorker' in navigator) {
-      window.addEventListener('load', () => {
-        navigator.serviceWorker.register('./sw.js').catch((err) => {
-          console.debug('ServiceWorker notice:', err);
-        });
-      });
-    }
-  </script>
 </body>
 </html>

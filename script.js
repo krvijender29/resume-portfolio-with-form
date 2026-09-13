@@ -479,28 +479,16 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // 13. HIGH-PERFORMANCE SPRITE-SHEET SCROLL-CONTROLLED 300-FRAME CHARACTER ANIMATION
+  // 13. FULL-SCREEN SCROLL-CONTROLLED 300-FRAME CHARACTER ANIMATION (Individual Full-Quality JPG Frames)
   const scrollCanvas = document.getElementById('hero-scroll-canvas');
   if (scrollCanvas) {
     const ctx = scrollCanvas.getContext('2d');
     const TOTAL_FRAMES = 300;
-    const COLS = 20;
-    const ROWS = 15;
-
-    // Sprite resolution configuration (Desktop: 400x225, Mobile: 200x112)
-    let isMobile = window.innerWidth <= 768;
-    let FRAME_W = isMobile ? 200 : 400;
-    let FRAME_H = isMobile ? 112 : 225;
+    const frameImages = new Array(TOTAL_FRAMES);
 
     let targetProgress = 0;   // 0.0 (top) to 1.0 (end of hero scroll range)
     let currentProgress = 0;  // Eased progress for ultra-smooth 60fps interpolation
     let lastDrawnIndex = -1;
-
-    let neutralPlaceholderImg = null;
-    let isPlaceholderLoaded = false;
-    let spriteSheetImg = null;
-    let isSpriteLoaded = false;
-    let supportsWebP = true;
 
     // Responsive Canvas Resize (covering hero viewport with retina DPR)
     function resizeCanvas() {
@@ -512,178 +500,87 @@ document.addEventListener('DOMContentLoaded', () => {
       scrollCanvas.width = Math.round(w * dpr);
       scrollCanvas.height = Math.round(h * dpr);
 
-      // Check if viewport crossed mobile/desktop breakpoint
-      const newIsMobile = window.innerWidth <= 768;
-      if (newIsMobile !== isMobile) {
-        isMobile = newIsMobile;
-        FRAME_W = isMobile ? 200 : 400;
-        FRAME_H = isMobile ? 112 : 225;
-        loadSpriteSheet();
-      }
-
-      // Redraw active frame immediately
-      lastDrawnIndex = -1;
-      const targetIndex = isSpriteLoaded
-        ? Math.min(TOTAL_FRAMES - 1, Math.max(0, Math.round(currentProgress * (TOTAL_FRAMES - 1))))
-        : 0;
+      // Re-draw active frame immediately after resize
+      const targetIndex = Math.min(TOTAL_FRAMES - 1, Math.max(0, Math.round(currentProgress * (TOTAL_FRAMES - 1))));
       drawFrameCover(targetIndex);
     }
 
     window.addEventListener('resize', resizeCanvas, { passive: true });
 
-    // Object-fit: cover rendering engine on canvas using sprite coordinates or placeholder
+    // Object-fit: cover rendering engine on canvas
     function drawFrameCover(frameIndex) {
+      // Find requested image or nearest already-loaded frame to eliminate blank flash
+      let img = frameImages[frameIndex];
+      if (!img || !img.complete || img.naturalWidth === 0) {
+        for (let offset = 1; offset < TOTAL_FRAMES; offset++) {
+          const down = frameIndex - offset;
+          const up = frameIndex + offset;
+          if (down >= 0 && frameImages[down] && frameImages[down].complete) {
+            img = frameImages[down];
+            break;
+          }
+          if (up < TOTAL_FRAMES && frameImages[up] && frameImages[up].complete) {
+            img = frameImages[up];
+            break;
+          }
+        }
+      }
+
+      if (!img || !img.complete || img.naturalWidth === 0) return;
+
       const cw = scrollCanvas.width;
       const ch = scrollCanvas.height;
-      if (cw === 0 || ch === 0) return;
+      const iw = img.naturalWidth;
+      const ih = img.naturalHeight;
 
+      // Calculate scale to cover canvas (100vw x 100vh)
+      const scale = Math.max(cw / iw, ch / ih);
+      const nw = iw * scale;
+      const nh = ih * scale;
+
+      // Character positioning:
+      // Position character prominently on the RIGHT side (clear of the left text)
+      const isMobile = window.innerWidth <= 768;
+      const charTargetX = isMobile ? (cw * 0.5) : (cw * 0.74);
+      const nx = charTargetX - (nw * 0.5);
+      // Anchor vertically so hair and head sit comfortably below the top banner (navbar)
       const dpr = Math.min(window.devicePixelRatio || 1, 2);
-      const isMob = window.innerWidth <= 768;
+      const verticalShift = (isMobile ? 32 : 65) * dpr;
+      const ny = ((ch - nh) * 0.15) + verticalShift;
 
-      // When sprite sheet is loaded, draw from sprite grid
-      if (isSpriteLoaded && spriteSheetImg && spriteSheetImg.complete && spriteSheetImg.naturalWidth > 0) {
-        const col = frameIndex % COLS;
-        const row = Math.floor(frameIndex / COLS);
-        const sx = col * FRAME_W;
-        const sy = row * FRAME_H;
+      ctx.fillStyle = '#f2e7d3';
+      ctx.fillRect(0, 0, cw, ch);
+      ctx.drawImage(img, nx, ny, nw, nh);
 
-        const iw = FRAME_W;
-        const ih = FRAME_H;
-        const scale = Math.max(cw / iw, ch / ih);
-        const nw = iw * scale;
-        const nh = ih * scale;
-
-        const charTargetX = isMob ? (cw * 0.5) : (cw * 0.74);
-        const nx = charTargetX - (nw * 0.5);
-        const verticalShift = (isMob ? 32 : 65) * dpr;
-        const ny = ((ch - nh) * 0.15) + verticalShift;
-
-        ctx.fillStyle = '#f2e7d3';
-        ctx.fillRect(0, 0, cw, ch);
-        ctx.drawImage(spriteSheetImg, sx, sy, FRAME_W, FRAME_H, nx, ny, nw, nh);
-
-        // Feather left edge of frame so it blends seamlessly into the background with zero visible boundary
-        if (nx > 0) {
-          const featherW = Math.min(140 * dpr, (cw - nx) * 0.25);
-          const featherGrad = ctx.createLinearGradient(nx, 0, nx + featherW, 0);
-          featherGrad.addColorStop(0, '#f2e7d3');
-          featherGrad.addColorStop(1, 'rgba(242, 231, 211, 0)');
-          ctx.fillStyle = featherGrad;
-          ctx.fillRect(nx, 0, featherW, ch);
-        }
-
-        lastDrawnIndex = frameIndex;
-        return;
+      // Feather left edge of frame so it blends seamlessly into the background with zero visible boundary
+      if (nx > 0) {
+        const featherW = Math.min(140 * dpr, (cw - nx) * 0.25);
+        const featherGrad = ctx.createLinearGradient(nx, 0, nx + featherW, 0);
+        featherGrad.addColorStop(0, '#f2e7d3');
+        featherGrad.addColorStop(1, 'rgba(242, 231, 211, 0)');
+        ctx.fillStyle = featherGrad;
+        ctx.fillRect(nx, 0, featherW, ch);
       }
 
-      // Progressive placeholder: Draw neutral frame immediately while full sprite loads
-      if (isPlaceholderLoaded && neutralPlaceholderImg && neutralPlaceholderImg.complete && neutralPlaceholderImg.naturalWidth > 0) {
-        const iw = neutralPlaceholderImg.naturalWidth || FRAME_W;
-        const ih = neutralPlaceholderImg.naturalHeight || FRAME_H;
-        const scale = Math.max(cw / iw, ch / ih);
-        const nw = iw * scale;
-        const nh = ih * scale;
-
-        const charTargetX = isMob ? (cw * 0.5) : (cw * 0.74);
-        const nx = charTargetX - (nw * 0.5);
-        const verticalShift = (isMob ? 32 : 65) * dpr;
-        const ny = ((ch - nh) * 0.15) + verticalShift;
-
-        ctx.fillStyle = '#f2e7d3';
-        ctx.fillRect(0, 0, cw, ch);
-        ctx.drawImage(neutralPlaceholderImg, nx, ny, nw, nh);
-
-        if (nx > 0) {
-          const featherW = Math.min(140 * dpr, (cw - nx) * 0.25);
-          const featherGrad = ctx.createLinearGradient(nx, 0, nx + featherW, 0);
-          featherGrad.addColorStop(0, '#f2e7d3');
-          featherGrad.addColorStop(1, 'rgba(242, 231, 211, 0)');
-          ctx.fillStyle = featherGrad;
-          ctx.fillRect(nx, 0, featherW, ch);
-        }
-
-        lastDrawnIndex = 0;
-      }
+      lastDrawnIndex = frameIndex;
     }
 
-    // 1. WebP Feature Detection with JPG Fallback
-    function testWebP(callback) {
-      const webpImg = new Image();
-      webpImg.onload = () => callback(webpImg.width > 0 && webpImg.height > 0);
-      webpImg.onerror = () => callback(false);
-      webpImg.src = 'data:image/webp;base64,UklGRhoAAABXRUJQVlA4TA0AAAAvAAAAEAcQERGIiP4HAA==';
-    }
+    // 1. Instant First Paint: Load neutral front frame (frame_001.jpg) immediately
+    const neutralImg = new Image();
+    neutralImg.src = './frames/frame_001.jpg';
+    neutralImg.onload = () => {
+      frameImages[0] = neutralImg;
+      resizeCanvas();
+      drawFrameCover(0);
+    };
+    frameImages[0] = neutralImg;
 
-    // 2. Progressive Asset Loading Engine
-    function initAssetLoading() {
-      testWebP((isSupported) => {
-        supportsWebP = isSupported;
-        const ext = supportsWebP ? 'webp' : 'jpg';
-
-        // Step A: Load lightweight neutral placeholder immediately (< 5 KB)
-        const placeholderSrc = isMobile
-          ? `./assets/placeholder-neutral-mobile.${ext}`
-          : `./assets/placeholder-neutral.${ext}`;
-
-        neutralPlaceholderImg = new Image();
-        neutralPlaceholderImg.src = placeholderSrc;
-        neutralPlaceholderImg.onload = () => {
-          isPlaceholderLoaded = true;
-          resizeCanvas();
-          drawFrameCover(0);
-        };
-        neutralPlaceholderImg.onerror = () => {
-          // Fallback to jpg if webp failed
-          if (ext === 'webp') {
-            neutralPlaceholderImg.src = isMobile
-              ? './assets/placeholder-neutral-mobile.jpg'
-              : './assets/placeholder-neutral.jpg';
-          }
-        };
-
-        // Step B: Load full sprite sheet in background
-        loadSpriteSheet();
-      });
-    }
-
-    function loadSpriteSheet() {
-      const ext = supportsWebP ? 'webp' : 'jpg';
-      const spriteSrc = isMobile
-        ? `./assets/character-spritesheet-mobile.${ext}`
-        : `./assets/character-spritesheet-desktop.${ext}`;
-
-      const loaderBar = document.getElementById('spriteLoaderBar');
-      if (loaderBar) loaderBar.classList.remove('loaded');
-
+    // 2. Preload remaining 299 frames sequentially in background
+    for (let i = 2; i <= TOTAL_FRAMES; i++) {
       const img = new Image();
-      img.src = spriteSrc;
-      img.onload = () => {
-        spriteSheetImg = img;
-        isSpriteLoaded = true;
-        if (loaderBar) loaderBar.classList.add('loaded');
-        lastDrawnIndex = -1;
-        drawFrameCover(Math.min(TOTAL_FRAMES - 1, Math.max(0, Math.round(currentProgress * (TOTAL_FRAMES - 1)))));
-      };
-      img.onerror = () => {
-        // Fallback to JPG version if WebP fails
-        if (ext === 'webp') {
-          const jpgSrc = isMobile
-            ? './assets/character-spritesheet-mobile.jpg'
-            : './assets/character-spritesheet-desktop.jpg';
-          const fallbackImg = new Image();
-          fallbackImg.src = jpgSrc;
-          fallbackImg.onload = () => {
-            spriteSheetImg = fallbackImg;
-            isSpriteLoaded = true;
-            if (loaderBar) loaderBar.classList.add('loaded');
-            lastDrawnIndex = -1;
-            drawFrameCover(Math.min(TOTAL_FRAMES - 1, Math.max(0, Math.round(currentProgress * (TOTAL_FRAMES - 1)))));
-          };
-        }
-      };
+      img.src = `./frames/frame_${String(i).padStart(3, '0')}.jpg`;
+      frameImages[i - 1] = img;
     }
-
-    initAssetLoading();
 
     // 3. Scroll progress calculation
     // 0% at scrollY = 0 (top of page, neutral front-facing pose)
@@ -711,10 +608,8 @@ document.addEventListener('DOMContentLoaded', () => {
         currentProgress = targetProgress;
       }
 
-      // Progressive guard: only advance frames once sprite sheet is ready; otherwise stay locked on neutral pose (0)
-      const targetIndex = isSpriteLoaded
-        ? Math.min(TOTAL_FRAMES - 1, Math.max(0, Math.round(currentProgress * (TOTAL_FRAMES - 1))))
-        : 0;
+      // Map progress (0.0 to 1.0) to frame index (0 to 299)
+      const targetIndex = Math.min(TOTAL_FRAMES - 1, Math.max(0, Math.round(currentProgress * (TOTAL_FRAMES - 1))));
 
       if (targetIndex !== lastDrawnIndex) {
         drawFrameCover(targetIndex);
