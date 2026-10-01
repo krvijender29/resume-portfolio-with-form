@@ -1419,6 +1419,39 @@ nav {
   min-height: 110px;
 }
 
+/* Google reCAPTCHA Container */
+.recaptcha-wrap {
+  margin: 0.5rem 0 0.8rem 0;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  width: 100%;
+}
+
+.g-recaptcha {
+  transform-origin: 0 0;
+}
+
+@media (max-width: 360px) {
+  .g-recaptcha {
+    transform: scale(0.86);
+    -webkit-transform: scale(0.86);
+  }
+}
+
+.recaptcha-error {
+  font-family: var(--font-mono);
+  font-size: 0.74rem;
+  color: var(--accent);
+  background: rgba(230, 57, 70, 0.08);
+  border: 1px solid rgba(230, 57, 70, 0.25);
+  padding: 0.5rem 0.85rem;
+  border-radius: 4px;
+  margin-top: 0.5rem;
+  width: 100%;
+  max-width: 304px;
+}
+
 .form-submit-btn {
   width: 100%;
   padding: 1rem;
