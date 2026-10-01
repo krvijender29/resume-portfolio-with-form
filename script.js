@@ -292,7 +292,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
           const result = await response.json();
 
-          if (response.ok) {
+          if (response.ok && (result.success === 'true' || result.success === true)) {
             // Hide form and display sleek custom success interface
             queryForm.style.display = 'none';
             queryForm.reset();
@@ -304,7 +304,7 @@ document.addEventListener('DOMContentLoaded', () => {
           }
         } catch (err) {
           if (formErrorMsg) {
-            formErrorMsg.textContent = 'Oops! Unable to send message. Please email directly at svijender130@gmail.com';
+            formErrorMsg.textContent = err.message || 'Oops! Unable to send message. Please email directly at svijender130@gmail.com';
             formErrorMsg.style.display = 'block';
           }
         } finally {
