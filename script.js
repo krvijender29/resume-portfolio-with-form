@@ -273,13 +273,10 @@ document.addEventListener('DOMContentLoaded', () => {
       formSubmitBtn.disabled = true;
       formSubmitBtn.innerHTML = 'Sending Message... ⏳';
 
-      const sendFormData = async (token) => {
+      const sendFormData = async () => {
         try {
           const formData = new FormData(queryForm);
           const data = Object.fromEntries(formData.entries());
-          if (token) {
-            data['g-recaptcha-response'] = token;
-          }
 
           const response = await fetch('https://formsubmit.co/ajax/svijender130@gmail.com', {
             method: 'POST',
@@ -313,20 +310,35 @@ document.addEventListener('DOMContentLoaded', () => {
         }
       };
 
-      // Execute Google reCAPTCHA v3 token generation
+      // Execute Google reCAPTCHA v3 with safety timeout so submission never hangs
       if (typeof grecaptcha !== 'undefined' && grecaptcha.ready) {
+        let executed = false;
+        const fallbackTimer = setTimeout(() => {
+          if (!executed) {
+            executed = true;
+            sendFormData();
+          }
+        }, 3000);
+
         grecaptcha.ready(() => {
           grecaptcha.execute('6Lfb2NktAAAAAGFN55Z2kvePwFcSybgS51BiAyag', { action: 'submit' })
-            .then((token) => {
-              sendFormData(token);
+            .then(() => {
+              if (!executed) {
+                executed = true;
+                clearTimeout(fallbackTimer);
+                sendFormData();
+              }
             })
             .catch(() => {
-              // Fallback without blocking user submission
-              sendFormData('');
+              if (!executed) {
+                executed = true;
+                clearTimeout(fallbackTimer);
+                sendFormData();
+              }
             });
         });
       } else {
-        sendFormData('');
+        sendFormData();
       }
     });
   }
