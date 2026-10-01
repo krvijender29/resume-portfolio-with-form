@@ -1419,37 +1419,30 @@ nav {
   min-height: 110px;
 }
 
-/* Google reCAPTCHA Container */
-.recaptcha-wrap {
-  margin: 0.5rem 0 0.8rem 0;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  width: 100%;
-}
-
-.g-recaptcha {
-  transform-origin: 0 0;
-}
-
-@media (max-width: 360px) {
-  .g-recaptcha {
-    transform: scale(0.86);
-    -webkit-transform: scale(0.86);
-  }
-}
-
-.recaptcha-error {
+/* Google reCAPTCHA v3 Notice & Badge Styling */
+.recaptcha-notice {
   font-family: var(--font-mono);
-  font-size: 0.74rem;
+  font-size: 0.7rem;
+  color: var(--text3);
+  margin-top: 0.85rem;
+  text-align: center;
+  line-height: 1.5;
+  letter-spacing: 0.02em;
+}
+
+.recaptcha-notice a {
   color: var(--accent);
-  background: rgba(230, 57, 70, 0.08);
-  border: 1px solid rgba(230, 57, 70, 0.25);
-  padding: 0.5rem 0.85rem;
-  border-radius: 4px;
-  margin-top: 0.5rem;
-  width: 100%;
-  max-width: 304px;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  transition: opacity 0.2s ease;
+}
+
+.recaptcha-notice a:hover {
+  opacity: 0.8;
+}
+
+.grecaptcha-badge {
+  z-index: 998 !important;
 }
 
 .form-submit-btn {

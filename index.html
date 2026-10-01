@@ -33,8 +33,8 @@
     })();
   </script>
   
-  <!-- GOOGLE RECAPTCHA V2 -->
-  <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+  <!-- GOOGLE RECAPTCHA V3 -->
+  <script src="https://www.google.com/recaptcha/api.js?render=6Lfb2NktAAAAAGFN55Z2kvePwFcSybgS51BiAyag" async defer></script>
   
   <!-- STYLESHEET -->
   <link rel="stylesheet" href="style.css">
@@ -429,17 +429,13 @@
               <textarea id="message" name="message" rows="4" placeholder="Hi Vijender, I would like to discuss..." required></textarea>
             </div>
 
-            <!-- Google reCAPTCHA v2 Widget -->
-            <div class="recaptcha-wrap">
-              <!-- Default demo sitekey from Google. Replace with your custom key from https://www.google.com/recaptcha/admin if needed -->
-              <div class="g-recaptcha" id="gRecaptcha" data-sitekey="6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI" data-theme="dark" data-callback="onRecaptchaSuccess" data-expired-callback="onRecaptchaExpired"></div>
-              <div id="recaptchaError" class="recaptcha-error" style="display: none;">Please verify that you are not a robot.</div>
-            </div>
-
             <button type="submit" id="formSubmitBtn" class="btn-primary form-submit-btn">
               Send Message <span>↗</span>
             </button>
             <div id="formErrorMsg" class="form-error-msg" style="display: none;"></div>
+            <div class="recaptcha-notice">
+              🛡️ Protected by Google reCAPTCHA · <a href="https://policies.google.com/privacy" target="_blank" rel="noopener noreferrer">Privacy</a> &amp; <a href="https://policies.google.com/terms" target="_blank" rel="noopener noreferrer">Terms</a>
+            </div>
           </form>
 
           <!-- Custom Success Interface (Shown after submit without leaving the website) -->

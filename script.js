@@ -255,91 +255,78 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // 7. AJAX QUERY FORM SUBMISSION (With Google reCAPTCHA v2 Verification)
+  // 7. AJAX QUERY FORM SUBMISSION (With Google reCAPTCHA v3 Invisible Protection)
   const queryForm = document.getElementById('queryForm');
   const formSubmitBtn = document.getElementById('formSubmitBtn');
   const formSuccessBox = document.getElementById('formSuccessBox');
   const formErrorMsg = document.getElementById('formErrorMsg');
-  const recaptchaError = document.getElementById('recaptchaError');
   const sendAnotherBtn = document.getElementById('sendAnotherBtn');
 
-  // Global callbacks for Google reCAPTCHA
-  window.onRecaptchaSuccess = () => {
-    if (recaptchaError) recaptchaError.style.display = 'none';
-  };
-  window.onRecaptchaExpired = () => {
-    if (recaptchaError) {
-      recaptchaError.textContent = 'Verification expired. Please check the reCAPTCHA box again.';
-      recaptchaError.style.display = 'block';
-    }
-  };
-
   if (queryForm) {
-    queryForm.addEventListener('submit', async (e) => {
+    queryForm.addEventListener('submit', (e) => {
       e.preventDefault();
 
       if (formErrorMsg) formErrorMsg.style.display = 'none';
-      if (recaptchaError) recaptchaError.style.display = 'none';
-
-      // Verify Google reCAPTCHA
-      let recaptchaToken = '';
-      if (typeof grecaptcha !== 'undefined') {
-        recaptchaToken = grecaptcha.getResponse();
-      }
-
-      if (!recaptchaToken) {
-        if (recaptchaError) {
-          recaptchaError.textContent = 'Please verify that you are not a robot.';
-          recaptchaError.style.display = 'block';
-        }
-        return;
-      }
 
       // Set loading state
       const originalBtnText = formSubmitBtn.innerHTML;
       formSubmitBtn.disabled = true;
       formSubmitBtn.innerHTML = 'Sending Message... ⏳';
 
-      try {
-        const formData = new FormData(queryForm);
-        const data = Object.fromEntries(formData.entries());
-        data['g-recaptcha-response'] = recaptchaToken;
+      const sendFormData = async (token) => {
+        try {
+          const formData = new FormData(queryForm);
+          const data = Object.fromEntries(formData.entries());
+          if (token) {
+            data['g-recaptcha-response'] = token;
+          }
 
-        const response = await fetch('https://formsubmit.co/ajax/svijender130@gmail.com', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            'Accept': 'application/json',
-          },
-          body: JSON.stringify(data),
+          const response = await fetch('https://formsubmit.co/ajax/svijender130@gmail.com', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              'Accept': 'application/json',
+            },
+            body: JSON.stringify(data),
+          });
+
+          const result = await response.json();
+
+          if (response.ok) {
+            // Hide form and display sleek custom success interface
+            queryForm.style.display = 'none';
+            queryForm.reset();
+            if (formSuccessBox) {
+              formSuccessBox.style.display = 'flex';
+            }
+          } else {
+            throw new Error(result.message || 'Submission failed. Please try again.');
+          }
+        } catch (err) {
+          if (formErrorMsg) {
+            formErrorMsg.textContent = 'Oops! Unable to send message. Please email directly at svijender130@gmail.com';
+            formErrorMsg.style.display = 'block';
+          }
+        } finally {
+          formSubmitBtn.disabled = false;
+          formSubmitBtn.innerHTML = originalBtnText;
+        }
+      };
+
+      // Execute Google reCAPTCHA v3 token generation
+      if (typeof grecaptcha !== 'undefined' && grecaptcha.ready) {
+        grecaptcha.ready(() => {
+          grecaptcha.execute('6Lfb2NktAAAAAGFN55Z2kvePwFcSybgS51BiAyag', { action: 'submit' })
+            .then((token) => {
+              sendFormData(token);
+            })
+            .catch(() => {
+              // Fallback without blocking user submission
+              sendFormData('');
+            });
         });
-
-        const result = await response.json();
-
-        if (response.ok) {
-          // Hide form and display sleek custom success interface
-          queryForm.style.display = 'none';
-          queryForm.reset();
-          if (typeof grecaptcha !== 'undefined') {
-            grecaptcha.reset();
-          }
-          if (formSuccessBox) {
-            formSuccessBox.style.display = 'flex';
-          }
-        } else {
-          throw new Error(result.message || 'Submission failed. Please try again.');
-        }
-      } catch (err) {
-        if (formErrorMsg) {
-          formErrorMsg.textContent = 'Oops! Unable to send message. Please email directly at svijender130@gmail.com';
-          formErrorMsg.style.display = 'block';
-        }
-        if (typeof grecaptcha !== 'undefined') {
-          grecaptcha.reset();
-        }
-      } finally {
-        formSubmitBtn.disabled = false;
-        formSubmitBtn.innerHTML = originalBtnText;
+      } else {
+        sendFormData('');
       }
     });
   }
@@ -350,10 +337,6 @@ document.addEventListener('DOMContentLoaded', () => {
       if (formSuccessBox) formSuccessBox.style.display = 'none';
       if (queryForm) queryForm.style.display = 'flex';
       if (formErrorMsg) formErrorMsg.style.display = 'none';
-      if (recaptchaError) recaptchaError.style.display = 'none';
-      if (typeof grecaptcha !== 'undefined') {
-        grecaptcha.reset();
-      }
     });
   }
 
