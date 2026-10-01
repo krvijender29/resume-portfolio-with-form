@@ -9,10 +9,17 @@
   <!-- FAVICON -->
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='16' fill='%23e63946'/><text x='50' y='68' font-family='Arial Black,sans-serif' font-size='44' font-weight='900' text-anchor='middle' fill='white'>VS</text></svg>">
   
-  <!-- GOOGLE FONTS -->
+  <!-- PRELOAD CRITICAL LCP ASSETS -->
+  <link rel="preload" as="image" href="./ezgif-frame-webp/ezgif-frame-001.webp" type="image/webp" fetchpriority="high">
+
+  <!-- GOOGLE FONTS (Non-render-blocking with display=swap) -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:ital,wght@0,300;0,400;0,500;1,300&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:ital,wght@0,300;0,400;0,500;1,300&family=Instrument+Serif:ital@0;1&display=swap">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:ital,wght@0,300;0,400;0,500;1,300&family=Instrument+Serif:ital@0;1&display=swap" media="print" onload="this.media='all'">
+  <noscript>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:ital,wght@0,300;0,400;0,500;1,300&family=Instrument+Serif:ital@0;1&display=swap">
+  </noscript>
   
   <!-- THEME PRE-INITIALIZATION (Defaults to dark, prevents flash) -->
   <script>
@@ -122,7 +129,10 @@
   <section class="about" id="about">
     <div class="about-left fade-up">
       <div class="about-photo-wrap">
-        <img src="./profile.jpeg" alt="Vijender Singh" class="about-photo" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+        <picture>
+          <source srcset="./profile.webp" type="image/webp">
+          <img src="./profile.jpeg" alt="Vijender Singh" class="about-photo" width="739" height="811" loading="lazy" decoding="async" onerror="this.closest('.about-photo-wrap').querySelector('.about-avatar').style.display='flex'; this.style.display='none';">
+        </picture>
         <div class="about-avatar" style="display: none;">
           <div class="about-avatar-initials">VS</div>
           <div class="about-avatar-sub">AI & DATA SCIENCE</div>
@@ -455,6 +465,6 @@
   <!-- TOAST NOTIFICATION BANNER -->
   <div id="toastNotification" class="toast-notification" aria-live="polite"></div>
 
-  <script src="script.js"></script>
+  <script src="script.js" defer></script>
 </body>
 </html>

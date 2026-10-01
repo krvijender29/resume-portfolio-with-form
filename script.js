@@ -47,78 +47,79 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // 2. CUSTOM CURSOR
+  // 2. CUSTOM CURSOR & CANVAS TRAIL (Desktop fine pointer only - saves mobile CPU/battery)
+  const hasFinePointer = window.matchMedia('(pointer: fine)').matches;
   const cursor = document.getElementById('cursor');
   const ring = document.getElementById('cursorRing');
   let mx = -100, my = -100, rx = -100, ry = -100;
+  let ringRafId = null;
 
-  document.addEventListener('mousemove', (e) => {
-    mx = e.clientX;
-    my = e.clientY;
-    if (cursor) {
-      cursor.style.left = mx + 'px';
-      cursor.style.top = my + 'px';
+  if (hasFinePointer && (cursor || ring)) {
+    function updateRing() {
+      const dx = mx - rx;
+      const dy = my - ry;
+      rx += dx * 0.18;
+      ry += dy * 0.18;
+      if (ring) {
+        ring.style.left = rx + 'px';
+        ring.style.top = ry + 'px';
+      }
+      if (Math.abs(dx) > 0.1 || Math.abs(dy) > 0.1) {
+        ringRafId = requestAnimationFrame(updateRing);
+      } else {
+        ringRafId = null;
+      }
     }
-  });
 
-  function animateRing() {
-    rx += (mx - rx) * 0.14;
-    ry += (my - ry) * 0.14;
-    if (ring) {
-      ring.style.left = rx + 'px';
-      ring.style.top = ry + 'px';
-    }
-    requestAnimationFrame(animateRing);
+    document.addEventListener('mousemove', (e) => {
+      mx = e.clientX;
+      my = e.clientY;
+      if (cursor) {
+        cursor.style.left = mx + 'px';
+        cursor.style.top = my + 'px';
+      }
+      if (!ringRafId) {
+        ringRafId = requestAnimationFrame(updateRing);
+      }
+    }, { passive: true });
+
+    // Hover expansion on interactive elements
+    const hoverElements = document.querySelectorAll(
+      'a, button, .skill-card, .project-card, .cert-card, .hobby-card, .stat, .btn-primary, .btn-ghost, .btn-download, .theme-toggle-btn, .contact-link'
+    );
+
+    hoverElements.forEach((el) => {
+      el.addEventListener('mouseenter', () => {
+        if (cursor) cursor.style.transform = 'translate(-50%, -50%) scale(2.2)';
+        if (ring) ring.style.opacity = '0.2';
+      }, { passive: true });
+      el.addEventListener('mouseleave', () => {
+        if (cursor) cursor.style.transform = 'translate(-50%, -50%) scale(1)';
+        if (ring) ring.style.opacity = '0.5';
+      }, { passive: true });
+    });
   }
-  animateRing();
 
-  // Hover expansion on interactive elements
-  const hoverElements = document.querySelectorAll(
-    'a, button, .skill-card, .project-card, .cert-card, .hobby-card, .stat, .btn-primary, .btn-ghost, .btn-download, .theme-toggle-btn, .contact-link'
-  );
-
-  hoverElements.forEach((el) => {
-    el.addEventListener('mouseenter', () => {
-      if (cursor) cursor.style.transform = 'translate(-50%, -50%) scale(2.2)';
-      if (ring) ring.style.opacity = '0.2';
-    });
-    el.addEventListener('mouseleave', () => {
-      if (cursor) cursor.style.transform = 'translate(-50%, -50%) scale(1)';
-      if (ring) ring.style.opacity = '0.5';
-    });
-  });
-
-  // 2. PARTICLE TRAIL CANVAS
+  // 2B. PARTICLE TRAIL CANVAS (Idle RAF auto-sleep: 0% CPU when stationary)
   const canvas = document.getElementById('trail-canvas');
-  if (canvas) {
+  if (hasFinePointer && canvas) {
     const ctx = canvas.getContext('2d');
+    let canvasW = window.innerWidth;
+    let canvasH = window.innerHeight;
+
     function resizeCanvas() {
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
+      canvasW = canvas.width = window.innerWidth;
+      canvasH = canvas.height = window.innerHeight;
     }
     resizeCanvas();
-    window.addEventListener('resize', resizeCanvas);
+    window.addEventListener('resize', resizeCanvas, { passive: true });
 
     const colors = ['#e63946', '#f4a261', '#2a9d8f', '#f7c948'];
     const particles = [];
-
-    document.addEventListener('mousemove', (e) => {
-      for (let i = 0; i < 2; i++) {
-        particles.push({
-          x: e.clientX,
-          y: e.clientY,
-          size: Math.random() * 4 + 1.5,
-          color: colors[Math.floor(Math.random() * colors.length)],
-          alpha: 0.6,
-          vx: (Math.random() - 0.5) * 1.2,
-          vy: (Math.random() - 0.5) * 1.2 - 0.3,
-          decay: 0.02 + Math.random() * 0.02,
-        });
-      }
-    });
+    let particleRafId = null;
 
     function animateParticles() {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      ctx.clearRect(0, 0, canvasW, canvasH);
       for (let i = particles.length - 1; i >= 0; i--) {
         const p = particles[i];
         p.alpha -= p.decay;
@@ -137,9 +138,31 @@ document.addEventListener('DOMContentLoaded', () => {
         ctx.fill();
         ctx.restore();
       }
-      requestAnimationFrame(animateParticles);
+
+      if (particles.length > 0) {
+        particleRafId = requestAnimationFrame(animateParticles);
+      } else {
+        particleRafId = null;
+      }
     }
-    animateParticles();
+
+    document.addEventListener('mousemove', (e) => {
+      for (let i = 0; i < 2; i++) {
+        particles.push({
+          x: e.clientX,
+          y: e.clientY,
+          size: Math.random() * 3.5 + 1.5,
+          color: colors[Math.floor(Math.random() * colors.length)],
+          alpha: 0.6,
+          vx: (Math.random() - 0.5) * 1.2,
+          vy: (Math.random() - 0.5) * 1.2 - 0.3,
+          decay: 0.025 + Math.random() * 0.02,
+        });
+      }
+      if (!particleRafId) {
+        particleRafId = requestAnimationFrame(animateParticles);
+      }
+    }, { passive: true });
   }
 
   // 3. SCROLL REVEAL (FADE-UP)
@@ -181,25 +204,29 @@ document.addEventListener('DOMContentLoaded', () => {
     barObserver.observe(skillGrid);
   }
 
-  // 5. ACTIVE NAV LINK HIGHLIGHTING
+  // 5. ACTIVE NAV LINK HIGHLIGHTING (IntersectionObserver for zero layout thrashing)
   const sections = document.querySelectorAll('section[id]');
   const navLinks = document.querySelectorAll('.nav-links a');
-
-  window.addEventListener('scroll', () => {
-    let current = '';
-    sections.forEach((s) => {
-      if (window.scrollY >= s.offsetTop - 220) {
-        current = s.id;
-      }
-    });
-
-    navLinks.forEach((a) => {
-      a.classList.remove('active');
-      if (a.getAttribute('href') === '#' + current) {
-        a.classList.add('active');
-      }
-    });
-  });
+  if (sections.length > 0 && navLinks.length > 0) {
+    const navObserver = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            const id = entry.target.getAttribute('id');
+            navLinks.forEach((a) => {
+              if (a.getAttribute('href') === '#' + id) {
+                a.classList.add('active');
+              } else {
+                a.classList.remove('active');
+              }
+            });
+          }
+        });
+      },
+      { rootMargin: '-20% 0px -70% 0px' }
+    );
+    sections.forEach((s) => navObserver.observe(s));
+  }
 
   // 6. MOBILE MENU TOGGLE
   const menuToggle = document.querySelector('.mobile-menu-toggle');
@@ -383,28 +410,36 @@ document.addEventListener('DOMContentLoaded', () => {
     typeRole();
   }
 
-  // 10. MAGNETIC SPOTLIGHT & 3D TILT EFFECT ON CARDS
-  const cards = document.querySelectorAll('.skill-card, .project-card, .cert-card, .qual-item');
-  cards.forEach((card) => {
-    card.addEventListener('mousemove', (e) => {
-      const rect = card.getBoundingClientRect();
-      const x = e.clientX - rect.left;
-      const y = e.clientY - rect.top;
-      card.style.setProperty('--mouse-x', `${x}px`);
-      card.style.setProperty('--mouse-y', `${y}px`);
+  // 10. MAGNETIC SPOTLIGHT & 3D TILT EFFECT ON CARDS (Cached geometry, no layout thrashing)
+  if (window.matchMedia('(hover: hover)').matches) {
+    const cards = document.querySelectorAll('.skill-card, .project-card, .cert-card, .qual-item');
+    cards.forEach((card) => {
+      let rect = null;
+      card.addEventListener('mouseenter', () => {
+        rect = card.getBoundingClientRect();
+      }, { passive: true });
 
-      // Mild 3D Tilt calculation
-      const centerX = rect.width / 2;
-      const centerY = rect.height / 2;
-      const rotateX = ((y - centerY) / centerY) * -5;
-      const rotateY = ((x - centerX) / centerX) * 5;
-      card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-5px)`;
-    });
+      card.addEventListener('mousemove', (e) => {
+        if (!rect) rect = card.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+        card.style.setProperty('--mouse-x', `${x}px`);
+        card.style.setProperty('--mouse-y', `${y}px`);
 
-    card.addEventListener('mouseleave', () => {
-      card.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) translateY(0px)';
+        // Mild 3D Tilt calculation
+        const centerX = rect.width / 2;
+        const centerY = rect.height / 2;
+        const rotateX = ((y - centerY) / centerY) * -5;
+        const rotateY = ((x - centerX) / centerX) * 5;
+        card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-5px)`;
+      }, { passive: true });
+
+      card.addEventListener('mouseleave', () => {
+        rect = null;
+        card.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) translateY(0px)';
+      });
     });
-  });
+  }
 
   // 11. SKILLS CATEGORY FILTERING & PERCENT COUNTER ANIMATION
   const filterBtns = document.querySelectorAll('.skills-filter-btn');
@@ -489,16 +524,18 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // 13. FULL-SCREEN SCROLL-CONTROLLED CHARACTER ANIMATION (66 Transparent PNG Frames)
+  // 13. FULL-SCREEN SCROLL-CONTROLLED CHARACTER ANIMATION (Optimized WebP, Tiered Loading, Smart RAF)
   const scrollCanvas = document.getElementById('hero-scroll-canvas');
   if (scrollCanvas) {
     const ctx = scrollCanvas.getContext('2d');
     const TOTAL_FRAMES = 66;
     const frameImages = new Array(TOTAL_FRAMES);
+    const frameLoaded = new Array(TOTAL_FRAMES).fill(false);
 
     let targetProgress = 0;   // 0.0 (top, face looking up) to 1.0 (scrolled, face looking down)
     let currentProgress = 0;  // Eased progress for smooth, snappy 60fps tracking
     let lastDrawnIndex = -1;
+    let rafActive = false;
 
     // Responsive Canvas Resize (covering hero viewport with retina DPR)
     function resizeCanvas() {
@@ -519,7 +556,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Object-fit: cover rendering engine on canvas
     function drawFrameCover(frameIndex) {
-      // Find requested image or nearest already-loaded frame to eliminate blank flash
       let img = frameImages[frameIndex];
       if (!img || !img.complete || img.naturalWidth === 0) {
         for (let offset = 1; offset < TOTAL_FRAMES; offset++) {
@@ -548,12 +584,10 @@ document.addEventListener('DOMContentLoaded', () => {
       const nw = iw * scale;
       const nh = ih * scale;
 
-      // Character positioning:
-      // Position character prominently on the RIGHT side (clear of the left text)
+      // Character positioning on right side
       const isMobile = window.innerWidth <= 768;
       const charTargetX = isMobile ? (cw * 0.5) : (cw * 0.74);
       const nx = charTargetX - (nw * 0.5);
-      // Anchor vertically so hair and head sit comfortably below the top banner (navbar)
       const dpr = Math.min(window.devicePixelRatio || 1, 2);
       const verticalShift = (isMobile ? 32 : 65) * dpr;
       const ny = ((ch - nh) * 0.15) + verticalShift;
@@ -564,61 +598,109 @@ document.addEventListener('DOMContentLoaded', () => {
       lastDrawnIndex = frameIndex;
     }
 
-    // 1. Instant First Paint: Load neutral front frame (ezgif-frame-001.png) immediately
-    const neutralImg = new Image();
-    neutralImg.src = './ezgif-frame-png/ezgif-frame-001.png';
-    neutralImg.onload = () => {
-      frameImages[0] = neutralImg;
-      resizeCanvas();
-      drawFrameCover(0);
-    };
-    frameImages[0] = neutralImg;
-
-    // 2. Preload remaining frames concurrently in background
-    for (let i = 2; i <= TOTAL_FRAMES; i++) {
+    // Helper to load a single frame
+    function loadFrame(idx, onLoaded) {
+      if (frameImages[idx]) return frameImages[idx];
       const img = new Image();
-      img.src = `./ezgif-frame-png/ezgif-frame-${String(i).padStart(3, '0')}.png`;
+      img.src = `./ezgif-frame-webp/ezgif-frame-${String(idx + 1).padStart(3, '0')}.webp`;
       img.onload = () => {
+        frameLoaded[idx] = true;
+        if (onLoaded) onLoaded(idx);
         const targetIdx = Math.min(TOTAL_FRAMES - 1, Math.max(0, Math.round(currentProgress * (TOTAL_FRAMES - 1))));
-        if (targetIdx === i - 1 && lastDrawnIndex !== targetIdx) {
+        if (targetIdx === idx && lastDrawnIndex !== targetIdx) {
           drawFrameCover(targetIdx);
         }
       };
-      frameImages[i - 1] = img;
+      frameImages[idx] = img;
+      return img;
     }
 
-    // 3. Scroll progress calculation
-    // Face moves down faster (within the top ~380px of scroll) so the full animation
-    // is clearly visible to the user while the hero section is still on screen
+    // 1. Instant First Paint: Load neutral front frame immediately (already preloaded in <head>)
+    loadFrame(0, () => {
+      resizeCanvas();
+      drawFrameCover(0);
+    });
+
+    // 2. Tier 1: Buffer initial scroll frames (frames 1 to 9) immediately
+    for (let i = 1; i <= 9 && i < TOTAL_FRAMES; i++) {
+      loadFrame(i);
+    }
+
+    // 3. Tier 2: Progressive background preloader in idle slices
+    const remainingQueue = [];
+    for (let i = 10; i < TOTAL_FRAMES; i++) {
+      remainingQueue.push(i);
+    }
+
+    function processPreloadQueue() {
+      if (remainingQueue.length === 0) return;
+      const batchSize = 3;
+      for (let b = 0; b < batchSize && remainingQueue.length > 0; b++) {
+        const nextIdx = remainingQueue.shift();
+        loadFrame(nextIdx);
+      }
+      if (remainingQueue.length > 0) {
+        if ('requestIdleCallback' in window) {
+          requestIdleCallback(processPreloadQueue, { timeout: 800 });
+        } else {
+          setTimeout(processPreloadQueue, 60);
+        }
+      }
+    }
+
+    if ('requestIdleCallback' in window) {
+      requestIdleCallback(processPreloadQueue, { timeout: 1000 });
+    } else {
+      setTimeout(processPreloadQueue, 150);
+    }
+
+    // 4. Scroll progress calculation & priority on-demand loading
     function updateScrollProgress() {
       const hero = document.querySelector('.hero');
       const heroHeight = hero ? hero.offsetHeight : window.innerHeight;
       const scrollY = window.scrollY || window.pageYOffset || 0;
       const animScrollDistance = Math.max(260, Math.min(heroHeight * 0.42, 400));
       targetProgress = Math.min(1, Math.max(0, scrollY / animScrollDistance));
+
+      // Priority load the current target frame if not loaded yet
+      const currentTargetIdx = Math.min(TOTAL_FRAMES - 1, Math.max(0, Math.round(targetProgress * (TOTAL_FRAMES - 1))));
+      if (!frameLoaded[currentTargetIdx]) {
+        loadFrame(currentTargetIdx);
+        if (currentTargetIdx + 1 < TOTAL_FRAMES) loadFrame(currentTargetIdx + 1);
+        if (currentTargetIdx - 1 >= 0) loadFrame(currentTargetIdx - 1);
+      }
+
+      startRenderLoop();
     }
 
     window.addEventListener('scroll', updateScrollProgress, { passive: true });
     updateScrollProgress();
     resizeCanvas();
 
-    // 4. Smooth 60 FPS requestAnimationFrame Loop with responsive lerp tracking
+    // 5. Smart RAF loop: Runs only while animating, sleeps at idle (0% CPU)
     function renderLoop() {
-      requestAnimationFrame(renderLoop);
-
-      // Fast, responsive lerp tracking (0.28 factor): immediately tracks scroll down and scroll up without lag
       const delta = targetProgress - currentProgress;
-      if (Math.abs(delta) > 0.001) {
+      if (Math.abs(delta) > 0.0008) {
         currentProgress += delta * 0.28;
+        const targetIndex = Math.min(TOTAL_FRAMES - 1, Math.max(0, Math.round(currentProgress * (TOTAL_FRAMES - 1))));
+        if (targetIndex !== lastDrawnIndex) {
+          drawFrameCover(targetIndex);
+        }
+        requestAnimationFrame(renderLoop);
       } else {
         currentProgress = targetProgress;
+        const targetIndex = Math.min(TOTAL_FRAMES - 1, Math.max(0, Math.round(currentProgress * (TOTAL_FRAMES - 1))));
+        if (targetIndex !== lastDrawnIndex) {
+          drawFrameCover(targetIndex);
+        }
+        rafActive = false;
       }
+    }
 
-      // Map progress (0.0 to 1.0) to frame index (0 to 65)
-      const targetIndex = Math.min(TOTAL_FRAMES - 1, Math.max(0, Math.round(currentProgress * (TOTAL_FRAMES - 1))));
-
-      if (targetIndex !== lastDrawnIndex) {
-        drawFrameCover(targetIndex);
+    function startRenderLoop() {
+      if (!rafActive) {
+        rafActive = true;
+        requestAnimationFrame(renderLoop);
       }
     }
 
@@ -627,10 +709,11 @@ document.addEventListener('DOMContentLoaded', () => {
     if (themeBtn) {
       themeBtn.addEventListener('click', () => {
         lastDrawnIndex = -1;
+        startRenderLoop();
       });
     }
 
-    renderLoop();
+    startRenderLoop();
   }
 
   // Welcome console message
